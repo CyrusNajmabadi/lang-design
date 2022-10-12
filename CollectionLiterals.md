@@ -1,5 +1,3 @@
-Test - second edit - third edit - cyrus - edit 4 - test
-
 # Collection literals
 
 * [x] Proposed
@@ -8,8 +6,6 @@ Test - second edit - third edit - cyrus - edit 4 - test
 * [ ] Specification: Not Started
 
 Many thanks to those who helped with this proposal.  Esp. @jnm2!
-
-Cyrus is adding this.
 
 # Summary
 [summary]: #summary
