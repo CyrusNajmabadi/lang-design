@@ -112,7 +112,7 @@ If all elements do have either property, or the count of elements can be dicover
 
 1. All `expression_element` expressions and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
-## Known length translation
+### Known length translation
 
 1. For a *known length* literal `[e1, .. s1, e2, .. s2, etc]`, the translation first starts with the following:
 
@@ -214,7 +214,7 @@ If all elements do have either property, or the count of elements can be dicover
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
-## Unknown length translation
+### Unknown length translation
 
 1. Given a target type `T` for an *unknown length* literal:
 
