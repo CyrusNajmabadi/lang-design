@@ -293,7 +293,9 @@ IEnumerable<int> x = [0, 1, 3];
 
 # Syntax Ambiguities
 
-1. There is one "true" syntactic ambiguity where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`. Specifically, the `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
+1. There is two "true" syntactic ambiguity where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
+
+    1a. The `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
 
     ```c#
     Range[] ranges = [range1, ..e, range2];
@@ -303,6 +305,16 @@ IEnumerable<int> x = [0, 1, 3];
 
     - Require users to parenthesize `(..e)` or include a start index `0..e` if they want a range.
     - Choose a different syntax (like `...`) for spread.  This would be unfortunate though for the lack of consistency with slice patterns.
+
+    1b. The `dictionary_element` is ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
+
+    ```c#
+    var v = [ a ? [b] : c ];
+    ```
+
+    This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is`k`, and `c` is `v`.
+
+1.2.
 
 1. There are two cases where there isn't a true ambiguity but where the syntax greatly increase parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
