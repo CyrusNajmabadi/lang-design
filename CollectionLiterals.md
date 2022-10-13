@@ -60,6 +60,7 @@ primary_no_array_creation_expression
 + collection_literal_element
   : expression_element
   | spread_element
+  | dictionary_element
   ;
 
 + expression_element
@@ -68,6 +69,10 @@ primary_no_array_creation_expression
 
 + spread_element
   : '..' expression
+  ;
+
++ dictionary_element
+  : expression ':' expression
   ;
 ```
 
