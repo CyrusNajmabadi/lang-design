@@ -76,7 +76,7 @@ primary_no_array_creation_expression
   ;
 ```
 
-Collection literals are [`target-typed`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation), but also have a `natural-type` in the absence of a `target type`.
+Collection literals are [`target-typed`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation), but also have a `natural-type` in the absence of a `target-type`.
 
 Unresolved question:  The above grammar choice means that it is not legal to immediately index into a collection literal (note that there would need to be a natural type for this to work at all).  So you cannot say `[1, 2, 3][0]`.  This seems like an acceptable restriction to have, as it would likely be odd to generate a collection in order to grab only a single value (or range of values) from it.  This restriction also holds for arrays in language today.  If this restriction is considered onerous, we could move `collection_literal_expression` into `primary_expression` without difficulty.
 
