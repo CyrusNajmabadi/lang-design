@@ -525,3 +525,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#c
 # Working group meetings
 
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
+
+# Upcoming agenda items
+
+1. Allow `TryGetNonEnumeratedCount` helper to be used to determine if a collection has known-length.
