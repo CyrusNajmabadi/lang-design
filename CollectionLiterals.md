@@ -215,6 +215,7 @@ If all elements do have either property, or the count of elements can be dicover
             T __result = new T();
 
             __result.Add(e1);
+            __result[k1] = v1;
             foreach (var __v in s1)
                 __result.Add(__v);
 
