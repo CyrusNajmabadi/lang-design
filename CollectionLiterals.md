@@ -285,6 +285,12 @@ Because the `best-common-type` requires at least one type to be considered, ther
 var x = []; // This is an error
 ```
 
+Because a `collection-literal-expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type that `List<T>` is convertible.  For example:
+
+```c#
+IEnumerable<int> x = [0, 1, 3];
+```
+
 # Syntax Ambiguities
 
 1. There is one "true" syntactic ambiguity where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`. Specifically, the `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
@@ -539,3 +545,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 # Upcoming agenda items
 
 1. Allow [`TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) helper to be used to determine if an IEnumerable has known-length.
+
+1. Determine the natural type for a dictionary literal.  I propose the following.
+
+  
