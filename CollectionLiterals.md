@@ -572,20 +572,64 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 1. Allow [`TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) helper to be used to determine if an IEnumerable has known-length.
 
-1. We proposed that collections have a natural-type of `List<T>` which woudl allow for code like so:
+1. We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
 
-```c#
-IEnumerable<int> x = [1, 2, 3];
-```
+    ```c#
+    IEnumerable<int> x = [1, 2, 3];
+    ```
 
-However, it would not allow:
+    However, it would not allow:
 
-```c#
-IEnumerable<long> x = [1, 2, 3];
-```
+    ```c#
+    IEnumerable<long> x = [1, 2, 3];
+    ```
 
-as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
+    as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
 
 1. Determine the natural type for a dictionary literal.  I propose the following.
 
-  
+    In the absence of a `target-type` a `collection-literal-expression` `[e1, .. s1]` has a `natural-type` of either `System.Collections.Generic.List<T>` or `System.Collections.Generic.Dictionary<TKey, TValue>`.  The [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
+    
+    If the literal has no elements, it has no `natural-type`.
+
+    The literal's `natural-type` is determined by the types of all of it's elements.
+
+    An `expresion_element` `e_n` has the type of `en`.
+
+    A `dictionary_element` `k:v` has the type `System.Collections.Generic.KeyValuePair<,>`.
+
+    A `spread_element` `.. s_n` has the type that is the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+
+    If all element types are some instantiation of `System.Collections.Generic.KeyValuePair<,>`, then the resultant `natural-type` is `System.Collections.Generic.Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the `best-common-type` between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the `best-common-type` between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
+
+    Otherwise, if there is a `dictionary_element` in the literal, there is no `natural-type` for the literal.
+
+    Otherwise, the resultant `natural-type` is `System.Collections.Generic.List<T>`.  `T` will be picked by choosing the `best-common-type` of the types of the elements within..
+
+    For example, given:
+
+    ```c#
+    string i = ...;
+    object[] objects = ...;
+    var x = [i, ..objects];
+    ```
+
+    The `natural-type` of `x` is `List<T>` where `T` is the `best-common-type` of `i` and the `iteration-type` of `objects`.  Respectively, that would be the `best-common-type` between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
+
+    Similarly, given:
+
+    ```c#
+    Dictionary<string, object> d1 = ...;
+    Dictionary<object, string> d2 = ...;
+    var d3 = [..d1, ..d2];
+    ```
+
+    The natural type of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a `spread_element` type of `KeyValuePair<string, object>` and `..d2` will have a `spread_element` type of `KeyValuePair<object, string>`.  As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the `best-common-type` of `string and object` and `TValue` will be the `best-common-type` of `object and string`.  In both cases, that is `object`.
+
+    Similarly, given:
+
+    ```c#
+    var d = [null: null, "a": "b"];
+    ```
+
+    The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the `best-common-type` of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
