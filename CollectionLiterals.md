@@ -176,9 +176,9 @@ If all elements do have either property, or the count of elements can be dicover
         __result.Init(__storage);
         ```
 
-        Note: The `Init` method can be marked with the `init` modifier like so: `init void Init(T1 values)`.  This `init` method design is [covered later](#init-methods).
+        Note: The `Construct` method can be marked with the `init` modifier like so: `init void Construct(T1 values)`.  This `init` method design is [covered later](#init-methods).
 
-        Note: The `Init` method can be an extension method (but then cannot be `init` as well).
+        Note: The `Construct` method can be an extension method (but then cannot be `init` as well).
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
 
