@@ -145,20 +145,16 @@ If all elements do have either property, or the count of elements can be dicover
         __result[__index++] = new T1(k1, v1);
         foreach (T1 __v in s1)
             __result[__index++] = __v;
+
+        // further assignments of the remaining elements
         ```
 
-    -  If `T` is some `Span<T1>`, then the literal is translated as:
+    -  If `T` is some `Span<T1>`, then the literal is translated as the same as above, except that the `__result` initialization is translated as:
     
         ```c#
         Span<T1> __result = stackalloc T1[__len];
-        int __index = 0;
 
-        __result[__index++] = e1;
-        __result[__index++] = new T1(k1, v1);
-        foreach (T1 __v in s1)
-            __result[__index++] = __v;
-
-        // further assignments of the remaining elements
+        // same assignments as the array translation
         ```
 
     - If `T` is some `ReadOnlySpan<T1>`, then the literal is translated the same as for the `Span<T1>` case except that the final result will be that `Span<T1>` [implicitly converted](https://docs.microsoft.com/en-us/dotnet/api/system.span-1.op_implicit?view=net-5.0#System_Span_1_op_Implicit_System_Span__0___System_ReadOnlySpan__0_) to a `ReadOnlySpan<T1>`.
