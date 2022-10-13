@@ -319,13 +319,15 @@ IEnumerable<int> x = [0, 1, 3];
     - Require users to parenthesize `(..e)` or include a start index `0..e` if they want a range.
     - Choose a different syntax (like `...`) for spread.  This would be unfortunate though for the lack of consistency with slice patterns.
 
-    1b. The `dictionary_element` is ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
+    1b. If `dictionary_element` is defined as `expression:expression` then it can be ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
 
     ```c#
     var v = [ a ? [b] : c ];
     ```
 
     This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
+
+    To resolve this we can either pick an interpretation for the above, and require parentheses for the other interpretation.  Alternatively, we can define `dictionary_element` as
 
 1. There are two cases where there isn't a true ambiguity but where the syntax greatly increase parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
