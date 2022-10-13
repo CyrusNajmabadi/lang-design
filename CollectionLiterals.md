@@ -71,7 +71,7 @@ primary_no_array_creation_expression
   ;
 
 + dictionary_element
-  : expression ':' expression
+  : null_coalescing_expression ':' expression
   ;
 
 + spread_element
