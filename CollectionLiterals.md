@@ -483,7 +483,7 @@ Very large questions:
 
 1. How would we proceed on this in the future to get dictionary literals?  
 
-    Resolution: The form `[k:v]` is supported for dictionary literals. The following text exists to record the original discussion of this topic.
+    Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
 
     ---
 
