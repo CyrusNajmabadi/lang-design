@@ -603,6 +603,8 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
 
+1. Determine how a spread `.. dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
+
 1. Determine the natural type for a dictionary literal.  I propose the following.
 
     In the absence of a `target-type` a `collection-literal-expression` `[e1, .. s1]` has a `natural-type` of either `System.Collections.Generic.List<T>` or `System.Collections.Generic.Dictionary<TKey, TValue>`.  The [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
