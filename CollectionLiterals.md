@@ -140,11 +140,12 @@ If all elements do have either property, or the count of elements can be dicover
         int __index = 0;
 
         __result[__index++] = e1;
+        __result[__index++] = new T1(k1, v1);
         foreach (T1 __v in s1)
             __result[__index++] = __v;
-
-        // further assignments of the remaining elements
         ```
+
+        For a `dictionary_element`, this requires that T1
 
     -  If `T` is some `Span<T1>`, then the literal is translated as:
     
@@ -153,6 +154,7 @@ If all elements do have either property, or the count of elements can be dicover
         int __index = 0;
 
         __result[__index++] = e1;
+        __result[__index++] = new T1(k1, v1);
         foreach (T1 __v in s1)
             __result[__index++] = __v;
 
@@ -192,6 +194,7 @@ If all elements do have either property, or the count of elements can be dicover
             T __result = new T(capacity: __len);
 
             __result.Add(e1);
+            __result[k1] = v1;
             foreach (var __v in s1)
                 __result.Add(__v);
 
