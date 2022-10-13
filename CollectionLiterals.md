@@ -173,7 +173,7 @@ If all elements do have either property, or the count of elements can be dicover
         Span<T1> __storage = ...
 
         T __result = new T();
-        __result.Init(__storage);
+        __result.Construct(__storage);
         ```
 
         Note: The `Construct` method can be marked with the `init` modifier like so: `init void Construct(T1 values)`.  This `init` method design is [covered later](#init-methods).
