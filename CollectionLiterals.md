@@ -312,7 +312,7 @@ IEnumerable<int> x = [0, 1, 3];
     var v = [ a ? [b] : c ];
     ```
 
-    This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is`k`, and `c` is `v`.
+    This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
 
 1.2.
 
