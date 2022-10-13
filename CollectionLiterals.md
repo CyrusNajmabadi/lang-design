@@ -122,6 +122,7 @@ If all elements do have either property, or the count of elements can be dicover
 
     ```c#
     int __len = count_of_expression_elements +
+                count_of_dictionary_elements +
                 s1.Count;
                 ...
                 sn.Count;
