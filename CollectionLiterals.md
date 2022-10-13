@@ -163,7 +163,7 @@ If all elements do have either property, or the count of elements can be dicover
 
     Similarly, even if the allocation size is small, it could cause problems if contained in something like a loop.  Can the compiler prevent each outer loop iteration from causing the stack to grow?
 
-    - If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Init(T1 values)` method (name TBD). If found, and if `T1` is either an array or span type, then the literal is translated as:
+    - If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
 
         ```c#
         // Generate raw array-type or span-type value using 
