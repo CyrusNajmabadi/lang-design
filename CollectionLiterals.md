@@ -347,8 +347,6 @@ IEnumerable<int> x = [0, 1, 3];
 
         Without complex lookahead, it would be impossible to tell without consuming the entirety of the literal.
 
-        Note: this is only an issue if collection literals get a natural type in the future.  Otherwise, `[X(), Y, Z()].ForEach(() => ...)` would always be illegal because that's not a location where a target type can exist (including with extension methods).
-
         Options to address this include:
 
         - Allow this, doing the parsing work to determine which of these cases this is.
