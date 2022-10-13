@@ -145,8 +145,6 @@ If all elements do have either property, or the count of elements can be dicover
             __result[__index++] = __v;
         ```
 
-        For a `dictionary_element`, this requires that T1
-
     -  If `T` is some `Span<T1>`, then the literal is translated as:
     
         ```c#
