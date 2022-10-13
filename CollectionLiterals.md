@@ -118,9 +118,9 @@ If all elements do have either property, or the count of elements can be dicover
 
     ```c#
     int __len = count_of_expression_elements +
-                s1.Length + // or s1.Count or the result of TryGetNonEnumeratedCount(s1, out int s1Count)
+                s1.Count;
                 ...
-                sn.Length;  // or sn.Count or the result of TryGetNonEnumeratedCount(sn, out int snCount)
+                sn.Count;
     ```
 
     Note that the references to `s1`–`sn` refer to the prior evaluated result of each `spread_element` expression.
