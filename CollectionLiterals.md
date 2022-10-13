@@ -560,6 +560,20 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 1. Allow [`TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) helper to be used to determine if an IEnumerable has known-length.
 
+1. We proposed that collections have a natural-type of `List<T>` which woudl allow for code like so:
+
+```c#
+IEnumerable<int> x = [1, 2, 3];
+```
+
+However, it would not allow:
+
+```c#
+IEnumerable<long> x = [1, 2, 3];
+```
+
+as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
+
 1. Determine the natural type for a dictionary literal.  I propose the following.
 
   
