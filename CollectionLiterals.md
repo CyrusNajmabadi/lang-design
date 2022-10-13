@@ -407,7 +407,9 @@ Hopefully small questions:
 1. Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
 
 1. Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
+
 1. Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
+
 1. In what order should we evaluate literal elements compared with Length/Count property evaluation?  Should we evaluate all elements first, then all lengths?  Or should we evaluate an element, then its length, then the next element, and so on?
 
 Very large questions:
