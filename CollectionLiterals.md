@@ -59,20 +59,20 @@ primary_no_array_creation_expression
 
 + collection_literal_element
   : expression_element
-  | spread_element
   | dictionary_element
+  | spread_element
   ;
 
 + expression_element
   : expression
   ;
 
-+ spread_element
-  : '..' expression
-  ;
-
 + dictionary_element
   : expression ':' expression
+  ;
+
++ spread_element
+  : '..' expression
   ;
 ```
 
@@ -84,6 +84,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 
 1. For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
 1. `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
+1. `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
 1. `spread_element` instances will commonly be referred to as `.. s1`, `.. s2`, etc.
 1. `span-type` means either `Span<T>` or `ReadOnlySpan<T>`.
 1. Literals will commonly be shown as `[e1, .. s1, e2, .. s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
