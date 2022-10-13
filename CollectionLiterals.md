@@ -201,9 +201,11 @@ If all elements do have either property, or the count of elements can be dicover
 
             This form allows for a literal to inform the newly constructed type of the count of elements to allow for efficient allocation of internal storage.  This avoids wasteful reallocations as the elements are added.
 
-            Unresolved question: should we look for a suitable `AddRange` method on the type and defer to that if it would apply to the `spread_element`?  This would need to be decided up front because the difference would be observable. This could have drawbacks though.  If a type exposed an `AddRange(IEnumerable<T>)` member, but was passed a `List<T>`, this would cause extra interface dispatches as well as the allocation of the `IEnumerator<T>` value.  Keeping the `foreach` loops at the callsite ensures optimal codegen for each particular `spread_element` type encountered.
+            Unresolved question: Should we look for a suitable `AddRange` method on the type and defer to that if it would apply to the `spread_element`?  This would need to be decided up front because the difference would be observable. This could have drawbacks though.  If a type exposed an `AddRange(IEnumerable<T>)` member, but was passed a `List<T>`, this would cause extra interface dispatches as well as the allocation of the `IEnumerator<T>` value.  Keeping the `foreach` loops at the callsite ensures optimal codegen for each particular `spread_element` type encountered.
 
-            Unresolved question:  Optimizations could occur by using methods like `.CopyTo`.  Should we explicitly decide if these will or won't be called?  Or should we spec such that we leave the door open for the implementation to choose to call that if it so decides?
+            Unresolved question: Optimizations could occur by using methods like `.CopyTo`.  Should we explicitly decide if these will or won't be called?  Or should we spec such that we leave the door open for the implementation to choose to call that if it so decides?
+
+            Unresolved question: How would the above translation work when `T` is some dictionary type?
 
         - otherwise, the literal is translated as:
 
