@@ -33,7 +33,7 @@ Further support is present for collection-like types not covered under the above
 
 3. C# has also added [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md) in C# 10.  This pattern allows matching and deconstruction of list-like values using a clean and intuitive syntax.  However, unlike almost all other pattern constructs, this matching/deconstruction syntax lacks the corresponding construction syntax.
 
-4. Getting the best performance for each collection type can be tricky.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  The specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
+4. Getting the best performance for each collection type can be tricky, with simple solutions often wasting both CPU and memory.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  The specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
 
 An inclusive solution is needed for C#. It should meet the 99% case for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
 
