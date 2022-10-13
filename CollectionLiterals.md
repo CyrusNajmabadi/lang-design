@@ -114,7 +114,7 @@ If all elements do have either property, or the count of elements can be dicover
 
 ### Known length translation
 
-1. For a *known length* literal `[e1, .. s1, e2, .. s2, etc]`, the translation first starts with the following:
+1. For a *known length* literal `[e1, .. s1, e2, .. s2, etc]` (with no `dictionary_element`), the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
