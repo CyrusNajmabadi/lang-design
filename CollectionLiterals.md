@@ -91,16 +91,18 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
     - Empty literals `[]`
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
-    - Literals with arbitrary ordering of either element type.
+    - Literals with arbitrary ordering of any element type.
+1. A literal without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `.. s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 1. Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
 1. An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.  For example, an implementation could translate literals like `[1, 2, 3]` directly to a `new int[] { 1, 2, 3 }` expression that itself bakes the raw data into the assembly, eliding the need for `__index` or a sequence of instructions to assign each value. Importantly, this does mean if any step of the translation might cause an exception at runtime that the program state is still left in the state indicated by the translation.
 
 ## Collection literal translation
 [simple-collection-literal]: #simple-collection-literal
 
-1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  If all elements do have either property, the literal is considered to have a *known length*.
+1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
+If all elements do have either property, or the count of elements can be dicovered by passing the `spread_element` value to [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0), the literal is considered to have a *known length*.
 
-    If at least one `spread_element` does not have either of these properties, then the literal is considered to have an *unknown length*.
+    If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
 
     Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
