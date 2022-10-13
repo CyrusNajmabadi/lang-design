@@ -104,7 +104,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 [simple-collection-literal]: #simple-collection-literal
 
 1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
-If all elements do have either property, or the count of elements can be dicovered by passing the `spread_element` value to [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0), the literal is considered to have a *known length*.
+If all elements do have either property, or the count of elements can be dicovered by passing the `spread_element` value to [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0), the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
     If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
 
