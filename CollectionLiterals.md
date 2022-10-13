@@ -110,7 +110,11 @@ If all elements do have either property, or the count of elements can be dicover
 
     Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
-1. All `expression_element` expressions and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
+1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
+
+<!-- 1. If the literal contains a `dictionary_element` then the types of the `expression_element` must be some `System.Collections.Generic.KeyValuePair<,>`.  Similarly, each `spread_element` must have an `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).  This `iteration_type` must be some `System.Collections.Generic.KeyValuePair<,>` as well.  This literal will be translated into some dictionary type. -->
+
+1. If the literal contains no `dictionary_element` but has `expression` and
 
 ### Known length translation
 
