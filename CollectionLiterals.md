@@ -205,7 +205,7 @@ If all elements do have either property, or the count of elements can be dicover
 
             Unresolved question: Optimizations could occur by using methods like `.CopyTo`.  Should we explicitly decide if these will or won't be called?  Or should we spec such that we leave the door open for the implementation to choose to call that if it so decides?
 
-            Unresolved question: How would the above translation work when `T` is some dictionary type?
+            Unresolved question: How would the above translation work when `T` is some dictionary type?  The `dictionary_element` case will work properly, but there needs to be an appropriate translation for spreading a dictionary.
 
         - otherwise, the literal is translated as:
 
