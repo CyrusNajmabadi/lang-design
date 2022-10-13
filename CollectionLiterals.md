@@ -528,4 +528,4 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 # Upcoming agenda items
 
-1. Allow `TryGetNonEnumeratedCount` helper to be used to determine if a collection has known-length.
+1. Allow [`TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) helper to be used to determine if an IEnumerable has known-length.
