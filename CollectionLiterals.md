@@ -37,6 +37,10 @@ An inclusive solution is needed for C#. It should meet the 99% case for customer
 
 This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, .. c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, .. p2, p3]`.
 
+A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable here.
+
+4. Getting the best performance for each collection type can be tricky.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  The specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
+
 # Detailed design
 [design]: #detailed-design
 
