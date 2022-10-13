@@ -397,7 +397,11 @@ Hopefully small questions:
 
 Very large questions:
 
-1. Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?  In practice, this feels like it would absolutely come up.  For example:
+1. Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
+
+Resolution: No, `collection_literal_expression` cannot be target typed to an `IEnumerable<T>`.  However, as a `collection_literal_expression` has a natural type of some instantiation of `List<T>`, it can be assigned to a compatible. `IEnumerable<T>`
+
+In practice, this feels like it would absolutely come up.  For example:
 
     ```c#
     void DoWork(IEnumerable<int> values) { ... }
