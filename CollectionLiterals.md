@@ -251,7 +251,7 @@ This facility thus prevents general use of such a marked method outside of known
 
 In the context of collection literals, the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
 
-For example, if an `init void Init(T[] values)` method were added to [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), then it would be possible for the compiler to emit the following:
+For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), then it would be possible for the compiler to emit the following:
 
 ```c#
 T[] __storage = /* initialize using the rules above */
