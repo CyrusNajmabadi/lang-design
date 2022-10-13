@@ -399,21 +399,21 @@ Very large questions:
 
 1. Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
 
-Resolution: No, `collection_literal_expression` cannot be target typed to an `IEnumerable<T>`.  However, as a `collection_literal_expression` has a natural type of some instantiation of `List<T>`, it can be assigned to a compatible `IEnumerable<T>`.
+    Resolution: No, `collection_literal_expression` cannot be target typed to an `IEnumerable<T>`.  However, as a `collection_literal_expression` has a natural type of some instantiation of `List<T>`, it can be assigned to a compatible `IEnumerable<T>`. The following text exists to record the original discussion of this topic.
 
-The following text exists to record the original discussion of this topic.
+    ---
 
-In practice, this feels like it would absolutely come up.  For example:
+    In practice, this feels like it would absolutely come up.  For example:
 
-```c#
-void DoWork(IEnumerable<int> values) { ... }
-// ...
-DoWork([1, 2, 3]);
-```
+    ```c#
+    void DoWork(IEnumerable<int> values) { ... }
+    // ...
+    DoWork([1, 2, 3]);
+    ```
 
-The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
+    The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
 
-A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
+    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
 1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Init(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
@@ -427,7 +427,9 @@ A downside to using an array would be if a natural type is added for collection 
 
 1. Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
 
-Resolution: YES
+    Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>. The following text exists to record the original discussion of this topic.
+
+    ---
 
     ```c#
     var x = [1, 2, 3];
@@ -479,7 +481,13 @@ Resolution: YES
 
     Finally, we could consider having different natural types in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
 
-1. How would we proceed on this in the future to get dictionary literals?  This is a complex space as we have multiple forms for dictionaries today.  For example:
+1. How would we proceed on this in the future to get dictionary literals?  
+
+    Resolution: The form `[k:v]` is supported for dictionary literals. The following text exists to record the original discussion of this topic.
+
+    ---
+
+    This is a complex space as we have multiple forms for dictionaries today.  For example:
 
     ```c#
     var x = new Dictionary<int, string>
