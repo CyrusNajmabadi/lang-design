@@ -256,7 +256,7 @@ For example, if an `init void Construct(T[] values)` method were added to [`Immu
 ```c#
 T[] __storage = /* initialize using the rules above */
 ImmutableArray<T> __result = new ImmutableArray<T>();
-__result.Init(__storage);
+__result.Construct(__storage);
 ```
 
 `ImmutableArray<T>` would then take that array directly and use it as its own  backing storage.  This would be safe because the compiler (following the requirements around `init`) would ensure that no other location in the code would have access to this temporary array, and thus it would not be possible to mutate it behind the back of the `ImmutableArray<T>` instance.
