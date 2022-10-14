@@ -354,10 +354,10 @@ While collection literals can be used for many scenarios, there are a few that t
         This could be one of:
 
         ```c#
-        // A list literal inside some expression-statement
+        // A list literal inside some expression statement
         [X(), Y, Z()].ForEach(() => ...);
 
-        // The attributes for a statement/local-function
+        // The attributes for a statement or local function
         [X(), Y, Z()] void LocalFunc() { }
         ```
 
@@ -515,7 +515,7 @@ Very large questions:
 
     Finally, we could consider having different natural types in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
 
-1. How would we proceed on this in the future to get dictionary literals?  
+1. How would we proceed on this in the future to get dictionary literals?
 
     Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
 
@@ -573,7 +573,7 @@ Very large questions:
 
     In order to evaluate this full literal, we need to evaluate the element expressions within.  That means being able to evaluate `b ? [c] : [d, e]`.  However, absent a target type to evaluate this expression in the context of, and absent any sort of natural type, this would we would be unable to determine what to do with either `[c]` or `[d, e]` here.
 
-    To resolve this, we could say that when evaluating a literal's `spread_element` expression, that there was an implicit target type equivalent to the target type of the literal itself.  So, in the above, that would rewritten as:
+    To resolve this, we could say that when evaluating a literal's `spread_element` expression, there was an implicit target type equivalent to the target type of the literal itself.  So, in the above, that would rewritten as:
 
     ```c#
     int __e1 = a;
