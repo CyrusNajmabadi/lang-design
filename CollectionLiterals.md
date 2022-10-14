@@ -118,10 +118,10 @@ If all elements do have either property, or the count of elements can be dicover
 
 <!-- 1. If the literal contains a `dictionary_element` then the types of the `expression_element` must be some `System.Collections.Generic.KeyValuePair<,>`.  Similarly, each `spread_element` must have an `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).  This `iteration_type` must be some `System.Collections.Generic.KeyValuePair<,>` as well.  This literal will be translated into some dictionary type. -->
 
-### Known length translation
+### Known-length translation
 [known-length-translation]: #known-length-translation
 
-1. For a *known length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
+1. For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
@@ -224,10 +224,10 @@ If all elements do have either property, or the count of elements can be dicover
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
-### Unknown length translation
+### Unknown-length translation
 [unknown-length-translation]: #unknown-length-translation
 
-1. Given a target type `T` for an *unknown length* literal:
+1. Given a target type `T` for an *unknown-length* literal:
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
@@ -450,9 +450,9 @@ Very large questions:
     The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
     A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
-1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
+1. Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
-    Users could always make an *unknown length* literal into a *known length* one with code like:
+    Users could always make an *unknown-length* literal into a *known-length* one with code like:
 
     ```c#
     ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
@@ -498,7 +498,7 @@ Very large questions:
     | `ImmutableArray<T>` | 1 | No | No | Yes | No* |
     | `ValueArray<T, N>` | ? | ? | ? | ? | ? |
 
-    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Construct` method used by *known length* translation in order to support `ImmutableArray<T>` and any other collection.
+    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Construct` method used by *known-length* translation in order to support `ImmutableArray<T>` and any other collection.
 
     Only `List<T>` gives us a `Yes` for all columns. However, getting `Yes` for everything is not necessarily what we desire.  For example, if we believe the future is one where immutable is the most desirable, the types like `T[]`, `Span<T>`, or `List<T>` may not compliment that well.  Similarly if we believe that people will want to use these without paying for allocations, then `Span<T>` and `ReadOnlySpan<T>` seem the most viable.
 
