@@ -449,7 +449,7 @@ Very large questions:
 
 1. Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
 
-    Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>. The following text exists to record the original discussion of this topic.
+    Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>`. The following text exists to record the original discussion of this topic.
 
     ---
 
