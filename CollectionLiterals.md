@@ -322,7 +322,7 @@ While collection literals can be used for many scenarios, there are a few that t
 # Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
 
-1. There is two "true" syntactic ambiguity where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
+1. There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
 
     1a. The `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
 
