@@ -225,6 +225,7 @@ If all elements do have either property, or the count of elements can be dicover
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
 ### Unknown length translation
+[unknown-length-translation]: #unknown-length-translation
 
 1. Given a target type `T` for an *unknown length* literal:
 
