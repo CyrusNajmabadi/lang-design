@@ -481,7 +481,7 @@ Very large questions:
     ```
 
     The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
-    
+
     A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
     </details>
@@ -504,6 +504,7 @@ Very large questions:
     Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>`. The following text exists to record the original discussion of this topic.
 
     <details>
+
     It is virtually certain that users will want to do this.  However, there is much less certainty both on what users would want this mean and if there is even any sort of broad majority on some default.  There are numerous types we could pick, all of which have varying pros and cons.  Specifically, our options are *at least* any of the following:
 
     1. Array types
@@ -549,6 +550,7 @@ Very large questions:
     I believe the only other reasonable alternative would be `ImmutableArray<T>`, but either with the caveat that that it cannot support `spread_elements` of *unknown length*, or that we will have to add a fair amount of complexity to this specification to allow for some API pattern to allow it to participate.  That said, we should strongly consider adding that complexity if we believe this will be the recommended collection type that we and the BCL will be encouraging people to use.
 
     Finally, we could consider having different natural types in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
+
     </details>
 
 1. How would we proceed on this in the future to get dictionary literals?
@@ -556,6 +558,7 @@ Very large questions:
     Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
 
     <details>
+
     This is a complex space as we have multiple forms for dictionaries today.  For example:
 
     ```c#
@@ -593,6 +596,7 @@ Very large questions:
     - `Dictionary<int, string> x = [ { 1, "x" }, { 2, "y" } ];`
     - `Dictionary<int, string> x = [1: "x", 2: "y"];`
     - etc.
+    
     </details>
 
 1. Do we need to target-type `spread_element`.  Consider, for example:
