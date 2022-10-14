@@ -645,6 +645,48 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 ## Upcoming agenda items
 
+1. Discuss List/Dictionary/KVP being first class concepts this feature needs to know about.
+
+1. Support TryGetNonEnumeratedCount to better understand the length of spread-elements
+
+1. known-length doesn't affect capabilities, it just affects performance.
+
+1. should we emit:
+
+var __s1 = eval(s1);
+..
+var __sn = eval(sn);
+
+int __len = count_of_expression_elements +
+            count_of_dictionary_elements +
+            __s1.Count;
+            ...
+            __sn.Count;
+
+--
+
+or
+
+int __len = count_of_expression_elements +
+            count_of_dictionary_elements;
+
+var __s1 = eval(s1);
+__len += __s1.Count;
+...
+var __sn = eval(sn);
+__len += __sn.Count;
+
+1. `k:v` Effectively means KeyValuePair<,>. 
+  a. this allows being used in a literal being translated to `KeyValuePair<,>[]`
+  b. we will attempt to add this KVP using .Add or direct assignment if possible.
+  c. if that is not possible, we will attempt to update using `__result[kvp.Key] = kvp.Value;`
+
+1. We still need strategy to go from unknown-length to T[].
+
+1. Empty literal handling
+
+1. unsupported cases
+
 1. Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if a spread `IEnumerable<T>` causes the literal to have a known length.
 
 1. We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
