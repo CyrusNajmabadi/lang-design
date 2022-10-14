@@ -117,6 +117,14 @@ If all elements do have either property, or the count of elements can be dicover
 
 1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
+<!--
+1. When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
+
+    ```c#
+    Span<int> span = [a, ..b ? [c, d] : [], f];
+    ```
+-->
+
 1. Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
 
 #### Known-length translation
