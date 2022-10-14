@@ -7,7 +7,7 @@
 
 Many thanks to those who helped with this proposal.  Esp. @jnm2!
 
-# Summary
+## Summary
 [summary]: #summary
 
 Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values in target-typing scenarios.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1: v1, ..d1]` form is also supported for creating dictionaries.
@@ -19,7 +19,7 @@ Several collection-like target types are supported without requiring external BC
 
 Further support is present for collection-like types not covered under the above, such as [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), through a new API pattern that can be adopted directly on the type itself or through extension methods.
 
-# Motivation
+## Motivation
 [motivation]: #motivation
 
 1. Collection-like values are hugely present in programming, algorithms, and especially in the C#/.NET ecosystem.  Nearly all programs will utilize these values to store data and transmit or receive it from other components. Currently, almost all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
@@ -44,7 +44,7 @@ This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, 
 
 A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable here.
 
-# Detailed design
+## Detailed design
 [design]: #detailed-design
 
 The following [`grammar`](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#primary-expressions) productions are added:
@@ -83,7 +83,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 Unresolved question:  The above grammar choice means that it is not legal to immediately index into a collection literal.  So you cannot say `[1, 2, 3][0]`.  This seems like an acceptable restriction to have, as it would likely be odd to generate a collection in order to grab only a single value (or range of values) from it.  This restriction also holds for arrays in language today.  If this restriction is considered onerous, we could move `collection_literal_expression` into `primary_expression` without difficulty.
 
-## Spec clarifications
+### Spec clarifications
 [spec-clarifications]: #spec-clarifications
 
 1. For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
@@ -104,7 +104,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
-## Collection literal translation
+### Collection literal translation
 [simple-collection-literal]: #simple-collection-literal
 
 1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
@@ -118,7 +118,7 @@ If all elements do have either property, or the count of elements can be dicover
 
 <!-- 1. If the literal contains a `dictionary_element` then the types of the `expression_element` must be some `System.Collections.Generic.KeyValuePair<,>`.  Similarly, each `spread_element` must have an *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).  This `iteration_type` must be some `System.Collections.Generic.KeyValuePair<,>` as well.  This literal will be translated into some dictionary type. -->
 
-### Known-length translation
+#### Known-length translation
 [known-length-translation]: #known-length-translation
 
 1. For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
@@ -224,7 +224,7 @@ If all elements do have either property, or the count of elements can be dicover
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
-### Unknown-length translation
+#### Unknown-length translation
 [unknown-length-translation]: #unknown-length-translation
 
 1. Given a target type `T` for an *unknown-length* literal:
@@ -244,7 +244,7 @@ If all elements do have either property, or the count of elements can be dicover
 
     This allows spreading of any iterable type, albeit with the least amount of optimization possible.
 
-# `init` methods
+## `init` methods
 [init-methods]: #init-methods
 
 Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-9.0/init.md#init-only-setters), an `init` method would be invocable at the point of object creation but become unavailable once object creation has completed.
@@ -278,7 +278,7 @@ foreach (var __v in s1)
 ImmutableArray<int> __result = __builder.MoveToImmutable();
 ```
 
-# Natural Type
+## Natural Type
 [natural-type]: #natural-type
 
 In the absence of a *target type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* `System.Collections.Generic.List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
@@ -308,7 +308,7 @@ Because a `collection_literal_expression` can have the natural type of some `Lis
 IEnumerable<int> x = [0, 1, 3];
 ```
 
-# Unsupported Scenarios
+## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
@@ -319,7 +319,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
 3. Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
 
-# Syntax Ambiguities
+## Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
 
 1. There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
@@ -391,7 +391,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
         As with the others, we could require parentheses to disambiguate.  In other words, presume the `null_conditional_operation` interpretation unless written like so: `x ? ([1, 2, 3]) :`.  However, that seems rather unfortunate. This sort of code does not seem unreasonable to write and will likely trip people up.
 
-# Drawbacks
+## Drawbacks
 [drawbacks]: #drawbacks
 
 This introduces [yet another form](https://xkcd.com/927/) for collection expressions on top of the myriad ways we already have. This is extra complexity for the language.  That said, this also makes it possible to unify on one ~~ring~~ syntax to rule them all, which means existing codebases can be simplified and moved to a uniform look everywhere.
@@ -407,12 +407,12 @@ int[] x = [ 1, 2, 3 ];
 
 However, given the breadth and consistency brought by the new literal syntax, we should consider recommending that people move to the new form.  IDE suggestions and fixes could help in that regard.
 
-# Alternatives
+## Alternatives
 [alternatives]: #alternatives
 
 <!-- What other designs have been considered? What is the impact of not doing this? -->
 
-# Unresolved questions
+## Unresolved questions
 [unresolved]: #unresolved-questions
 
 Hopefully small questions:
@@ -591,19 +591,19 @@ Very large questions:
     Span<int> span = __result;
     ```
 
-# Design meetings
+## Design meetings
 [design-meetings]: #design-meetings
 
 https://github.com/dotnet/csharplang/blob/main/meetings/2021/LDM-2021-11-01.md#collection-literals
 https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-03-09.md#ambiguity-of--in-collection-expressions
 https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#collection-literals
 
-# Working group meetings
+## Working group meetings
 [working-group-meetings]: #working-group-meetings
 
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
 
-# Upcoming agenda items
+## Upcoming agenda items
 
 1. Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if a spread `IEnumerable<T>` causes the literal to have a known length.
 
