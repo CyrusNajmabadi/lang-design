@@ -309,6 +309,7 @@ IEnumerable<int> x = [0, 1, 3];
 ```
 
 # Unsupported Scenarios
+[unsupported-scenarios]: #unsupported-scenarios
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
 
