@@ -292,10 +292,10 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 ## Natural Type
 [natural-type]: #natural-type
 
-1. The empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type.
+In the absence of a *target type*:
 
-In the absence of a *target type*, a literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
- 
+1. A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+
 
 1. For an `expression_element` `e_n`, the type of `e_n`.
 2. For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
@@ -321,6 +321,19 @@ Because a `collection_literal_expression` can have the natural type of some `Lis
 ```c#
 IEnumerable<int> x = [0, 1, 3];
 ```
+
+## Empty Collection Literal
+
+In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
+
+For example, given:
+
+```c#
+var values = x ? [1, 2, 3] : [];
+```
+
+The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the standard rules, just without any elements added to it.
+
 
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
