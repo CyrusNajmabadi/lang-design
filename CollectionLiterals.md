@@ -152,7 +152,7 @@ If all elements do have either property, or the count of elements can be dicover
         // further assignments of the remaining elements
         ```
 
-        In this translation, `dictionary_element` is only supported if `T1` is some `System.
+        In this translation, `dictionary_element` is only supported if `T1` is some `KeyValuePair<,>`.
 
     -  If `T` is some `Span<T1>`, then the literal is translated as the same as above, except that the `__result` initialization is translated as:
     
