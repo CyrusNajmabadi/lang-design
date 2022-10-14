@@ -333,7 +333,7 @@ While collection literals can be used for many scenarios, there are a few that t
     To resolve this, we can either:
 
     - Require users to parenthesize `(..e)` or include a start index `0..e` if they want a range.
-    - Choose a different syntax (like `...`) for spread.  This would be unfortunate though for the lack of consistency with slice patterns.
+    - Choose a different syntax (like `...`) for spread.  This would be unfortunate for the lack of consistency with slice patterns.
 
     1b. `dictionary_element` can be ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
 
