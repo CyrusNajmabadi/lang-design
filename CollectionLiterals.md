@@ -102,7 +102,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 
     * For example, an implementation could translate literals like `[1, 2, 3]` directly to a `new int[] { 1, 2, 3 }` expression that itself bakes the raw data into the assembly, eliding the need for `__index` or a sequence of instructions to assign each value. Importantly, this does mean if any step of the translation might cause an exception at runtime that the program state is still left in the state indicated by the translation.
 
-    * Similarly, while a collection literal has a natural type of `List<T>` it is permissable to avoid such an allocation if the result would not be obserbable.  For example, `foreach (var toggle in [true, false])`.  Here because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
+    * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
 ## Collection literal translation
 [simple-collection-literal]: #simple-collection-literal
