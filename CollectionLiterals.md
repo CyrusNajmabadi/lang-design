@@ -279,6 +279,7 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 ```
 
 # Natural Type
+[natural-type]: #natural-type
 
 In the absence of a `target-type` a `collection-literal-expression` `[e1, .. s1]` has a `natural-type` `System.Collections.Generic.List<T>` where the `T` type is picked as the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
