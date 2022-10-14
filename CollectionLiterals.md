@@ -115,6 +115,8 @@ If all elements do have either property, or the count of elements can be dicover
 
     Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
+    *known length* does not affect what collections can be supported.  It only affects how efficiently the construction can happen.
+
 1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
 <!--
