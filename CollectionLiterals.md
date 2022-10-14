@@ -757,4 +757,4 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     var d = [null: null, "a": "b"];
     ```
 
-    The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
+    The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression` and `string` and likewise for `TValue`. In both cases, that is `string`.
