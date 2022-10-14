@@ -429,21 +429,13 @@ Very large questions:
 
 1. Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
 
-    Resolution: No, `collection_literal_expression` cannot be target-typed to an `IEnumerable<T>`.  However, as a `collection_literal_expression` has a natural type of some instantiation of `List<T>`, it can be assigned to a compatible `IEnumerable<T>`. The following text exists to record the original discussion of this topic.
-
-    ---
-
-    In practice, this feels like it would absolutely come up.  For example:
+    If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
     ```c#
-    void DoWork(IEnumerable<int> values) { ... }
+    void DoWork(IEnumerable<long> values) { ... }
     // ...
     DoWork([1, 2, 3]);
     ```
-
-    The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
-
-    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
 1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
