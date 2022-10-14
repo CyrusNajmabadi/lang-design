@@ -336,7 +336,7 @@ For example, given:
 var values = x ? [1, 2, 3] : [];
 ```
 
-The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the standard rules, just without any elements added to it.
+The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
 
 
 ## Unsupported Scenarios
