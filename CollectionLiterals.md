@@ -599,7 +599,7 @@ Very large questions:
     
     </details>
 
-1. Do we need to target-type `spread_element`.  Consider, for example:
+1. Do we need to target-type `spread_element`?  Consider, for example:
 
     ```c#
     Span<int> span = [a, ..b ? [c] : [d, e], f];
