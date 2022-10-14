@@ -90,7 +90,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 1. `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
 1. `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
 1. `spread_element` instances will commonly be referred to as `..s1`, `..s2`, etc.
-1. `span-type` means either `Span<T>` or `ReadOnlySpan<T>`.
+1. *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
 1. Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
     - Empty literals `[]`
     - Literals with no `expression_element` in them.
