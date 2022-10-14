@@ -343,7 +343,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
     This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
 
-1. There are two cases where there isn't a true ambiguity but where the syntax greatly increase parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
+1. There are two cases where there isn't a true ambiguity but where the syntax greatly increases parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
     - Ambiguity between `collection_literal_expression` and `attributes` on statements/local-functions.  Consider:
 
