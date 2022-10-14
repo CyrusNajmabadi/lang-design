@@ -47,7 +47,7 @@ A form for dictionary-like collections is also supported where the elements of t
 ## Detailed design
 [design]: #detailed-design
 
-The following [`grammar`](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#primary-expressions) productions are added:
+The following [grammar](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#primary-expressions) productions are added:
 
 ```diff
 primary_no_array_creation_expression
