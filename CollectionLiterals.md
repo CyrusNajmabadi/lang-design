@@ -24,7 +24,7 @@ Further support is present for collection-like types not covered under the above
 
 1. Collection-like values are hugely present in programming, algorithms, and especially in the C#/.NET ecosystem.  Nearly all programs will utilize these values to store data and transmit or receive it from other components. Currently, almost all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
 
-    - Arrays, which require either `new Type[]` or `new[]` before the `{ ...}` values.
+    - Arrays, which require either `new Type[]` or `new[]` before the `{ ... }` values.
 
     - Spans, which may use `stackalloc` and other cumbersome constructs.
 
