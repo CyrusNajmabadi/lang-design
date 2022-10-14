@@ -653,28 +653,30 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 1. should we emit:
 
-var __s1 = eval(s1);
-..
-var __sn = eval(sn);
+    ```c#
+    var __s1 = eval(s1);
+    ..
+    var __sn = eval(sn);
 
-int __len = count_of_expression_elements +
-            count_of_dictionary_elements +
-            __s1.Count;
-            ...
-            __sn.Count;
+    int __len = count_of_expression_elements +
+                count_of_dictionary_elements +
+                __s1.Count;
+                ...
+                __sn.Count;
+    ```
 
---
+    or
 
-or
+    ```c#
+    int __len = count_of_expression_elements +
+                count_of_dictionary_elements;
 
-int __len = count_of_expression_elements +
-            count_of_dictionary_elements;
-
-var __s1 = eval(s1);
-__len += __s1.Count;
-...
-var __sn = eval(sn);
-__len += __sn.Count;
+    var __s1 = eval(s1);
+    __len += __s1.Count;
+    ...
+    var __sn = eval(sn);
+    __len += __sn.Count;
+    ```
 
 1. `k:v` Effectively means KeyValuePair<,>. 
   a. this allows being used in a literal being translated to `KeyValuePair<,>[]`
