@@ -445,7 +445,7 @@ Very large questions:
 
     A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
-1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Init(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
+1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
     Users could always make an *unknown length* literal into a *known length* one with code like:
 
@@ -494,7 +494,7 @@ Very large questions:
     | `ImmutableArray<T>` | 1 | No | No | Yes | No* |
     | `ValueArray<T, N>` | ? | ? | ? | ? | ? |
 
-    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Init` method used by *known length* translation in order to support `ImmutableArray<T>` and any other collection.
+    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Construct` method used by *known length* translation in order to support `ImmutableArray<T>` and any other collection.
 
     Only `List<T>` gives us a `Yes` for all columns. However, getting `Yes` for everything is not necessarily what we desire.  For example, if we believe the future is one where immutable is the most desirable, the types like `T[]`, `Span<T>`, or `List<T>` may not compliment that well.  Similarly if we believe that people will want to use these without paying for allocations, then `Span<T>` and `ReadOnlySpan<T>` seem the most viable.
 
