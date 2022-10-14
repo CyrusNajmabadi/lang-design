@@ -186,7 +186,7 @@ If all elements do have either property, or the count of elements can be dicover
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
 
-        - if the type `T` contains an accessible constructor with a single parameter '`int capacity`', then the literal is translated as:
+        - if the type `T` contains an accessible constructor with a single parameter `int capacity`, then the literal is translated as:
 
             ```c#
             T __result = new T(capacity: __len);
@@ -199,7 +199,7 @@ If all elements do have either property, or the count of elements can be dicover
             // further additions of the remaining elements
             ```
 
-            Note: the name of the parameter is required to be '`capacity`'.
+            Note: the name of the parameter is required to be `capacity`.
 
             This form allows for a literal to inform the newly constructed type of the count of elements to allow for efficient allocation of internal storage.  This avoids wasteful reallocations as the elements are added.
 
