@@ -596,6 +596,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-03-09.md#a
 https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#collection-literals
 
 # Working group meetings
+[working-group-meetings]: #working-group-meetings
 
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
 
