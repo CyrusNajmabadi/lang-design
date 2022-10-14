@@ -284,7 +284,7 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 ## Natural Type
 [natural-type]: #natural-type
 
-In the absence of a *target type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* `System.Collections.Generic.List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+In the absence of a *target type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
 1. For an `expression_element` `e_n`, the type of `e_n`.
 2. For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
@@ -634,7 +634,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 1. Determine the natural type for a dictionary literal.  I propose the following.
 
-    In the absence of a *target-type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* of either `System.Collections.Generic.List<T>` or `System.Collections.Generic.Dictionary<TKey, TValue>`.  The [best common type](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
+    In the absence of a *target-type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* of either `List<T>` or `Dictionary<TKey, TValue>`.  The [best common type](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
 
     If the literal has no elements, it has no *natural type*.
 
@@ -642,15 +642,15 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     An `expression_element` `e_n` has the type of `e_n`.
 
-    A `dictionary_element` `k:v` has the type `System.Collections.Generic.KeyValuePair<,>`.
+    A `dictionary_element` `k:v` has the type `KeyValuePair<,>`.
 
     A `spread_element` `..s_n` has the type that is the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
-    If all element types are some instantiation of `System.Collections.Generic.KeyValuePair<,>`, then the resultant *natural type* is `System.Collections.Generic.Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the *best common type* between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the *best common type* between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
+    If all element types are some `KeyValuePair<,>`, then the resultant *natural type* is `Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the *best common type* between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the *best common type* between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
 
     Otherwise, if there is a `dictionary_element` in the literal, there is no *natural type* for the literal.
 
-    Otherwise, the resultant *natural type* is `System.Collections.Generic.List<T>`.  `T` will be picked by choosing the *best common type* of the types of the elements within.
+    Otherwise, the resultant *natural type* is `List<T>`.  `T` will be picked by choosing the *best common type* of the types of the elements within.
 
     For example, given:
 
