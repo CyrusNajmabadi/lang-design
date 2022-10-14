@@ -115,7 +115,7 @@ If all elements do have either property, or the count of elements can be dicover
 
     Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
-    Having a *known length* does not affect what collections can be created.  It only affects how efficiently the construction can happen.
+    Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen.
 
 1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
@@ -132,7 +132,9 @@ If all elements do have either property, or the count of elements can be dicover
 #### Known-length translation
 [known-length-translation]: #known-length-translation
 
+Having a *known-length* allows for efficient construction of a result with the potential for no copying of data and no unnecessary slack space in a result.
 
+Not having a *known-length* does not prevent any result from being created. However, it may result in extra CPU and memory costs producing the data, then moving to the final destination.
 
 1. For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
 
