@@ -314,7 +314,7 @@ var x = [i, ..objects];
 
 The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
 
-Because the *best common type* requires at least one type to be considered, there is no *natural type* for a `collection_literal_expression` without any elements:
+Because the *best common type* requires at least one type to be considered, there is no *natural type* for a literal without any elements:
 
 ```c#
 var x = []; // This is an error
