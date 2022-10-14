@@ -119,6 +119,7 @@ If all elements do have either property, or the count of elements can be dicover
 <!-- 1. If the literal contains a `dictionary_element` then the types of the `expression_element` must be some `System.Collections.Generic.KeyValuePair<,>`.  Similarly, each `spread_element` must have an `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).  This `iteration_type` must be some `System.Collections.Generic.KeyValuePair<,>` as well.  This literal will be translated into some dictionary type. -->
 
 ### Known length translation
+[known-length-translation]: #known-length-translation
 
 1. For a *known length* literal `[e1, k1:v1, .. s1, e2, k2:v2, .. s2, etc]`, the translation first starts with the following:
 
