@@ -631,7 +631,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     The literal's `natural-type` is determined by the types of all of its elements.
 
-    An `expression_element` `e_n` has the type of `en`.
+    An `expression_element` `e_n` has the type of `e_n`.
 
     A `dictionary_element` `k:v` has the type `System.Collections.Generic.KeyValuePair<,>`.
 
