@@ -661,7 +661,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     var d3 = [..d1, ..d2];
     ```
 
-    The natural type of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a `spread_element` type of `KeyValuePair<string, object>` and `..d2` will have a `spread_element` type of `KeyValuePair<object, string>`.  As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `string and object` and `TValue` will be the *best common type* of `object` and `string`.  In both cases, that is `object`.
+    The natural type of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a `spread_element` type of `KeyValuePair<string, object>` and `..d2` will have a `spread_element` type of `KeyValuePair<object, string>`.  As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `string` and `object` and `TValue` will be the *best common type* of `object` and `string`.  In both cases, that is `object`.
 
     Similarly, given:
 
