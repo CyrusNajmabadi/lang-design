@@ -313,7 +313,7 @@ IEnumerable<int> x = [0, 1, 3];
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
 
-1. Multi-dimensional arrays (e.g. `new int[5, 10] { ...}`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
+1. Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
 
 2. Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
 
