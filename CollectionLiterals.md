@@ -317,7 +317,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
 2. Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
 
-3. Nested-collection-initializers (e.g. `new Widget { Children = { w1, w2, w3 } }`).  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign the collection over `.Children`.  We could consider allowing the latter form if `.Children` is readonly...but that seems like it could be extremely confusing.
+3. Adding to existing collections similar to nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign the collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
 
 # Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
