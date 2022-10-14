@@ -253,7 +253,7 @@ This facility thus prevents general use of such a marked method outside of known
 
 In the context of collection literals, the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
 
-For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), then it would be possible for the compiler to emit the following:
+For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
 
 ```c#
 T[] __storage = /* initialize using the rules above */
@@ -263,7 +263,7 @@ __result.Construct(__storage);
 
 `ImmutableArray<T>` would then take that array directly and use it as its own backing storage.  This would be safe because the compiler (following the requirements around `init`) would ensure that no other location in the code would have access to this temporary array, and thus it would not be possible to mutate it behind the back of the `ImmutableArray<T>` instance.
 
-The above also demonstrates that this approach can work with struct types which do not have a [`parameterless struct constructor`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md).  In the above, the call to `new ImmutableArray<T>()` is equivalent to `default(ImmutableArray<T>)`, (producing an `ImmutableArray<T>` whose [`IsDefault`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1.isdefault?view=net-5.0) property is initially true.  However, the `Construct` method can then safely update this to the final non-default state without that intermediate state being visible.
+The above also demonstrates that this approach can work with struct types which do not have a [`parameterless struct constructor`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md).  In the above, the call to `new ImmutableArray<T>()` is equivalent to `default(ImmutableArray<T>)`, (producing an `ImmutableArray<T>` whose [`IsDefault`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1.isdefault) property is initially true.  However, the `Construct` method can then safely update this to the final non-default state without that intermediate state being visible.
 
 This formalization is quite beneficial because the only existing mechanism to (safely) create an ImmutableArray with values without copying is the excessively verbose:
 
