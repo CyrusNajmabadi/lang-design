@@ -84,6 +84,7 @@ Collection literals are [`target-typed`](https://github.com/dotnet/csharplang/bl
 Unresolved question:  The above grammar choice means that it is not legal to immediately index into a collection literal.  So you cannot say `[1, 2, 3][0]`.  This seems like an acceptable restriction to have, as it would likely be odd to generate a collection in order to grab only a single value (or range of values) from it.  This restriction also holds for arrays in language today.  If this restriction is considered onerous, we could move `collection_literal_expression` into `primary_expression` without difficulty.
 
 ## Spec clarifications
+[spec-clarifications]: #spec-clarifications
 
 1. For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
 1. `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
