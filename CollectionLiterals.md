@@ -447,17 +447,14 @@ Very large questions:
 
     However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
 
-1. Should a `collection_literal_expression` have a natural type?
+1. Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
+    ```c#
+    var x = [1, 2, 3];
+    ```
 
     Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>`. The following text exists to record the original discussion of this topic.
 
     ---
-
-    In other words, should it be legal to write the following:
-
-    ```c#
-    var x = [1, 2, 3];
-    ```
 
     It is virtually certain that users will want to do this.  However, there is much less certainty both on what users would want this mean and if there is even any sort of broad majority on some default.  There are numerous types we could pick, all of which have varying pros and cons.  Specifically, our options are *at least* any of the following:
 
