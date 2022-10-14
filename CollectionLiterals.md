@@ -432,7 +432,7 @@ Very large questions:
     If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
     ```c#
-    void DoWork(IEnumerable<long> values) { ...}
+    void DoWork(IEnumerable<long> values) { ... }
     // ...
     DoWork([1, 2, 3]);
     ```
@@ -443,7 +443,7 @@ Very large questions:
 
     Considering the case of the element types matching (both being `int`):
     ```c#
-    void DoWork(IEnumerable<int> values) { ...}
+    void DoWork(IEnumerable<int> values) { ... }
     // ...
     DoWork([1, 2, 3]);
     ```
