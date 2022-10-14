@@ -304,6 +304,16 @@ Because a `collection-literal-expression` can have the natural type of some `Lis
 IEnumerable<int> x = [0, 1, 3];
 ```
 
+# Unsupported Scenarios
+
+While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
+
+1. Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
+
+2. Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
+
+3. Nested-collection-initializers (e.g. `new Widget { Children = { w1, w2, w3 } }`).  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign the collection over `.Children`.  We could consider allowing the latter form if `.Children` is readonly... but that seems like it could be extremely confusing.
+
 # Syntax Ambiguities
 
 1. There is two "true" syntactic ambiguity where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
