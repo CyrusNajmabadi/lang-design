@@ -437,6 +437,19 @@ Very large questions:
     DoWork([1, 2, 3]);
     ```
 
+    The following text exists to record the original discussion of this topic.
+
+    ---
+
+    Considering the case of the element types matching (both being `int`):
+    ```c#
+    void DoWork(IEnumerable<int> values) { ... }
+    // ...
+    DoWork([1, 2, 3]);
+    ```
+    The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
+    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
+
 1. Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
     Users could always make an *unknown length* literal into a *known length* one with code like:
