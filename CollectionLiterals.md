@@ -302,7 +302,7 @@ Because the `best-common-type` requires at least one type to be considered, ther
 var x = []; // This is an error
 ```
 
-Because a `collection-literal-expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type that `List<T>` is convertible.  For example:
+Because a `collection-literal-expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type to which `List<T>` is convertible.  For example:
 
 ```c#
 IEnumerable<int> x = [0, 1, 3];
