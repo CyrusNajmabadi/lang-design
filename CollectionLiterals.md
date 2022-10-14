@@ -550,8 +550,7 @@ Very large questions:
 
     Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
 
-    ---
-
+    <details>
     This is a complex space as we have multiple forms for dictionaries today.  For example:
 
     ```c#
@@ -589,6 +588,7 @@ Very large questions:
     - `Dictionary<int, string> x = [ { 1, "x" }, { 2, "y" } ];`
     - `Dictionary<int, string> x = [1: "x", 2: "y"];`
     - etc.
+    </details>
 
 1. Do we need to target-type `spread_element`.  Consider, for example:
 
