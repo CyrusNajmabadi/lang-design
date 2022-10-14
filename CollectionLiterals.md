@@ -281,7 +281,7 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 # Natural Type
 [natural-type]: #natural-type
 
-In the absence of a `target-type`, a `collection-literal-expression` `[e1, ..s1]` has a `natural-type` `System.Collections.Generic.List<T>` where the `T` type is picked as the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+In the absence of a *target type*, a `collection-literal-expression` `[e1, ..s1]` has a *natural type* `System.Collections.Generic.List<T>` where the `T` type is picked as the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
 1. For an `expression_element` `e_n`, the type of `e_n`.
 2. For a `spread_element` `..s_n` the type is the same as the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
@@ -294,9 +294,9 @@ object[] objects = ...;
 var x = [i, ..objects];
 ```
 
-The `natural-type` of `x` is `List<T>` where `T` is the `best-common-type` of `i` and the `iteration-type` of `objects`.  Respectively, that would be the `best-common-type` between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
+The *natural type* of `x` is `List<T>` where `T` is the `best-common-type` of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
 
-Because the `best-common-type` requires at least one type to be considered, there is no `natural-type` for a `collection-literal-expression` without any elements:
+Because the *best common type* requires at least one type to be considered, there is no *natural type* for a `collection-literal-expression` without any elements:
 
 ```c#
 var x = []; // This is an error
