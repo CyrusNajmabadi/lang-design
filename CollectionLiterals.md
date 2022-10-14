@@ -590,7 +590,6 @@ Very large questions:
 
     Span<int> span = __result;
     ```
-        
 
 # Design meetings
 [design-meetings]: #design-meetings
