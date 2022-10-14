@@ -606,7 +606,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 # Upcoming agenda items
 
-1. Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if an `IEnumerable<T>` has known-length.
+1. Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if a spread `IEnumerable<T>` causes the literal to have a known length.
 
 1. We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
 
