@@ -555,7 +555,7 @@ Very large questions:
     - `Dictionary<int, string> x = [1: "x", 2: "y"];`
     - etc.
 
-1. Do we need to target type `spread_element`.  Consider, for example:
+1. Do we need to target-type `spread_element`.  Consider, for example:
 
     ```c#
     Span<int> span = [a, .. b ? [c] : [d, e], f];
