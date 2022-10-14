@@ -10,7 +10,7 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 # Summary
 [summary]: #summary
 
-Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values in target-typing scenarios.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, .. c2, e2, .. c2]`.  A `[k1: v1, .. d1]` form is also supported for creating dictionaries.
+Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values in target-typing scenarios.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1: v1, ..d1]` form is also supported for creating dictionaries.
 
 Several collection-like target types are supported without requiring external BCL support.  These types are:
 1. [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
@@ -24,7 +24,7 @@ Further support is present for collection-like types not covered under the above
 
 1. Collection-like values are hugely present in programming, algorithms, and especially in the C#/.NET ecosystem.  Nearly all programs will utilize these values to store data and transmit or receive it from other components. Currently, almost all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
 
-    - Arrays, which require either `new Type[]` or `new[]` before the `{ ... }` values.
+    - Arrays, which require either `new Type[]` or `new[]` before the `{ ...}` values.
 
     - Spans, which may use `stackalloc` and other cumbersome constructs.
 
@@ -40,9 +40,9 @@ Further support is present for collection-like types not covered under the above
 
 An inclusive solution is needed for C#. It should meet the 99% case for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
 
-This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, .. c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, .. p2, p3]`.
+This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, ..c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, ..p2, p3]`.
 
-A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1: v1, .. d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable here.
+A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable here.
 
 # Detailed design
 [design]: #detailed-design
@@ -89,14 +89,14 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 1. For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
 1. `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
 1. `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
-1. `spread_element` instances will commonly be referred to as `.. s1`, `.. s2`, etc.
+1. `spread_element` instances will commonly be referred to as `..s1`, `..s2`, etc.
 1. `span-type` means either `Span<T>` or `ReadOnlySpan<T>`.
-1. Literals will commonly be shown as `[e1, .. s1, e2, .. s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
+1. Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
     - Empty literals `[]`
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
-1. In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `.. s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+1. In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 1. Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
 1. An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
 
@@ -121,7 +121,7 @@ If all elements do have either property, or the count of elements can be dicover
 ### Known length translation
 [known-length-translation]: #known-length-translation
 
-1. For a *known length* literal `[e1, k1:v1, .. s1, e2, k2:v2, .. s2, etc]`, the translation first starts with the following:
+1. For a *known length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
@@ -172,7 +172,7 @@ If all elements do have either property, or the count of elements can be dicover
         ```c#
         // Generate raw array-type or span-type value using 
         // one of the above rules.
-        T1[] __storage = ... 
+        T1[] __storage = ...
         // or
         Span<T1> __storage = ...
 
@@ -281,10 +281,10 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 # Natural Type
 [natural-type]: #natural-type
 
-In the absence of a `target-type` a `collection-literal-expression` `[e1, .. s1]` has a `natural-type` `System.Collections.Generic.List<T>` where the `T` type is picked as the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+In the absence of a `target-type` a `collection-literal-expression` `[e1, ..s1]` has a `natural-type` `System.Collections.Generic.List<T>` where the `T` type is picked as the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
 1. For an `expression_element` `e_n`, the type of `e_n`.
-2. For a `spread_element` `.. s_n` the type is the same as the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+2. For a `spread_element` `..s_n` the type is the same as the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
 For example, given:
 
@@ -313,11 +313,11 @@ IEnumerable<int> x = [0, 1, 3];
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
 
-1. Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
+1. Multi-dimensional arrays (e.g. `new int[5, 10] { ...}`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
 
 2. Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
 
-3. Nested-collection-initializers (e.g. `new Widget { Children = { w1, w2, w3 } }`).  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign the collection over `.Children`.  We could consider allowing the latter form if `.Children` is readonly... but that seems like it could be extremely confusing.
+3. Nested-collection-initializers (e.g. `new Widget { Children = { w1, w2, w3 } }`).  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign the collection over `.Children`.  We could consider allowing the latter form if `.Children` is readonly...but that seems like it could be extremely confusing.
 
 # Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
@@ -432,7 +432,7 @@ Very large questions:
     If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
     ```c#
-    void DoWork(IEnumerable<long> values) { ... }
+    void DoWork(IEnumerable<long> values) { ...}
     // ...
     DoWork([1, 2, 3]);
     ```
@@ -443,7 +443,7 @@ Very large questions:
 
     Considering the case of the element types matching (both being `int`):
     ```c#
-    void DoWork(IEnumerable<int> values) { ... }
+    void DoWork(IEnumerable<int> values) { ...}
     // ...
     DoWork([1, 2, 3]);
     ```
@@ -455,7 +455,7 @@ Very large questions:
     Users could always make an *unknown length* literal into a *known length* one with code like:
 
     ```c#
-    ImmutableArray<int> x = [a, .. unknownLength.ToArray(), b];
+    ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
     ```
 
     However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
@@ -562,13 +562,13 @@ Very large questions:
 1. Do we need to target-type `spread_element`.  Consider, for example:
 
     ```c#
-    Span<int> span = [a, .. b ? [c] : [d, e], f];
+    Span<int> span = [a, ..b ? [c] : [d, e], f];
     ```
 
     Note: this may commonly come up in the following form to allow conditional inclusion of some set of elements, or nothing if the condition is false:
 
     ```c#
-    Span<int> span = [a, .. b ? [c, d, e] : [], f];
+    Span<int> span = [a, ..b ? [c, d, e] : [], f];
     ```
 
     In order to evaluate this full literal, we need to evaluate the element expressions within.  That means being able to evaluate `b ? [c] : [d, e]`.  However, absent a target type to evaluate this expression in the context of, and absent any sort of natural type, this would we would be unable to determine what to do with either `[c]` or `[d, e]` here.
@@ -622,11 +622,11 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
 
-1. Determine how a spread `.. dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
+1. Determine how a spread `..dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
 
 1. Determine the natural type for a dictionary literal.  I propose the following.
 
-    In the absence of a `target-type` a `collection-literal-expression` `[e1, .. s1]` has a `natural-type` of either `System.Collections.Generic.List<T>` or `System.Collections.Generic.Dictionary<TKey, TValue>`.  The [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
+    In the absence of a `target-type` a `collection-literal-expression` `[e1, ..s1]` has a `natural-type` of either `System.Collections.Generic.List<T>` or `System.Collections.Generic.Dictionary<TKey, TValue>`.  The [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
     
     If the literal has no elements, it has no `natural-type`.
 
@@ -636,7 +636,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     A `dictionary_element` `k:v` has the type `System.Collections.Generic.KeyValuePair<,>`.
 
-    A `spread_element` `.. s_n` has the type that is the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+    A `spread_element` `..s_n` has the type that is the `iteration-type` of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
     If all element types are some instantiation of `System.Collections.Generic.KeyValuePair<,>`, then the resultant `natural-type` is `System.Collections.Generic.Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the `best-common-type` between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the `best-common-type` between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
 
