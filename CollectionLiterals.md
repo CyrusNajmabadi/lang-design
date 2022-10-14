@@ -641,7 +641,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     Otherwise, if there is a `dictionary_element` in the literal, there is no `natural-type` for the literal.
 
-    Otherwise, the resultant `natural-type` is `System.Collections.Generic.List<T>`.  `T` will be picked by choosing the `best-common-type` of the types of the elements within..
+    Otherwise, the resultant `natural-type` is `System.Collections.Generic.List<T>`.  `T` will be picked by choosing the `best-common-type` of the types of the elements within.
 
     For example, given:
 
