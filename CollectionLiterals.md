@@ -96,7 +96,7 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
-1. A literal without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `.. s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+1. For examples written in this document, a literal without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `.. s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 1. Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
 1. An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
 
