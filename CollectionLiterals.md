@@ -629,7 +629,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     
     If the literal has no elements, it has no `natural-type`.
 
-    The literal's `natural-type` is determined by the types of all of it's elements.
+    The literal's `natural-type` is determined by the types of all of its elements.
 
     An `expresion_element` `e_n` has the type of `en`.
 
