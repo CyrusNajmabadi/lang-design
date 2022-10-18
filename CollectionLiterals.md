@@ -356,9 +356,11 @@ Not having a *known-length* does not prevent any result from being created. Howe
         __result.Construct(__storage);
         ```
 
-        Note: The `Construct` method can be marked with the `init` modifier like so: `init void Construct(T1 values)`.  This `init` method design is [covered later](#init-methods).
+        If `T` is a `struct` with a [`parameterless-struct-constructors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md) then `__result` is initialized like so:
 
-        Note: The `Construct` method can be an extension method (but then cannot be `init` as well).
+        ```c#
+        __result = default(T);
+        ```
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
 
