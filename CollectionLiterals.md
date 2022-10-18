@@ -170,20 +170,20 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 
 1. In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
 
-For example, the following is not legal as there is no *target type* and the `best-common-type` algorithm is not involved:
+    For example, the following is not legal as there is no *target type* and the `best-common-type` algorithm is not involved:
 
-```c#
-var v = []; // illegal
-```
+    ```c#
+    var v = []; // illegal
+    ```
 
-However, the following is allowed because of the use of the `best-common-type` algorithm:
+    However, the following is allowed because of the use of the `best-common-type` algorithm:
 
-```c#
-bool b = ...
-var v = b ? [1, 2, 3] : [];
-```
+    ```c#
+    bool b = ...
+    var v = b ? [1, 2, 3] : [];
+    ```
 
-In this case the type of the empty literal will be `List<int>` due to the [*natural type*](#natural-type) of `[1, 2, 3]`.
+    In this case the type of the empty literal will be `List<int>` due to the [*natural type*](#natural-type) of `[1, 2, 3]`.
 
 The compi
 
