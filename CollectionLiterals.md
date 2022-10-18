@@ -271,11 +271,11 @@ The natural type is determined using the [`best-common-type`](https://github.com
 * The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
 If all elements do have either property the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
-    If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
+    * If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
 
-    Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
+    * Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
-    Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
+    * Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
 * A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
 
