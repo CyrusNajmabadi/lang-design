@@ -143,7 +143,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 * For example, if an `init void Construct(T[] values)` instance method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
 
     ```c#
-    T[] __storage = /* initialized using standard rules */
+    T[] __storage = /* initialized using predefined rules */
     ImmutableArray<T> __result = new ImmutableArray<T>();
     __result.Construct(__storage);
     ```
