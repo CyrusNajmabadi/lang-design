@@ -120,13 +120,13 @@ The following types can be constructed using a collection literal.  Actual trans
 
 While certain types (like arrays and spans) can always be constructed with a collection-literal, an arbitrary type `T` can support being be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
 
-* If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
+* If this instance method is found on an instance of `T` (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
 * `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span), then
 
 * the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
 
-The allowance for extension methods means that collection literal support can be added to a shipped API without needing direct support on that API already.
+The allowance for extension methods means that collection literal support can be added to a existing API without needing direct support on that API already.
 
 Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
 
