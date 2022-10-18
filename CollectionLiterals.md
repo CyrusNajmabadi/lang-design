@@ -139,7 +139,6 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 * In the context of collection literals, using the `init` modifier on the [`Construct` method](#construct-methods) would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
 
-
 * For example, if an `init void Construct(T[] values)` instance method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
 
     ```c#
