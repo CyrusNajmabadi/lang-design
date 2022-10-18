@@ -13,9 +13,9 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values in target-typing scenarios.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1: v1, ..d1]` form is also supported for creating dictionaries.
 
 Several collection-like target types are supported without requiring external BCL support.  These types are:
-1. [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
-2. [`Span<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=net-5.0) and [`ReadOnlySpan<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.readonlyspan-1?view=net-5.0).
-3. Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-5.0) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0).
+* [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
+* [`Span<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=net-5.0) and [`ReadOnlySpan<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.readonlyspan-1?view=net-5.0).
+* Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-5.0) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0).
 
 Further support is present for collection-like types not covered under the above, such as [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), through a new API pattern that can be adopted directly on the type itself or through extension methods.
 
@@ -167,7 +167,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 ## Empty Collection Literal
 
-1. In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
+* In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
 
     For example, the following is not legal as there is no *target type* and the `best-common-type` algorithm is not involved:
 
@@ -184,7 +184,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
     In this case the type of the empty literal will be `List<int>` due to the [*natural type*](#natural-type) of `[1, 2, 3]`.
 
-1. Spreading an empty literal is permitted to be elided.  For example:
+* Spreading an empty literal is permitted to be elided.  For example:
 
     ```c#
     bool b = ...
@@ -199,11 +199,11 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 In the absence of a *target type*:
 
-1. A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+* A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
-    1. For an `expression_element` `e_n`, the type of `e_n`.
+    * For an `expression_element` `e_n`, the type of `e_n`.
 
-    1. For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+    * For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
 For example, given:
 
@@ -240,7 +240,7 @@ The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible colle
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
 
-1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
+* The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
 If all elements do have either property the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
     If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
@@ -249,17 +249,17 @@ If all elements do have either property the literal is considered to have a *kno
 
     Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
-1. A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
+* A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
 
-1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
+* All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
-1. Evaluation of the element expressions happens entirely first.  Only after all those evaluations happen are calls to `Count` (or `Length` or `TryGetNonEnumeratedCount`) and all enumerations made.
+* Evaluation of the element expressions happens entirely first.  Only after all those evaluations happen are calls to `Count` (or `Length` or `TryGetNonEnumeratedCount`) and all enumerations made.
 
-1. Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
+* Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
 
 
 <!--
-1. When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
+* When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
 
     ```c#
     Span<int> span = [a, ..b ? [c, d] : [], f];
@@ -273,7 +273,7 @@ Having a *known-length* allows for efficient construction of a result with the p
 
 Not having a *known-length* does not prevent any result from being created. However, it may result in extra CPU and memory costs producing the data, then moving to the final destination.
 
-1. For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
+* For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
@@ -285,7 +285,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
     Note that the references to `s1`–`sn` refer to the prior evaluated result of each `spread_element` expression.
 
-2. Given a target type `T` for that literal:
+* Given a target type `T` for that literal:
 
     - If `T` is some `T1[]`, then the literal is translated as:
     
@@ -377,7 +377,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
 ### Unknown-length translation
 [unknown-length-translation]: #unknown-length-translation
 
-1. Given a target type `T` for an *unknown-length* literal:
+* Given a target type `T` for an *unknown-length* literal:
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
@@ -399,16 +399,16 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
 
-1. Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
+* Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
 
-2. Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
+* Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
 
-3. Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
+* Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
 
 ## Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
 
-1. There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
+* There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
 
     1a. The `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
 
@@ -429,7 +429,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
     This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
 
-1. There are two cases where there isn't a true ambiguity but where the syntax greatly increases parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
+* There are two cases where there isn't a true ambiguity but where the syntax greatly increases parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
     - Ambiguity between `collection_literal_expression` and `attributes` on statements or local functions.  Consider:
 
@@ -503,17 +503,17 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
 Hopefully small questions:
 
-1. Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
+* Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
 
-1. Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
+* Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
 
-1. Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
+* Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
 
-1. In what order should we evaluate literal elements compared with Length/Count property evaluation?  Should we evaluate all elements first, then all lengths?  Or should we evaluate an element, then its length, then the next element, and so on?
+* In what order should we evaluate literal elements compared with Length/Count property evaluation?  Should we evaluate all elements first, then all lengths?  Or should we evaluate an element, then its length, then the next element, and so on?
 
 Very large questions:
 
-1. Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
+* Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
 
     If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
@@ -541,7 +541,7 @@ Very large questions:
 
     </details>
 
-1. Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
+* Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
     Users could always make an *unknown-length* literal into a *known-length* one with code like:
 
@@ -551,7 +551,7 @@ Very large questions:
 
     However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
 
-1. Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
+* Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
     ```c#
     var x = [1, 2, 3];
     ```
@@ -562,19 +562,19 @@ Very large questions:
 
     It is virtually certain that users will want to do this.  However, there is much less certainty both on what users would want this mean and if there is even any sort of broad majority on some default.  There are numerous types we could pick, all of which have varying pros and cons.  Specifically, our options are *at least* any of the following:
 
-    1. Array types
-    2. Span types
-    3. `ImmutableArray<T>`
-    4. `List<T>`
-    5. [`ValueArray<T, N>`](https://github.com/dotnet/roslyn/pull/57286)
+    * Array types
+    * Span types
+    * `ImmutableArray<T>`
+    * `List<T>`
+    * [`ValueArray<T, N>`](https://github.com/dotnet/roslyn/pull/57286)
 
     Each of those options has varying benefits with respect to the following questions:
 
-    1. Will the literal cause a heap allocation (and, if so, how many), or can it live on the stack?
-    1. Are the values of the literal mutable after creation or are they fixed?
-    1. Is the resultant value itself mutable (e.g. can it be cleared, or can new elements be added to it)?
-    1. Can the value be used in all contexts (for example, async/non-async)?
-    1. Can be used for *all* literal forms (for example, a `spread_element` of an *unknown length*)?
+    * Will the literal cause a heap allocation (and, if so, how many), or can it live on the stack?
+    * Are the values of the literal mutable after creation or are they fixed?
+    * Is the resultant value itself mutable (e.g. can it be cleared, or can new elements be added to it)?
+    * Can the value be used in all contexts (for example, async/non-async)?
+    * Can be used for *all* literal forms (for example, a `spread_element` of an *unknown length*)?
 
     Note: for whatever type we pick as a natural type, the user can always target-type to the type they want with a simple cast, though that won't be pleasant.
 
@@ -595,10 +595,10 @@ Very large questions:
 
     However, the likely crux of this is the following:
 
-    1. Mutation is part and parcel of .NET
-    2. `List<T>` is already heavily the lingua franca of lists.
-    3. `List<T>` is a viable final form for any potential list literal (including those with spreads of *unknown length*)
-    4. Spans types and ValueArray are too esoteric, and the inability to use ref structs within async-contexts is likely a deal breaker for broad acceptance.
+    * Mutation is part and parcel of .NET
+    * `List<T>` is already heavily the lingua franca of lists.
+    * `List<T>` is a viable final form for any potential list literal (including those with spreads of *unknown length*)
+    * Spans types and ValueArray are too esoteric, and the inability to use ref structs within async-contexts is likely a deal breaker for broad acceptance.
 
     As such, while it unfortunate that it has two allocations, `List<T>` seems be the most broadly applicable. This is likely what we would want from the natural type.
 
@@ -608,7 +608,7 @@ Very large questions:
 
     </details>
 
-1. How would we proceed on this in the future to get dictionary literals?
+* How would we proceed on this in the future to get dictionary literals?
 
     Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
 
@@ -654,7 +654,7 @@ Very large questions:
     
     </details>
 
-1. Do we need to target-type `spread_element`?  Consider, for example:
+* Do we need to target-type `spread_element`?  Consider, for example:
 
     ```c#
     Span<int> span = [a, ..b ? [c] : [d, e], f];
@@ -700,13 +700,13 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 ## Upcoming agenda items
 
-1. Discuss List/Dictionary/KVP being first class concepts this feature needs to know about.
+* Discuss List/Dictionary/KVP being first class concepts this feature needs to know about.
 
-1. Support TryGetNonEnumeratedCount to better understand the length of spread-elements
+* Support TryGetNonEnumeratedCount to better understand the length of spread-elements
 
-1. known-length doesn't affect capabilities, it just affects performance.
+* known-length doesn't affect capabilities, it just affects performance.
 
-1. should we emit:
+* should we emit:
 
     ```c#
     var __s1 = eval(s1);
@@ -733,20 +733,20 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     __len += __sn.Count;
     ```
 
-1. `k:v` Effectively means KeyValuePair<,>. 
+* `k:v` Effectively means KeyValuePair<,>. 
   a. this allows being used in a literal being translated to `KeyValuePair<,>[]`
   b. we will attempt to add this KVP using .Add or direct assignment if possible.
   c. if that is not possible, we will attempt to update using `__result[kvp.Key] = kvp.Value;`
 
-1. We still need strategy to go from unknown-length to T[].
+* We still need strategy to go from unknown-length to T[].
 
-1. Empty literal handling
+* Empty literal handling
 
-1. unsupported cases
+* unsupported cases
 
-1. Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if a spread `IEnumerable<T>` causes the literal to have a known length.
+* Allow the [`Enumerable.TryGetNonEnumeratedCount`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) helper to be used to determine if a spread `IEnumerable<T>` causes the literal to have a known length.
 
-1. We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
+* We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
 
     ```c#
     IEnumerable<int> x = [1, 2, 3];
@@ -766,9 +766,9 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     As such, it seems trivial to infer a type `T` for a `T[]` based on the interface's instantiation, and use that to do our normal construction semantics.  The `T[]` would then be exposed through whatever interface we are target-typing to.
 
-1. Determine how a spread `..dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
+* Determine how a spread `..dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
 
-1. Determine the natural type for a dictionary literal.  I propose the following.
+* Determine the natural type for a dictionary literal.  I propose the following.
 
     In the absence of a *target-type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* of either `List<T>` or `Dictionary<TKey, TValue>`.  The [best common type](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
 
