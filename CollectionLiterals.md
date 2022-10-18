@@ -117,11 +117,11 @@ If all elements do have either property the literal is considered to have a *kno
 
     Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
+1. A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
+
 1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
 1. Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
-
-1. A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.
 
 <!--
 1. When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
@@ -150,7 +150,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
     Note that the references to `s1`–`sn` refer to the prior evaluated result of each `spread_element` expression.
 
-    Unresolved question: This translation indicates that we will evaluate all elements first, *then* evaluate all counts.  We could also evaluate each element and its count at the same time.  This distinction would be observable.  For example, a collection initializer evaluates an element, adds it to the collection, then moves to the next.  Thus, if adding fails, further evaluation of other elements will not occur.
+    Importantly, all calls to `Count` (or `Length` or other compiler helpers used to determine `__len`), as well as all enumeration, 
 
 2. Given a target type `T` for that literal:
 
