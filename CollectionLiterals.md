@@ -201,9 +201,9 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-* If the literal contains at least one `expression_element` or `spread_element`
+* If the literal contains at least one `expression_element` or `spread_element`:
 
-    * The inputs to the `best-common-type` algorithm are the following expressions and types, which produce type `BCT`.
+    * The inputs to a first round of the `best-common-type` algorithm are the following expressions and types, which produce type `BCT`:
 
         * For an `expression_element` `'e_n'` the input is the expression `e_n`.
         * For a `spread_element` `'..s_n'` the input is *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
