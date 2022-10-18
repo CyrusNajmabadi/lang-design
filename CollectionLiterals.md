@@ -401,6 +401,10 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
 * Given a target type `T` for an *unknown-length* literal:
 
+    - If `T` is some `T1[]`, then the literal is translated as:
+
+    
+
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
         ```c#
