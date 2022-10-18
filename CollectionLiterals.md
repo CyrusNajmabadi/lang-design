@@ -89,7 +89,7 @@ The following types can be constructed using a collection literal.  Actual trans
 1. To spans.
 1. To a type with a suitable [`Construct` method](#construct-methods).
 1. To a type that supports [`collection initializer`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
-1. To a [dictionary](#dictionary-support).
+1. A suitable [dictionary](#dictionary-support) type.
 
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
