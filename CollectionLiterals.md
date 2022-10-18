@@ -105,6 +105,22 @@ Translation of collection literals is defined [below](#collection-literal-transl
 
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
+## `Construct` methods
+
+A type `T` can proffer their ability to be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
+
+1. If the type `T` has an accessible no-arg constructor (or the collection literal has *known length* and `T` has constructor with a single `int capacity` parameter), and
+
+1. If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
+
+1. `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span),
+
+Then the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
+
+The allowance for extension methods means that collection literal support can be added to a shipped API without needing direct support on that API already.
+
+Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
+
 ## `init` methods
 [init-methods]: #init-methods
 
