@@ -109,17 +109,19 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 [simple-collection-literal]: #simple-collection-literal
 
 1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
-If all elements do have either property, or the count of elements can be dicovered by passing the `spread_element` value to [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0), the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
+If all elements do have either property the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
     If at least one `spread_element` can not have its count of elements determined, then the literal is considered to have an *unknown length*.
 
     Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
-    Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen.
+    Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
 1. All `expression_element` expressions, `dictionary_element` expressions, and `spread_element` expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
 1. Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
+
+1. A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.
 
 <!--
 1. When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
