@@ -403,7 +403,19 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
     - If `T` is some `T1[]`, then the literal is translated as:
 
-    
+        ```c#
+        T1[] __result = <private_implementation_details>.CreateArray<T1>(
+            count_of_expression_elements + count_of_dictionary_elements);
+        __count = 0;
+        
+        <private_implementation_details>.Add(ref __result, e1);
+        foreach (var __v in s1)
+            <private_implementation_details>.Add(ref __result, __v);
+
+            // further additions of the remaining elements
+        ```
+
+
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
