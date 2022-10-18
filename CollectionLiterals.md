@@ -95,9 +95,9 @@ The following types can be constructed using a collection literal.  Actual trans
 [spec-clarifications]: #spec-clarifications
 
 * For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
-* `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
-* `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
-* `spread_element` instances will commonly be referred to as `..s1`, `..s2`, etc.
+* `expression_element` instances will commonly be referred to as `e1`, `e2`, .., `e_n`.
+* `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2`, .., `k_n:v_n`.
+* `spread_element` instances will commonly be referred to as `..s1`, `..s2`, `..s_n`.
 * *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
 * Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
     - Empty literals `[]`
