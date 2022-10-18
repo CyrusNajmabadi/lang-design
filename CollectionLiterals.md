@@ -222,38 +222,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
     * The `TValue` type of the dictionary is determined by running the `best-common-type` algorithm with all the `v_n` expressions for all the `dictionary_element` `k_n : v_n` in the literal.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Determine the natural type for a dictionary literal.  I propose the following.
-
-    In the absence of a *target-type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* of either `List<T>` or `Dictionary<TKey, TValue>`.  The [best common type](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
-
-    The literal's *natural type* is determined by the types of all of its elements.
-
-    An `expression_element` `e_n` has the type of `e_n`.
-
-    A `dictionary_element` `k:v` has the type `KeyValuePair<,>`.
-
-    A `spread_element` `..s_n` has the type that is the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
-
-    If all element types are some `KeyValuePair<,>`, then the resultant *natural type* is `Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the *best common type* between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the *best common type* between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
-
-    Otherwise, if there is a `dictionary_element` in the literal, there is no *natural type* for the literal.
-
-    Otherwise, the resultant *natural type* is `List<T>`.  `T` will be picked by choosing the *best common type* of the types of the elements within.
-
-    For example, given:
+* For example, given:
 
     ```c#
     string i = ...;
@@ -282,58 +251,20 @@ Determine the natural type for a dictionary literal.  I propose the following.
     The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
 
 
+* Because a `collection_literal_expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type to which `List<T>` is convertible.  For example:
+
+    ```c#
+    IEnumerable<int> x = [0, 1, 3];
+    ```
 
 
+    For example, given:
 
+    ```c#
+    var values = x ? [1, 2, 3] : [];
+    ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-* A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
-
-    * For an `expression_element` `e_n`, the type of `e_n`.
-
-    * For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
-
-For example, given:
-
-```c#
-string i = ...;
-object[] objects = ...;
-var x = [i, ..objects];
-```
-
-The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
-
-Because the *best common type* requires at least one type to be considered, there is no *natural type* for a literal without any elements:
-
-```c#
-var x = []; // This is an error
-```
-
-Because a `collection_literal_expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type to which `List<T>` is convertible.  For example:
-
-```c#
-IEnumerable<int> x = [0, 1, 3];
-```
-
-
-For example, given:
-
-```c#
-var values = x ? [1, 2, 3] : [];
-```
-
-The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
+    The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
 
 
 ## Collection literal translation
