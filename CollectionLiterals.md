@@ -81,7 +81,15 @@ primary_no_array_creation_expression
 
 Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a target type.
 
-Translation of collection literals is defined [below](#collection-literal-translation).
+### Supported collection types
+
+The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
+
+1. To single dimensional arrays.
+1. To spans.
+1. To a type with a suitable [`Construct` method](#construct-methods).
+1. To a type that supports [`collection initializer`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
+1. To a [dictionary](#dictionary-support).
 
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
