@@ -185,7 +185,14 @@ ImmutableArray<int> __result = __builder.MoveToImmutable();
 
     In this case the type of the empty literal will be `List<int>` due to the [*natural type*](#natural-type) of `[1, 2, 3]`.
 
-The compi
+1. Spreading an empty literal is permitted to be elided.  For example:
+
+    ```c#
+    bool b = ...
+    var v = [x, y, .. b ? [1, 2, 3] : []];
+    ```
+
+    Here, if `b` is false it is not required that any value actually be constructed as it would immediately be spread into zero values in the final literal.
 
 
 ## Natural Type
