@@ -166,7 +166,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 ## Empty Collection Literal
 
-* In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.  In the `best-common-type` algorithm, it is convertible to any other constructible *collection type*
+* In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.  In the `best-common-type` algorithm, it is convertible to any other constructible collection type.
 
     For example, the following is not legal as there is no *target type* and the `best-common-type` algorithm is not involved:
 
