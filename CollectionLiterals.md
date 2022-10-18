@@ -85,11 +85,11 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
 
-1. To single dimensional arrays.
-1. To spans.
-1. To a type with a suitable [`Construct` method](#construct-methods).
-1. To a type that supports [`collection initializer`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
-1. A suitable [dictionary](#dictionary-support) type.
+* To single dimensional arrays.
+* To spans.
+* To a type with a suitable [`Construct` method](#construct-methods).
+* To a type that supports [`collection initializer`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
+* A suitable [dictionary](#dictionary-support) type.
 
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
@@ -118,11 +118,11 @@ The following types can be constructed using a collection literal.  Actual trans
 
 A type `T` can be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
 
-1. If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
+* If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
-1. `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span), then
+* `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span), then
 
-1. the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
+* the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
 
 The allowance for extension methods means that collection literal support can be added to a shipped API without needing direct support on that API already.
 
