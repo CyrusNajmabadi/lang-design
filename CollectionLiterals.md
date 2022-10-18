@@ -199,6 +199,86 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 In the absence of a *target type* a non-empty literal can have a *natural type*.  The *natural type* will either be some instantiation of `List<T>` or `Dictionary<TKey, TValue>` depending on the elements contained within the literal.
 
+* The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
+
+* The inputs to the `best-common-type` algorithm are the following expressions and types.
+
+    * For an `expression_element` `'e_n'` the input is the expression `e_n`.
+    * For a `spread_element`
+
+
+
+
+
+
+
+
+
+
+
+Determine the natural type for a dictionary literal.  I propose the following.
+
+    In the absence of a *target-type*, a `collection_literal_expression` `[e1, ..s1]` has a *natural type* of either `List<T>` or `Dictionary<TKey, TValue>`.  The [best common type](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm will be used as part of this.
+
+    The literal's *natural type* is determined by the types of all of its elements.
+
+    An `expression_element` `e_n` has the type of `e_n`.
+
+    A `dictionary_element` `k:v` has the type `KeyValuePair<,>`.
+
+    A `spread_element` `..s_n` has the type that is the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+
+    If all element types are some `KeyValuePair<,>`, then the resultant *natural type* is `Dictionary<TKey, TValue>`.  `TKey` will be picked by choosing the *best common type* between the individual `TKey` types of the elements (and the `k` expression in the case of a `dictionary_element`).   `TValue` will be picked by choosing the *best common type* between the individual `TValue` types of the elements (and the `v` expression in the case of a `dictionary_element`)
+
+    Otherwise, if there is a `dictionary_element` in the literal, there is no *natural type* for the literal.
+
+    Otherwise, the resultant *natural type* is `List<T>`.  `T` will be picked by choosing the *best common type* of the types of the elements within.
+
+    For example, given:
+
+    ```c#
+    string i = ...;
+    object[] objects = ...;
+    var x = [i, ..objects];
+    ```
+
+    The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
+
+    Similarly, given:
+
+    ```c#
+    Dictionary<string, object> d1 = ...;
+    Dictionary<object, string> d2 = ...;
+    var d3 = [..d1, ..d2];
+    ```
+
+    The natural type of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a `spread_element` type of `KeyValuePair<string, object>` and `..d2` will have a `spread_element` type of `KeyValuePair<object, string>`.  As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `string` and `object` and `TValue` will be the *best common type* of `object` and `string`.  In both cases, that is `object`.
+
+    Similarly, given:
+
+    ```c#
+    var d = [null: null, "a": "b"];
+    ```
+
+    The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
     * For an `expression_element` `e_n`, the type of `e_n`.
