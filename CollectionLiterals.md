@@ -94,20 +94,20 @@ The following types can be constructed using a collection literal.  Actual trans
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
 
-1. For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
-1. `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
-1. `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
-1. `spread_element` instances will commonly be referred to as `..s1`, `..s2`, etc.
-1. *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
-1. Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
+* For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
+* `expression_element` instances will commonly be referred to as `e1`, `e2`, etc.
+* `dictionary_element` instances will commonly be referred to as `k1:v1`, `k2:v2` etc.
+* `spread_element` instances will commonly be referred to as `..s1`, `..s2`, etc.
+* *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
+* Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
     - Empty literals `[]`
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
-1. In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
-1. `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
-1. Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
-1. An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
+* In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+* `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
+* Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
+* An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
 
     * For example, an implementation could translate literals like `[1, 2, 3]` directly to a `new int[] { 1, 2, 3 }` expression that itself bakes the raw data into the assembly, eliding the need for `__index` or a sequence of instructions to assign each value. Importantly, this does mean if any step of the translation might cause an exception at runtime that the program state is still left in the state indicated by the translation.
 
