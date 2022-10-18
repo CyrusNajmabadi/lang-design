@@ -197,7 +197,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 ## Natural Type
 [natural-type]: #natural-type
 
-In the absence of a *target type*:
+In the absence of a *target type* a non-empty literal can have a *natural type*.  The *natural type* will either be some instantiation of `List<T>` or `Dictionary<TKey, TValue>` depending on the elements contained within the literal.
 
 * A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
 
