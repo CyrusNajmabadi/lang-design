@@ -120,9 +120,9 @@ A type `T` can be constructed from a collection literal through the use of a `vo
 
 1. If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
-1. `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span),
+1. `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span), then
 
-Then the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
+1. the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
 
 The allowance for extension methods means that collection literal support can be added to a shipped API without needing direct support on that API already.
 
