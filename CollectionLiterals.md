@@ -105,7 +105,87 @@ Unresolved question:  The above grammar choice means that it is not legal to imm
 
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
-### Collection literal translation
+## `init` methods
+[init-methods]: #init-methods
+
+Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-9.0/init.md#init-only-setters), an `init` method would be invocable at the point of object creation but become unavailable once object creation has completed.
+
+This facility thus prevents general use of such a marked method outside of known safe compiler scopes where the instance value being constructed cannot be observed until complete.
+
+In the context of collection literals, the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
+
+For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
+
+```c#
+T[] __storage = /* initialize using the rules above */
+ImmutableArray<T> __result = new ImmutableArray<T>();
+__result.Construct(__storage);
+```
+
+`ImmutableArray<T>` would then take that array directly and use it as its own backing storage.  This would be safe because the compiler (following the requirements around `init`) would ensure that no other location in the code would have access to this temporary array, and thus it would not be possible to mutate it behind the back of the `ImmutableArray<T>` instance.
+
+The above also demonstrates that this approach can work with struct types which do not have a [`parameterless struct constructor`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md).  In the above, the call to `new ImmutableArray<T>()` is equivalent to `default(ImmutableArray<T>)`, (producing an `ImmutableArray<T>` whose [`IsDefault`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1.isdefault) property is initially true.  However, the `Construct` method can then safely update this to the final non-default state without that intermediate state being visible.
+
+This formalization is quite beneficial because the only existing mechanism to (safely) create an ImmutableArray with values without copying is the excessively verbose:
+
+```c#
+var __builder = ImmutableArray.CreateBuilder<int>(initialCapacity: __len);
+
+__builder.Add(e1);
+foreach (var __v in s1)
+    __builder.Add(__v);
+
+// add remainder of values 
+ImmutableArray<int> __result = __builder.MoveToImmutable();
+```
+
+## Natural Type
+[natural-type]: #natural-type
+
+In the absence of a *target type*:
+
+1. A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
+
+    1. For an `expression_element` `e_n`, the type of `e_n`.
+
+    1. For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+
+For example, given:
+
+```c#
+string i = ...;
+object[] objects = ...;
+var x = [i, ..objects];
+```
+
+The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
+
+Because the *best common type* requires at least one type to be considered, there is no *natural type* for a literal without any elements:
+
+```c#
+var x = []; // This is an error
+```
+
+Because a `collection_literal_expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type to which `List<T>` is convertible.  For example:
+
+```c#
+IEnumerable<int> x = [0, 1, 3];
+```
+
+## Empty Collection Literal
+
+In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
+
+For example, given:
+
+```c#
+var values = x ? [1, 2, 3] : [];
+```
+
+The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
+
+
+## Collection literal translation
 [simple-collection-literal]: #simple-collection-literal
 
 1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
@@ -134,7 +214,7 @@ If all elements do have either property the literal is considered to have a *kno
     ```
 -->
 
-#### Known-length translation
+### Known-length translation
 [known-length-translation]: #known-length-translation
 
 Having a *known-length* allows for efficient construction of a result with the potential for no copying of data and no unnecessary slack space in a result.
@@ -242,7 +322,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
-#### Unknown-length translation
+### Unknown-length translation
 [unknown-length-translation]: #unknown-length-translation
 
 1. Given a target type `T` for an *unknown-length* literal:
@@ -261,86 +341,6 @@ Not having a *known-length* does not prevent any result from being created. Howe
         ```
 
     This allows spreading of any iterable type, albeit with the least amount of optimization possible.
-
-## `init` methods
-[init-methods]: #init-methods
-
-Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-9.0/init.md#init-only-setters), an `init` method would be invocable at the point of object creation but become unavailable once object creation has completed.
-
-This facility thus prevents general use of such a marked method outside of known safe compiler scopes where the instance value being constructed cannot be observed until complete.
-
-In the context of collection literals, the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
-
-For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
-
-```c#
-T[] __storage = /* initialize using the rules above */
-ImmutableArray<T> __result = new ImmutableArray<T>();
-__result.Construct(__storage);
-```
-
-`ImmutableArray<T>` would then take that array directly and use it as its own backing storage.  This would be safe because the compiler (following the requirements around `init`) would ensure that no other location in the code would have access to this temporary array, and thus it would not be possible to mutate it behind the back of the `ImmutableArray<T>` instance.
-
-The above also demonstrates that this approach can work with struct types which do not have a [`parameterless struct constructor`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md).  In the above, the call to `new ImmutableArray<T>()` is equivalent to `default(ImmutableArray<T>)`, (producing an `ImmutableArray<T>` whose [`IsDefault`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1.isdefault) property is initially true.  However, the `Construct` method can then safely update this to the final non-default state without that intermediate state being visible.
-
-This formalization is quite beneficial because the only existing mechanism to (safely) create an ImmutableArray with values without copying is the excessively verbose:
-
-```c#
-var __builder = ImmutableArray.CreateBuilder<int>(initialCapacity: __len);
-
-__builder.Add(e1);
-foreach (var __v in s1)
-    __builder.Add(__v);
-
-// add remainder of values 
-ImmutableArray<int> __result = __builder.MoveToImmutable();
-```
-
-## Natural Type
-[natural-type]: #natural-type
-
-In the absence of a *target type*:
-
-1. A non-empty list literal `[e1, ..s1]` has a *natural type* `List<T>` where the `T` type is picked as the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) of the following types corresponding to the expression-elements:
-
-    1. For an `expression_element` `e_n`, the type of `e_n`.
-
-    1. For a `spread_element` `..s_n` the type is the same as the *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
-
-For example, given:
-
-```c#
-string i = ...;
-object[] objects = ...;
-var x = [i, ..objects];
-```
-
-The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
-
-Because the *best common type* requires at least one type to be considered, there is no *natural type* for a literal without any elements:
-
-```c#
-var x = []; // This is an error
-```
-
-Because a `collection_literal_expression` can have the natural type of some `List<T>` instantiation, it is then implicitly convertible to any type to which `List<T>` is convertible.  For example:
-
-```c#
-IEnumerable<int> x = [0, 1, 3];
-```
-
-## Empty Collection Literal
-
-In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any constructible collection literal type and participates in the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm. 
-
-For example, given:
-
-```c#
-var values = x ? [1, 2, 3] : [];
-```
-
-The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
-
 
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
