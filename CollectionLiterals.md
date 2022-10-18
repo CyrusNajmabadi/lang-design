@@ -106,6 +106,7 @@ Translation of collection literals is defined [below](#collection-literal-transl
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
 ## `Construct` methods
+[construct-methods]: #construct-methods
 
 A type `T` can proffer their ability to be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
 
@@ -128,7 +129,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
 
 This facility thus prevents general use of such a marked method outside of known safe compiler scopes where the instance value being constructed cannot be observed until complete.
 
-In the context of collection literals, the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
+In the context of collection literals, using the `init` modifier on the [`Construct`]() the presence of these methods would allow types to trust that data passed into them cannot be mutated outside of them, and that they are being passed ownership of it.  This would negate any need to copy data that would normally be assumed to be in an untrusted location.
 
 For example, if an `init void Construct(T[] values)` method were added to [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), then it would be possible for the compiler to emit the following:
 
