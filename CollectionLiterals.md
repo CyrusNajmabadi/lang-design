@@ -343,10 +343,6 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
     The above forms (for arrays and spans) are the base representations of the literal value and are used for the next translation rule.
 
-    Unresolved question: Creating spans in this fashion for a literal that contains a `spread_element` allows for stack allocation which could trivially blow out the stack.  Should the compiler bake in some known limit and decide to instead heap-allocate an array instead, and have the span point at that?
-
-    Unresolved question: Similarly, even if the allocation size is small, it could cause problems if contained in something like a loop.  Can the compiler prevent each outer loop iteration from causing the stack to grow?
-
     - If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
 
         ```c#
