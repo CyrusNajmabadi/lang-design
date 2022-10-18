@@ -81,7 +81,7 @@ primary_no_array_creation_expression
 
 Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a target type.
 
-Unresolved question:  The above grammar choice means that it is not legal to immediately index into a collection literal.  So you cannot say `[1, 2, 3][0]`.  This seems like an acceptable restriction to have, as it would likely be odd to generate a collection in order to grab only a single value (or range of values) from it.  This restriction also holds for arrays in language today.  If this restriction is considered onerous, we could move `collection_literal_expression` into `primary_expression` without difficulty.
+Translation of collection literals is defined [below](#collection-literal-translation).
 
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
@@ -186,7 +186,7 @@ The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible colle
 
 
 ## Collection literal translation
-[simple-collection-literal]: #simple-collection-literal
+[collection-literal-translation]: #collection-literal-translation
 
 1. The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
 If all elements do have either property the literal is considered to have a *known length*.  In examples below, references to `.Count` refer to this computed length, however it was obtained.
