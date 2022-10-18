@@ -118,7 +118,7 @@ The following types can be constructed using a collection literal.  Actual trans
 ## `Construct` methods
 [construct-methods]: #construct-methods
 
-While certain types (like arrays and spans) can always be constructed with a collection-literal, an aribtrary type `T` can be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
+While certain types (like arrays and spans) can always be constructed with a collection-literal, an arbitrary type `T` can be constructed from a collection literal through the use of a `void Construct(CollectionType)` method.
 
 * If this instance method is found (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
