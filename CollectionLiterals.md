@@ -113,6 +113,8 @@ The following types can be constructed using a collection literal.  Actual trans
 
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
+    * Collections are assumed to be well-behaved.  For example that a collection that has a `Count` of some number of elements will produce that same number of elements when enumerated.  Behavior with collections that are not well-behaved in undefined.
+
 ## `Construct` methods
 [construct-methods]: #construct-methods
 
