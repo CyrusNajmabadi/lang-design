@@ -191,7 +191,7 @@ Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals
     var v = [x, y, .. b ? [1, 2, 3] : []];
     ```
 
-    Here, if `b` is false it is not required that any value actually be constructed as it would immediately be spread into zero values in the final literal.
+    Here, if `b` is false it is not required that any value actually be constructed for the empty literal as it would immediately be spread into zero values in the final literal.
 
 
 ## Natural Type
