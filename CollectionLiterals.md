@@ -360,12 +360,6 @@ Not having a *known-length* does not prevent any result from being created. Howe
         __result.Construct(__storage);
         ```
 
-        If `T` is a `struct` with a [`parameterless-struct-constructors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md) then the translation is the same except that `__result` is initialized like so:
-
-        ```c#
-        __result = default(T);
-        ```
-
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
 
         - if the type `T` contains an accessible constructor with a single parameter `int capacity`, then the literal is translated as:
