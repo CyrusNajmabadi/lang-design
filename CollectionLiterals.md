@@ -128,7 +128,7 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 * `CollectionType` is some other type known to be some [`constructible`](constructible-collection-types) type.
 
-If found, collection can be constructed by creating a new instance of its type, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
+If found, collection can be constructed by creating a fresh instance of its type, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
 
 The allowance for extension methods means that collection literal support can be added to a existing API without needing direct support on that API already.
 
