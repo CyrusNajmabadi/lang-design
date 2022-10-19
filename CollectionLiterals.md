@@ -221,7 +221,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
     * The `TKey` type of the dictionary is determined by running the `best-common-type` algorithm with all the `k_n` expressions for all the `k_n:v_n` elements.
 
-    * The `TValue` type of the dictionary is determined by running the `best-common-type` algorithm with all the `v_n` expressions for all the `dictionary_element` `k_n : v_n` in the literal.
+    * The `TValue` type of the dictionary is determined by running the `best-common-type` algorithm with all the `v_n` expressions for all the `k_n:v_n` elements.
 
 * For example, given:
 
