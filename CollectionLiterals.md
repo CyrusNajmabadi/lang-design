@@ -42,7 +42,7 @@ An inclusive solution is needed for C#. It should meet the vast majority of cass
 
 This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, ..c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, ..p2, p3]`.
 
-A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable here.
+A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1:v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1:var v1]`) would be desirable here.
 
 ## Detailed design
 [design]: #detailed-design
