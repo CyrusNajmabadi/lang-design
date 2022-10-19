@@ -239,7 +239,7 @@ Each element of the literal is examined in the following fashion:
 
 * If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
 
-    * If the first round fails for either set, the *fallback case* runs below if applicable.
+    * If the first round fails for either set, the *fallback case* runs below.
     
     * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
     
