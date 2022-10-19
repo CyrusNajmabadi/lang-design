@@ -385,9 +385,9 @@ Not having a *known-length* does not prevent any result from being created. Howe
             ```c#
             T __result = new T();
 
-            __result.Add(e1);
-            __result[k1] = v1;
-            foreach (var __v in s1)
+            __result.Add(__e1);
+            __result[__k1] = __v1;
+            foreach (var __v in __s1)
                 __result.Add(__v);
 
             // further additions of the remaining elements
@@ -412,9 +412,9 @@ Not having a *known-length* does not prevent any result from being created. Howe
         ```c#
         T __result = new T();
 
-        __result.Add(e1);
-        __result[k1] = v1;
-        foreach (var __v in s1)
+        __result.Add(__e1);
+        __result[__k1] = __v1;
+        foreach (var __v in __s1)
             __result.Add(__v);
 
             // further additions of the remaining elements
