@@ -479,28 +479,28 @@ While collection literals can be used for many scenarios, there are a few that t
 
 * There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
 
-    1a. The `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
+    * The `spread_element` is ambiguous with a [`range_expression`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-8.0/ranges.md#systemrange).  One could technically have:
 
-    ```c#
-    Range[] ranges = [range1, ..e, range2];
-    ```
+        ```c#
+        Range[] ranges = [range1, ..e, range2];
+        ```
 
-    To resolve this, we can either:
+        To resolve this, we can either:
 
-    - Require users to parenthesize `(..e)` or include a start index `0..e` if they want a range.
-    - Choose a different syntax (like `...`) for spread.  This would be unfortunate for the lack of consistency with slice patterns.
+        * Require users to parenthesize `(..e)` or include a start index `0..e` if they want a range.
+        * Choose a different syntax (like `...`) for spread.  This would be unfortunate for the lack of consistency with slice patterns.
 
-    1b. `dictionary_element` can be ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
+    * `dictionary_element` can be ambiguous with a [`conditional_expression`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#1115-conditional-operator).  For example:
 
-    ```c#
-    var v = [ a ? [b] : c ];
-    ```
+        ```c#
+        var v = [ a ? [b] : c ];
+        ```
 
-    This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
+        This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
 
 * There are two cases where there isn't a true ambiguity but where the syntax greatly increases parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
-    - Ambiguity between `collection_literal_expression` and `attributes` on statements or local functions.  Consider:
+    * Ambiguity between `collection_literal_expression` and `attributes` on statements or local functions.  Consider:
 
         ```c#
         [X(), Y, Z()]
@@ -520,11 +520,11 @@ While collection literals can be used for many scenarios, there are a few that t
 
         Options to address this include:
 
-        - Allow this, doing the parsing work to determine which of these cases this is.
+        * Allow this, doing the parsing work to determine which of these cases this is.
 
-        - Disallow this, and require the user wrap the literal in parentheses like `([X(), Y, Z()]).ForEach(...)`.
+        * Disallow this, and require the user wrap the literal in parentheses like `([X(), Y, Z()]).ForEach(...)`.
 
-    - Ambiguity between a `collection_literal_expression` in a `conditional_expression` and a `null_conditional_operations`.  Consider:
+    * Ambiguity between a `collection_literal_expression` in a `conditional_expression` and a `null_conditional_operations`.  Consider:
 
         ```c#
         M(x ? [a, b, c]
