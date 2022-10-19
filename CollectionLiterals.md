@@ -241,7 +241,7 @@ Each element of the literal is examined in the following fashion:
 
     * If the first round fails for either set, the *fallback* run below if applicable.
     
-    * If the succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
+    * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
     
         * If the second round fails, the *fallback* case is run if applicable.
         * If the second round succeds, `BCT_Final` is the *natural element type*.
