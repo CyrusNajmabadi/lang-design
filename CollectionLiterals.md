@@ -461,6 +461,8 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
         This allows for minimal waste and copying, without additional overhead that library collections might incur.
 
+        The counts passed to `CreateArray` are used to provide a starting size hint to prevent wasteful reallocations.
+
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
 
