@@ -125,7 +125,7 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 * If this instance method is found on an instance of `T` (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
-* `CollectionType` is some other type known to be constructible from a collection literal (for example, an array or span), then
+* `CollectionType` is some other type known to be some [`constructible`](constructible-collection-types) type.
 
 * the final collection can be constructed by creating a new instance of it, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
 
