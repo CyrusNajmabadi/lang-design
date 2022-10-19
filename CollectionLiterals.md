@@ -409,8 +409,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
     - If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
         ```c#
-        // using the existing translations to instantiate and populate __list
-        List<T1> __list = ...;
+        List<T1> __list = [...]; /* initialized using predefined rules */
         I<T1> __result = __list;
         ```
 
