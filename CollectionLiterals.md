@@ -160,7 +160,7 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
 
     The above also demonstrates that this approach can work with struct types which do not have a [`parameterless struct constructor`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/parameterless-struct-constructors.md).  In the above, the call to `new ImmutableArray<T>()` is equivalent to `default(ImmutableArray<T>)`, (producing an `ImmutableArray<T>` whose [`IsDefault`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1.isdefault) property is initially true.  However, the `Construct` method can then safely update this to the final non-default state without that intermediate state being visible.
 
-* This formalization is quite beneficial because the only existing mechanism to (safely) create an ImmutableArray with values without copying is the excessively verbose and produces unavoidable garbage:
+* This formalization is quite beneficial because the only existing mechanism to (safely) create an ImmutableArray with values without copying is both excessively verbose and produces unavoidable garbage:
 
     ```c#
     var __builder = ImmutableArray.CreateBuilder<int>(initialCapacity: __len);
