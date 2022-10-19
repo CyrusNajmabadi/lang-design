@@ -218,7 +218,7 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-The overall algorithm (defined below) produces an element type `T`.  If that `T` is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
+The overall algorithm (defined below) produces a *natural element type* `T`.  If that `T` is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
 ### Natural Element Type
 
@@ -234,9 +234,17 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-* If `dictionary key/value set` are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively.
+If `dictionary key/value set` are empty:
 
-    *   If the first round succeeds, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  It is then added to the 
+
+
+If `dictionary key/value set` are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively. 
+
+    * If this succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  The *natural element type* is the `best-common-type` of `remainder set`.
+
+    * If this fails for either set, and there is a `dictionary_element`, there is no *natural element type*
+
+    * If this fails for either set, and there is `dictionary_element`
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
