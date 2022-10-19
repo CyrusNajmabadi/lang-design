@@ -89,7 +89,7 @@ The following types can be constructed using a collection literal.  Actual trans
 * Spans (e.g. `Span<T>`)
 * Types with a suitable [`Construct` method](#construct-methods).
 * Instantiations of the `List<T>` type.  This also includes:
-    * any interface type `I<>` implemented by `List<T>` that has a single type parameter and which is instantiated as `I<T>` on `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
+    * instantiations of any interface type `I<T>` implemented by `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
 * Instantiations of the `Dictionary<TKey, TValue>` type.
 * Types that support [`collection initializers`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
 
