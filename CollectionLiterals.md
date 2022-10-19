@@ -651,7 +651,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     ```c#
     void DoWork(IEnumerable<long> values) { ... }
-    // ...
+    // Needs to produce `longs` not `ints` for this to work.
     DoWork([1, 2, 3]);
     ```
 
