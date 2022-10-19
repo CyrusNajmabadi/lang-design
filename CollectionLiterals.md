@@ -260,7 +260,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
     Similarly, given:
 
     ```c#
-    var d = [null: null, "a": "b"];
+    var d = [null:null, "a":"b"];
     ```
 
     The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
@@ -729,7 +729,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     - `Dictionary<int, string> x = { { 1, "x" }, { 2, "y" } };`
     - `Dictionary<int, string> x = { [1] = "x", [2] = "y" };`
     - `Dictionary<int, string> x = [ { 1, "x" }, { 2, "y" } ];`
-    - `Dictionary<int, string> x = [1: "x", 2: "y"];`
+    - `Dictionary<int, string> x = [1:"x", 2:"y"];`
     - etc.
     
     </details>
