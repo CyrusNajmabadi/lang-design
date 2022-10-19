@@ -545,6 +545,32 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
 <!-- What other designs have been considered? What is the impact of not doing this? -->
 
+## Resolved questions
+[resolved]: #resolved-questions
+
+* In what order should we evaluate literal elements compared with Length/Count property evaluation?  Should we evaluate all elements first, then all lengths?  Or should we evaluate an element, then its length, then the next element, and so on?
+
+    Resolution: We evaluate all elements first, then everything else follows that.
+
+* Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
+
+    Resolution: Yes, we allow creating a fixes-length collection from an *unknown length* literal.  The compiler is permitted to implement this in as efficient a manner as possible.
+
+    The following text exists to record the original discussion of this topic.
+
+    <details>
+
+    Users could always make an *unknown-length* literal into a *known-length* one with code like:
+
+    ```c#
+    ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
+    ```
+
+    However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
+
+    </details>
+
+
 ## Unresolved questions
 [unresolved]: #unresolved-questions
 
@@ -555,10 +581,6 @@ Hopefully small questions:
 * Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
 
 * Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
-
-* In what order should we evaluate literal elements compared with Length/Count property evaluation?  Should we evaluate all elements first, then all lengths?  Or should we evaluate an element, then its length, then the next element, and so on?
-
-    Resolution: we evaluate all elements first, then everything else follows that.
 
 * Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
 
@@ -585,24 +607,6 @@ Hopefully small questions:
     The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
 
     A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
-
-    </details>
-
-* Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
-
-    Resolution: Yes, we allow creating a fixes-length collection from an *unknown length* literal.  The compiler is permitted to implement this in as efficient a manner as possible.
-
-    The following text exists to record the original discussion of this topic.
-
-    <details>
-
-    Users could always make an *unknown-length* literal into a *known-length* one with code like:
-
-    ```c#
-    ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
-    ```
-
-    However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
 
     </details>
 
