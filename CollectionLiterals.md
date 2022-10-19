@@ -94,7 +94,9 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
-* In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+
+* In the following sections, examples of literals without a `k:1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+
 * Variables starting with `__name` are used to represent the results of the evaluation of `name`, stored in a location so that it is only evaluated once.  For example `__e1` is the evaluation of `e1`.
 * `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
 * The specification defines a [translation](#collection-literal-translation) of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
