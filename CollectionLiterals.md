@@ -240,6 +240,7 @@ Each element of the literal is examined in the following fashion:
     * All `e_n` *expressions* are added to `remainder set`
     * All `..s_n` *iteration types* are added to `remainder set`
     * The *natural element type* is the `best-common-type` of the `remainder set`.
+    * The algorithm ends.
 
 * If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively. 
 
