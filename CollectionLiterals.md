@@ -414,7 +414,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
             // further additions of the remaining elements
         ```
 
-    This allows spreading of any iterable type, albeit with the least amount of optimization possible.
+        This allows spreading of any iterable type, albeit with the least amount of optimization possible.
 
     - If `T` is some `T1[]`, then the literal has the same semantics as:
 
@@ -439,7 +439,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
         <private_details>.Resize(ref __result, __index);
         ```
 
-        This approach allows the compiler to effectively 
+        This allows for minimal waste and copying, without additional overhead that library collections might incur.
 
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
