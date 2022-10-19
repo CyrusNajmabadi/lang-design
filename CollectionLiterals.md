@@ -793,4 +793,25 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 * Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
 
+
+* Creating an `ImmutableDictionary<,>` is not efficient with any of the translations exposed today.  The only translation that can create them would be:
+
+    ```c#
+    KeyValuePair<,>[] __temp = ...; // initialized with all values
+    ImmutableDictionary<,> __result = new ImmutableDictionary<,>();
+    __result.Construct(__temp);
+    ```
+
+    This has the benefit of giving the dictionary all values at once.  But it has the downside of allocating a buffer to just be thrown away.  Is it more desirable to define something like an `init void Add(T value)` method so that the above could be:
+
+    ```c#
+    KeyValuePair<,>[] __temp = ...; // initialized with all values
+    ImmutableDictionary<,> __result = new ImmutableDictionary<,>();
+    __result.Add(__e1);
+    foreach (var __v in __s1)
+        __result.Add(__v);
+        
+    // and so on.
+    ```
+
 * Do we need to target-type `spread_element`?  Consider, for example:
