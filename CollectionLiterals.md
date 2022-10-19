@@ -218,15 +218,15 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-* There is a set of types and expressions called `dictionary key set` and a set of types and expressions called `dictionary value set`.  These sets will either both be empty, or both be non-empty.
+* There is a set of types and expressions called `dictionary key set` a set of types and expressions called `dictionary value set`.  These sets will either both be empty, or both be non-empty.  There is also a set called `remainder set`.
 
-* Each `e_n` has its type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
+* Each `e_n` has its type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.  Otherwise, the `e_n` *expression* is added to `remainder set`.
 
-* Each  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
+* Each  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`. Otherwise, the *iteration type* is added to `remainder set`.
 
 * Each `k_n:v_n` adds `k_n` and `v_n` to `dictionary key set` and `dictionary value set` repectively.
 
-* If 
+* If `dictionary key/value set` are non-empty, then the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively.  If these succeed there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced. 
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
