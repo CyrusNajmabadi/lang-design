@@ -235,7 +235,7 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-* If the `dictionary key/value  set` sets are empty, then there was definitely no `k_n:v_n` elements.  In that case:
+* If the `dictionary key/value  set` sets are empty, then there was definitely no `k_n:v_n` elements. In that case:
 
     * All `e_n` *expressions* are added to `remainder set`
     * All `..s_n` *iteration types* are added to `remainder set`
