@@ -176,7 +176,7 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
     var v = []; // illegal
     ```
 
-    However, the following is allowed because of the use of the `best-common-type` algorithm:
+    However, the following is allowed because of the use of the `best-common-type` algorithm used in the conditional expression:
 
     ```c#
     bool b = ...
