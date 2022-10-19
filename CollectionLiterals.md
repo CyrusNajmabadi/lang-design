@@ -89,7 +89,7 @@ The following types can be constructed using a collection literal.  Actual trans
 * To spans.
 * To a type with a suitable [`Construct` method](#construct-methods).
 * To a type that supports [`collection initializer`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
-* 
+* Instantiations of the `List<T>` type.
 * Instantiations of the `Dictionary<TKey, TValue>` type.
 
 ### Spec clarifications
