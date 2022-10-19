@@ -326,7 +326,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
 * Given a target type `T` for that literal:
 
-    - If `T` is some `T1[]`, then the literal is translated as:
+    * If `T` is some `T1[]`, then the literal is translated as:
     
         ```c#
         T1[] __result = new T1[__len];
@@ -342,7 +342,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
         In this translation, `dictionary_element` is only supported if `T1` is some `KeyValuePair<,>`.
 
-    -  If `T` is some `Span<T1>`, then the literal is translated as the same as above, except that the `__result` initialization is translated as:
+    *  If `T` is some `Span<T1>`, then the literal is translated as the same as above, except that the `__result` initialization is translated as:
     
         ```c#
         Span<T1> __result = stackalloc T1[__len];
@@ -350,11 +350,11 @@ Not having a *known length* does not prevent any result from being created. Howe
         // same assignments as the array translation
         ```
 
-    - If `T` is some `ReadOnlySpan<T1>`, then the literal is translated the same as for the `Span<T1>` case except that the final result will be that `Span<T1>` [implicitly converted](https://docs.microsoft.com/en-us/dotnet/api/system.span-1.op_implicit?view=net-5.0#System_Span_1_op_Implicit_System_Span__0___System_ReadOnlySpan__0_) to a `ReadOnlySpan<T1>`.
+    * If `T` is some `ReadOnlySpan<T1>`, then the literal is translated the same as for the `Span<T1>` case except that the final result will be that `Span<T1>` [implicitly converted](https://docs.microsoft.com/en-us/dotnet/api/system.span-1.op_implicit?view=net-5.0#System_Span_1_op_Implicit_System_Span__0___System_ReadOnlySpan__0_) to a `ReadOnlySpan<T1>`.
 
     The above forms (for arrays and spans) are the base representations of the literal value and are used for the following translation rules.
 
-    - If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
+    * If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
 
         ```c#
         // Generate raw array-type or span-type value using 
@@ -367,9 +367,9 @@ Not having a *known length* does not prevent any result from being created. Howe
         __result.Construct(__storage);
         ```
 
-    - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
+    * If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then:
 
-        - if the type `T` contains an accessible constructor with a single parameter `int capacity`, then the literal is translated as:
+        * if the type `T` contains an accessible constructor with a single parameter `int capacity`, then the literal is translated as:
 
             ```c#
             T __result = new T(capacity: __len);
@@ -386,7 +386,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
             This form allows for a literal to inform the newly constructed type of the count of elements to allow for efficient allocation of internal storage.  This avoids wasteful reallocations as the elements are added.
 
-        - otherwise, the literal is translated as:
+        * otherwise, the literal is translated as:
 
             ```c#
             T __result = new T();
@@ -401,7 +401,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
-    - If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
+    * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
         ```c#
         List<T1> __list = [...]; /* initialized using predefined rules */
@@ -413,7 +413,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
 * Given a target type `T` for an *unknown length* literal:
 
-    - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
+    * If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
         ```c#
         T __result = new T();
@@ -428,14 +428,14 @@ Not having a *known length* does not prevent any result from being created. Howe
 
         This allows spreading of any iterable type, albeit with the least amount of optimization possible.
 
-    - If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
+    * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
         ```c#
         List<T1> __list = [...]; /* initialized using predefined rules */
         I<T1> __result = __list;
         ```
 
-    - If `T` is some `T1[]`, then the literal has the same semantics as:
+    * If `T` is some `T1[]`, then the literal has the same semantics as:
 
         ```c#
         List<T1> __list = [...]; /* initialized using predefined rules */
