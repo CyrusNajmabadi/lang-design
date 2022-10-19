@@ -785,26 +785,3 @@ https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#c
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
 
 ## Upcoming agenda items
-
-
-* We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
-
-    ```c#
-    IEnumerable<int> x = [1, 2, 3];
-    ```
-
-    However, it would not allow:
-
-    ```c#
-    IEnumerable<long> x = [1, 2, 3];
-    ```
-
-    as the target type information would not flow into the literal.  Is this a problem, or is it acceptable?  Should we special case IEnumerable and still target-type it?
-
-    IMO, yes.  The language defines [conversions](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/conversions.md#1028-implicit-reference-conversions) from arrays to certain interfaces.  Specifically
-
-        From a single-dimensional array type S[] to System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyList<T>, and their base interfaces, provided that there is an implicit identity or reference conversion from S to T
-
-    As such, it seems trivial to infer a type `T` for a `T[]` based on the interface's instantiation, and use that to do our normal construction semantics.  The `T[]` would then be exposed through whatever interface we are target-typing to.
-
-* Determine how a spread `..dict` works with dictionaries.  Presumably we will get `KeyValuePair`s from `dict` that we then need to grab the `.Key` and `.Value` from to update the destination.
