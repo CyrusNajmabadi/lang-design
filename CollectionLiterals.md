@@ -226,6 +226,8 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
 * Each `k_n:v_n` adds `k_n` and `v_n` to `dictionary key set` and `dictionary value set` repectively.
 
+* If 
+
 * If the literal contains at least one `expression_element` or `spread_element`:
 
     * The inputs to a first round of the `best-common-type` algorithm are the following expressions and types, which produce type `BCT`:
