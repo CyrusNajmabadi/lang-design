@@ -235,21 +235,33 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-* If the `dictionary key/value  set` sets are empty, then there was definitely no `k_n:v_n` elements. In that case:
+* If the `dictionary key/value set` sets are empty, then there was definitely no `k_n:v_n` elements. In that case the *fallback case* runs below.
+
+* If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
+
+    * If the first round fails for either set, the *fallback* case is run if applicable.
+    
+    * If the succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
+    
+        * If the second round fails, the *fallback* case is run if applicable.
+        * If the second round succeds, 
+
+      The *natural element type* is the `best-common-type` of `remainder set`
+
+        * If this succeeds, the algorithm ends.
+
+    * If this fails for either set, and there is a `dictionary_element`, there is no *natural element type*
+
+        * If this fails for either set, and there is `dictionary_element`
+
+* The *fallback case* (only allowed when there are no `k_n:v_n` elements):
 
     * All `e_n` *expressions* are added to `remainder set`
     * All `..s_n` *iteration types* are added to `remainder set`
     * The *natural element type* is the `best-common-type` of the `remainder set`.
     * The algorithm ends.
 
-* If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively. 
-
-    * If this succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  The *natural element type* is the `best-common-type` of `remainder set`.
-
-    * If this fails for either set, and there is a `dictionary_element`, there is no *natural element type*
-
-    * If this fails for either set, and there is `dictionary_element`
-
+* Anything else produces no *natural element type*.
 
 
 * If the literal contains at least one `expression_element` or `spread_element`:
