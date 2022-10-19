@@ -543,7 +543,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 ## Alternatives
 [alternatives]: #alternatives
 
-<!-- What other designs have been considered? What is the impact of not doing this? -->
+ * What other designs have been considered? What is the impact of not doing this?
 
 ## Resolved questions
 [resolved]: #resolved-questions
