@@ -570,7 +570,6 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     </details>
 
-
 * Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
     ```c#
     var x = [1, 2, 3];
