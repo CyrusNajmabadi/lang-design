@@ -263,7 +263,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
     var values = x ? [1, 2, 3] : [];
     ```
 
-    The natural-type of `[1, 2, 3]` is `List<int>`. As this is a constructible collection literal type, it is determined as the type for `[]` which is created using the existing rules, just without any elements added to it.
+    The best-common-type between `[1, 2, 3]` and `[]` causes `[]` to take on the type `[1, 2, 3]`, which is `List<int>` as per the existing natural type rules. As this is a constructible collection literal type, `[]` is treated as being target-typed to that collection type.
 
 
 ## Collection literal translation
