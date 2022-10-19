@@ -280,7 +280,7 @@ Each element of the literal is examined in the following fashion:
     var d3 = [..d1, ..d2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{ string, object }` to the determination of the `TKey` type and `{ object, string }` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{string,object}` to the determination of the `TKey` type and `{object,string}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
 
 * Given:
 
