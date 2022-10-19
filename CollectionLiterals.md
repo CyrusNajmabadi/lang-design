@@ -223,9 +223,9 @@ A [*natural element type*](#natural-element-type) `T` is first determiend.  If t
 ### Natural Element Type
 [natural-element-type]: #natural-element-type
 
-Computing the *natural element type* starts with a set of types and expressions called `dictionary key set` a set of types and expressions called `dictionary value set`, and a set of expressions and types called `remainder set`.
+Computing the *natural element type* starts with three sets of types and expressions called `dictionary key set`, `dictionary value set`, and `remainder set`.
 
-These `dictionary` sets will either both be empty, or both be non-empty.
+The `dictionary *** set` sets will either both be empty, or both be non-empty.
 
 Each element of the literal is examined in the following fashion:
 
