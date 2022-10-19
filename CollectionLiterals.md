@@ -403,8 +403,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
         ```c#
         List<T1> __list = ...; // using the existing translations
         I<T1> __result = __list;
-
-
+        ```
 
 ### Unknown-length translation
 [unknown-length-translation]: #unknown-length-translation
@@ -425,6 +424,13 @@ Not having a *known-length* does not prevent any result from being created. Howe
         ```
 
         This allows spreading of any iterable type, albeit with the least amount of optimization possible.
+
+    - If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
+
+        ```c#
+        List<T1> __list = ...; // using the existing translations
+        I<T1> __result = __list;
+        ```
 
     - If `T` is some `T1[]`, then the literal has the same semantics as:
 
