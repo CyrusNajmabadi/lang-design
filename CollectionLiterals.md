@@ -814,4 +814,13 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     // and so on.
     ```
 
+* How does overload resolution work?  If an API has:
+
+    ```C#
+    public void M(T[] values);
+    public void M(List<T> values);
+    ```
+
+    What happens with `M([1, 2, 3])`.  We likely need to define 'betterness' for these conversions.
+
 * Do we need to target-type `spread_element`?  Consider, for example:
