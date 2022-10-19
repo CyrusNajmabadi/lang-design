@@ -38,7 +38,7 @@ Further support is present for collection-like types not covered under the above
 
 * Getting the best performance for constructing each collection type can be tricky, with simple solutions often wasting both CPU and memory.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  Very often the compiler will be able to do better, and the specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
 
-An inclusive solution is needed for C#. It should meet the 99% case for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
+An inclusive solution is needed for C#. It should meet the vast majority of casse for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
 
 This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, ..c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, ..p2, p3]`.
 
