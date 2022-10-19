@@ -344,7 +344,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
     - If `T` is some `ReadOnlySpan<T1>`, then the literal is translated the same as for the `Span<T1>` case except that the final result will be that `Span<T1>` [implicitly converted](https://docs.microsoft.com/en-us/dotnet/api/system.span-1.op_implicit?view=net-5.0#System_Span_1_op_Implicit_System_Span__0___System_ReadOnlySpan__0_) to a `ReadOnlySpan<T1>`.
 
-    The above forms (for arrays and spans) are the base representations of the literal value and are used for the next translation rule.
+    The above forms (for arrays and spans) are the base representations of the literal value and are used for the following translation rules.
 
     - If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
 
