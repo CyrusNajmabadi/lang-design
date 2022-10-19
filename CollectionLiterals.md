@@ -214,9 +214,11 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
 ## Natural Type
 [natural-type]: #natural-type
 
-In the absence of a *target type* a non-empty literal can have a *natural type*.  The *natural type* will either be some instantiation of `List<T>` or `Dictionary<TKey, TValue>` depending on the elements contained within the literal.
+In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
+
+The overall algorithm (defined below) produces an element type `T`.  If that `T` is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
 * There is a set of types and expressions called `dictionary key set` a set of types and expressions called `dictionary value set`.  These sets will either both be empty, or both be non-empty.  There is also a set called `remainder set`.
 
@@ -226,7 +228,9 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
 * Each `k_n:v_n` adds `k_n` and `v_n` to `dictionary key set` and `dictionary value set` repectively.
 
-* If `dictionary key/value set` are non-empty, then the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively.  If these succeed there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced. 
+* If `dictionary key/value set` are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively.
+
+    *   If the first round succeeds, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  It is then added to the 
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
