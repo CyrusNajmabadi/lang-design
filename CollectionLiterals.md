@@ -171,8 +171,8 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
     var __builder = ImmutableArray.CreateBuilder<int>(initialCapacity: __len);
 
     __builder.Add(e1);
-    foreach (var __v in s1)
-        __builder.Add(__v);
+    foreach (var __t in s1)
+        __builder.Add(__t);
 
     // Add remainder of values.
 
@@ -334,8 +334,8 @@ Not having a *known length* does not prevent any result from being created. Howe
 
         __result[__index++] = __e1;
         __result[__index++] = new T1(__k1, __v1);
-        foreach (T1 __v in __s1)
-            __result[__index++] = __v;
+        foreach (T1 __t in __s1)
+            __result[__index++] = __t;
 
         // further assignments of the remaining elements
         ```
@@ -376,8 +376,8 @@ Not having a *known length* does not prevent any result from being created. Howe
 
             __result.Add(__e1);
             __result[__k1] = __v1;
-            foreach (var __v in __s1)
-                __result.Add(__v);
+            foreach (var __t in __s1)
+                __result.Add(__t);
 
             // further additions of the remaining elements
             ```
@@ -393,8 +393,8 @@ Not having a *known length* does not prevent any result from being created. Howe
 
             __result.Add(__e1);
             __result[__k1] = __v1;
-            foreach (var __v in __s1)
-                __result.Add(__v);
+            foreach (var __t in __s1)
+                __result.Add(__t);
 
             // further additions of the remaining elements
             ```
@@ -420,8 +420,8 @@ Not having a *known length* does not prevent any result from being created. Howe
 
         __result.Add(__e1);
         __result[__k1] = __v1;
-        foreach (var __v in __s1)
-            __result.Add(__v);
+        foreach (var __t in __s1)
+            __result.Add(__t);
 
             // further additions of the remaining elements
         ```
@@ -451,8 +451,8 @@ Not having a *known length* does not prevent any result from being created. Howe
         
         <private_details>.Add(ref __result, __index++, __e1);
         <private_details>.Add(ref __result, __index++, new T1(__k1, __v1));
-        foreach (var __v in __s1)
-            <private_details>.Add(ref __result, __index++, __v);
+        foreach (var __t in __s1)
+            <private_details>.Add(ref __result, __index++, __t);
 
             // further additions of the remaining elements
 
@@ -771,8 +771,8 @@ Hopefully small questions:
     int __index = 0;
 
     __result[__index++] = a;
-    foreach (int __v in __s1)
-        __result[index++] = __v;
+    foreach (int __t in __s1)
+        __result[index++] = __t;
     __result[__index++] = f;
 
     Span<int> span = __result;
@@ -813,8 +813,8 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     KeyValuePair<,>[] __temp = ...; // initialized with all values
     ImmutableDictionary<,> __result = new ImmutableDictionary<,>();
     __result.Add(__e1);
-    foreach (var __v in __s1)
-        __result.Add(__v);
+    foreach (var __t in __s1)
+        __result.Add(__t);
         
     // and so on.
     ```
