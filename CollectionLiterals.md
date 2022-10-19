@@ -97,6 +97,8 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 * In the following sections, examples of literals without a `k:v` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 
+* *iteration type* of `..sn` is the type of the *iteration variable* determined as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+
 * Variables starting with `__name` are used to represent the results of the evaluation of `name`, stored in a location so that it is only evaluated once.  For example `__e1` is the evaluation of `e1`.
 
 * `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
@@ -216,9 +218,11 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-* There is a set of types and expressions called `
+* There is a set of types and expressions called `dictionary key set` and a set of types and expressions called `dictionary value set`.
 
-* All `e_n` have their type determined.  If that type is some `KeyValuePair<,>`
+* All `e_n` have their type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
+
+* All `..s_n` 
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
