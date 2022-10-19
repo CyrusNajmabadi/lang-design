@@ -128,13 +128,11 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 * `CollectionType` is some other type known to be some [`constructible`](constructible-collection-types) type.
 
-If found, collection can be constructed by creating a fresh instance of its type, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.
+If found, the collection can be constructed by creating a fresh instance of its type, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance. Construction can be through an accesible constructor, or it can be obtained through the use of `default(T)` (if it is a struct without a `parameterless struct constructor`).  The [`init`](#init-methods) section describes this in more detail.
 
 The allowance for extension methods means that collection literal support can be added to a existing API without needing direct support on that API already.
 
 Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
-
-Note that the instance of type `T` can be constructed with an accesible constructor, or it can be obtained through the use of `default(T)` (if it is a struct without a `parameterless struct constructor`).  The [`init`](#init-methods) section describes this in more detail.
 
 ## `init` methods
 [init-methods]: #init-methods
