@@ -220,6 +220,8 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
 A [*natural element type*](#natural-element-type) `T` is first determiend.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
+This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<,>>` (though it certainly can be `target-typed` to that type).
+
 ### Natural Element Type
 [natural-element-type]: #natural-element-type
 
