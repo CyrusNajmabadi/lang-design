@@ -79,7 +79,7 @@ primary_no_array_creation_expression
   ;
 ```
 
-Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a *target type*.
+Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [*natural type*](#natural-type) in the absence of a *target type*.
 
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
@@ -109,7 +109,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
     * For example, an implementation could translate literals like `[1, 2, 3]` directly to a `new int[] { 1, 2, 3 }` expression that itself bakes the raw data into the assembly, eliding the need for `__index` or a sequence of instructions to assign each value. Importantly, this does mean if any step of the translation might cause an exception at runtime that the program state is still left in the state indicated by the translation.
 
-    * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
+    * Similarly, while a collection literal has a *natural type* of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
 * Collections are assumed to be well behaved.  For example:
 
@@ -216,7 +216,7 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
 
 In the absence of a *target type* a non-empty literal can have a *natural type*.
 
-The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
+The *natural type* is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
 A [*natural element type*](#natural-element-type) `T` is first determiend.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
@@ -272,7 +272,7 @@ Each element of the literal is examined in the following fashion:
 
     The *natural type* of `x` is `List<T>` where `T` is the *best common type* of `i` and the *iteration type* of `objects`.  Respectively, that would be the *best common type* between `string` and `object`, which would be `object`.  As such, the type of `x` would be `List<object>`.
 
-    Similarly, given:
+* Given:
 
     ```c#
     Dictionary<string, object> d1 = ...;
@@ -280,15 +280,15 @@ Each element of the literal is examined in the following fashion:
     var d3 = [..d1, ..d2];
     ```
 
-    The natural type of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a `spread_element` type of `KeyValuePair<string, object>` and `..d2` will have a `spread_element` type of `KeyValuePair<object, string>`.  As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `string` and `object` and `TValue` will be the *best common type* of `object` and `string`.  In both cases, that is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{ string, object }` to the determination of the `TKey` type and `{ object, string }` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
 
-    Similarly, given:
+* Given:
 
     ```c#
     var d = [null:null, "a":"b"];
     ```
 
-    The natural type of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
+    The *natural type* of `d` is `Dictionary<string, string>`.  This is because the two `dictionary_element` will have the type `KeyValuePair<,>`.   As such, as all types are `KeyValuePair<...>` the result is `Dictionary<TKey, TValue>` where `TKey` will be the *best common type* of `null-expression and string` and likewise for `TValue`. In both cases, that is `string`.
 
     For example, given:
 
@@ -296,8 +296,17 @@ Each element of the literal is examined in the following fashion:
     var values = x ? [1, 2, 3] : [];
     ```
 
-    The best-common-type between `[1, 2, 3]` and `[]` causes `[]` to take on the type `[1, 2, 3]`, which is `List<int>` as per the existing natural type rules. As this is a constructible collection literal type, `[]` is treated as being target-typed to that collection type.
+    The best-common-type between `[1, 2, 3]` and `[]` causes `[]` to take on the type `[1, 2, 3]`, which is `List<int>` as per the existing *natural type* rules. As this is a constructible collection literal type, `[]` is treated as being target-typed to that collection type.
 
+* Given:
+
+    ```c#
+    string s;
+    objec o;
+    var d = [s:o, o:s]
+    ```
+
+    The *natural type* of `d` is `Dictionary<object,object>`
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
@@ -567,7 +576,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
         Without complex lookahead, it would be impossible to tell without consuming the entirety of the literal.
 
-        Note: this is a problem even without a natural type because target-typing applies through `conditional_expressions`.
+        Note: this is a problem even without a *natural type* because target-typing applies through `conditional_expressions`.
 
         As with the others, we could require parentheses to disambiguate.  In other words, presume the `null_conditional_operation` interpretation unless written like so: `x ? ([1, 2, 3]) :`.  However, that seems rather unfortunate. This sort of code does not seem unreasonable to write and will likely trip people up.
 
@@ -617,13 +626,13 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     </details>
 
-* Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
+* Should a `collection_literal_expression` have a *natural type*?  In other words, should it be legal to write the following:
 
     ```c#
     var x = [1, 2, 3];
     ```
 
-    Resolution: Yes, the natural type will be an appropriate instantiation of `List<T>`. The following text exists to record the original discussion of this topic.
+    Resolution: Yes, the *natural type* will be an appropriate instantiation of `List<T>`. The following text exists to record the original discussion of this topic.
 
     <details>
 
@@ -643,7 +652,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     * Can the value be used in all contexts (for example, async/non-async)?
     * Can be used for *all* literal forms (for example, a `spread_element` of an *unknown length*)?
 
-    Note: for whatever type we pick as a natural type, the user can always target-type to the type they want with a simple cast, though that won't be pleasant.
+    Note: for whatever type we pick as a *natural type*, the user can always target-type to the type they want with a simple cast, though that won't be pleasant.
 
     With all of that, we have a matrix like so:
 
@@ -671,7 +680,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     I believe the only other reasonable alternative would be `ImmutableArray<T>`, but either with the caveat that that it cannot support `spread_elements` of *unknown length*, or that we will have to add a fair amount of complexity to this specification to allow for some API pattern to allow it to participate.  That said, we should strongly consider adding that complexity if we believe this will be the recommended collection type that we and the BCL will be encouraging people to use.
 
-    Finally, we could consider having different natural types in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
+    Finally, we could consider having different *natural types* in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
 
     </details>
 
@@ -690,7 +699,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     <details>
 
-    If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
+    If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its *natural type* of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
     ```c#
     void DoWork(IEnumerable<long> values) { ... }
@@ -708,7 +717,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
 
-    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
+    A downside to using an array would be if a *natural type* is added for collection literals and that *natural type* is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
     </details>
 
@@ -765,7 +774,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
 Hopefully small questions:
 
-* Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
+* Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a *natural type*.
 
 * Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
 
@@ -783,7 +792,7 @@ Hopefully small questions:
     Span<int> span = [a, ..b ? [c, d, e] : [], f];
     ```
 
-    In order to evaluate this full literal, we need to evaluate the element expressions within.  That means being able to evaluate `b ? [c] : [d, e]`.  However, absent a target type to evaluate this expression in the context of, and absent any sort of natural type, this would we would be unable to determine what to do with either `[c]` or `[d, e]` here.
+    In order to evaluate this full literal, we need to evaluate the element expressions within.  That means being able to evaluate `b ? [c] : [d, e]`.  However, absent a target type to evaluate this expression in the context of, and absent any sort of *natural type*, this would we would be unable to determine what to do with either `[c]` or `[d, e]` here.
 
     To resolve this, we could say that when evaluating a literal's `spread_element` expression, there was an implicit target type equivalent to the target type of the literal itself.  So, in the above, that would rewritten as:
 
