@@ -587,6 +587,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     </details>
 
 * Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
+
     ```c#
     var x = [1, 2, 3];
     ```
@@ -644,10 +645,19 @@ However, given the breadth and consistency brought by the new literal syntax, we
     </details>
 
 
-
-
-
 * Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
+
+For example:
+
+    ```c#
+    void DoWork(IEnumerable<long> values) { ... }
+    // ...
+    DoWork([1, 2, 3]);
+    ```
+
+    Resolution: Yes, a literal can be target-typed to any interface type `I<T>` that `List<T>` implements.  For example, `IEnumerable<long>`. This is the same as target-typing to `List<long>` and then assigning that result to the specified interface type. The following text exists to record the original discussion of this topic.
+
+    <details>
 
     If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
 
@@ -656,10 +666,6 @@ However, given the breadth and consistency brought by the new literal syntax, we
     // ...
     DoWork([1, 2, 3]);
     ```
-
-    The following text exists to record the original discussion of this topic.
-
-    <details>
 
     Considering the case of the element types matching (both being `int`):
 
