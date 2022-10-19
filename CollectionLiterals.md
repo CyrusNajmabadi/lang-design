@@ -106,7 +106,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 * Collections are assumed to be well behaved.  For example:
 
-    * It is assumed that the value of `Count` on a collection  will produce that same value as the number of elements when enumerated.
+    * It is assumed that the value of `Count` on a collection will produce that same value as the number of elements when enumerated.
     
     * The types used in this spec defined in the `System.Collections.Generic` namespace are presumed to be side-effect free.  As such, the compiler can optimize scenarios where such types might be used as intermediary values, but otherwise not be exposed.
 
