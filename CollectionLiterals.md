@@ -81,19 +81,6 @@ primary_no_array_creation_expression
 
 Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a *target type*.
 
-### Constructible collection types
-[constructible-collection-types]: #constructible-collection-types
-
-The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
-
-* Single dimensional arrays (e.g. `T[]`).
-* Spans (e.g. `Span<T>`)
-* Types with a suitable [`Construct` method](#construct-methods).
-* Instantiations of the `List<T>` type.  This also includes:
-    * instantiations of any interface type `I<T>` implemented by `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
-* Instantiations of the `Dictionary<TKey, TValue>` type.
-* Types that support [`collection initializers`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
-
 ### Spec clarifications
 [spec-clarifications]: #spec-clarifications
 
@@ -117,6 +104,19 @@ The following types can be constructed using a collection literal.  Actual trans
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
     * Collections are assumed to be well-behaved.  For example, it is assumed that the value of `Count` on a collection  will produce that same value as the count of elements when enumerated.  Behavior with collections that are not well-behaved is undefined.
+
+### Constructible collection types
+[constructible-collection-types]: #constructible-collection-types
+
+The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
+
+* Single dimensional arrays (e.g. `T[]`).
+* Spans (e.g. `Span<T>`)
+* Types with a suitable [`Construct` method](#construct-methods).
+* Instantiations of the `List<T>` type.  This also includes:
+    * instantiations of any interface type `I<T>` implemented by `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
+* Instantiations of the `Dictionary<TKey, TValue>` type.
+* Types that support [`collection initializers`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
 
 ## `Construct` methods
 [construct-methods]: #construct-methods
