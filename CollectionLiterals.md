@@ -795,9 +795,6 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
     * Only stackalloc when the literal has a *fixed* number of elements (i.e. no spread elements).  This then likely makes things always safe, with fixed stack usage, and the compiler (hopefully) able to reuse that fixed buffer.  However, it means things like `[1, 2, ..s]` would never be possible, even if the user knows it is completely safe at runtime.
 
-* Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
-
-
 * Creating an `ImmutableDictionary<,>` is not efficient with any of the translations exposed today.  The only translation that can create them would be:
 
     ```c#
@@ -826,5 +823,10 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     ```
 
     What happens with `M([1, 2, 3])`.  We likely need to define 'betterness' for these conversions.
+
+
+* Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
+
+
 
 * Do we need to target-type `spread_element`?  Consider, for example:
