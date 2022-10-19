@@ -327,7 +327,7 @@ Not having a *known-length* does not prevent any result from being created. Howe
         int __index = 0;
 
         __result[__index++] = __e1;
-        __result[__index++] = new T1(k1, v1);
+        __result[__index++] = new T1(__k1, __v1);
         foreach (T1 __v in __s1)
             __result[__index++] = __v;
 
@@ -443,8 +443,9 @@ Not having a *known-length* does not prevent any result from being created. Howe
             count_of_expression_elements + count_of_dictionary_elements);
         __result = 0;
         
-        <private_details>.Add(ref __result, __index++, e1);
-        foreach (var __v in s1)
+        <private_details>.Add(ref __result, __index++, __e1);
+        <private_details>.Add(ref __result, __index++, new T1(__k1, __v1));
+        foreach (var __v in __s1)
             <private_details>.Add(ref __result, __index++, __v);
 
             // further additions of the remaining elements
