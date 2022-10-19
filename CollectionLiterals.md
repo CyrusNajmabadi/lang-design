@@ -592,6 +592,10 @@ Hopefully small questions:
 
     Resolution: Yes, we allow creating a fixes-length collection from an *unknown length* literal.  The compiler is permitted to implement this in as efficient a manner as possible.
 
+    The following text exists to record the original discussion of this topic.
+
+    <details>
+
     Users could always make an *unknown-length* literal into a *known-length* one with code like:
 
     ```c#
@@ -599,6 +603,8 @@ Hopefully small questions:
     ```
 
     However, this is unfortunate due to the need to force allocations of temporary storage.  We could potentially be more efficient if we controlled how this was emitted.
+
+    </details>
 
 * Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
     ```c#
