@@ -401,20 +401,6 @@ Not having a *known-length* does not prevent any result from being created. Howe
 
 * Given a target type `T` for an *unknown-length* literal:
 
-    - If `T` is some `T1[]`, then the literal is translated as:
-
-        ```c#
-        T1[] __result = <private_implementation_details>.CreateArray<T1>(
-            count_of_expression_elements + count_of_dictionary_elements);
-        __index__ = 0;
-        
-        <private_implementation_details>.Add(ref __result, __index++, e1);
-        foreach (var __v in s1)
-            <private_implementation_details>.Add(ref __result, __index++, __v);
-
-            // further additions of the remaining elements
-        ```
-
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
         ```c#
@@ -429,6 +415,31 @@ Not having a *known-length* does not prevent any result from being created. Howe
         ```
 
     This allows spreading of any iterable type, albeit with the least amount of optimization possible.
+
+    - If `T` is some `T1[]`, then the literal has the same semantics as:
+
+        ```c#
+        List<T1> __list = [...]; // using pre-existing translation.
+        T1[] __result = __list.ToArray();
+        ```
+
+        The above is inefficient though as it creates the intermediary list, and then creates a copy of the final array from it.  Implementations are free to optimize this away, for example, producing code like so:
+
+        ```c#
+        T1[] __result = <private_details>.CreateArray<T1>(
+            count_of_expression_elements + count_of_dictionary_elements);
+        __result = 0;
+        
+        <private_details>.Add(ref __result, __index++, e1);
+        foreach (var __v in s1)
+            <private_details>.Add(ref __result, __index++, __v);
+
+            // further additions of the remaining elements
+
+        <private_details>.Resize(ref __result, __index);
+        ```
+
+        This approach allows the compiler to effectively 
 
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
