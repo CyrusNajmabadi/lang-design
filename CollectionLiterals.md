@@ -79,7 +79,7 @@ primary_no_array_creation_expression
   ;
 ```
 
-Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a target type.
+Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.1/target-typed-default.md#motivation) but also have a [natural type](#natural-type) in the absence of a *target type*.
 
 ### Supported collection types
 
