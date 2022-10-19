@@ -134,7 +134,7 @@ The allowance for extension methods means that collection literal support can be
 
 Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
 
-## `init` methods
+### `init Construct` methods
 [init-methods]: #init-methods
 
 Like [`init accessors`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-9.0/init.md#init-only-setters), an `init` method would be invocable at the point of object creation but become unavailable once object creation has completed. An `init` method is required to be an instance method. This facility thus prevents general use of such a marked method outside of known safe compiler scopes where the instance value being constructed cannot be observed until complete.
