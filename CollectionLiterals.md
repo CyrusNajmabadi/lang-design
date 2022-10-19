@@ -783,6 +783,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#c
 [working-group-meetings]: #working-group-meetings
 
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
+https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-14.md
 
 ## Upcoming agenda items
 
