@@ -218,7 +218,7 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-* There is a set of types and expressions called `dictionary key set` and a set of types and expressions called `dictionary value set`.
+* There is a set of types and expressions called `dictionary key set` and a set of types and expressions called `dictionary value set`.  These sets will either both be empty, or both be non-empty.
 
 * Each `e_n` has its type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
 
