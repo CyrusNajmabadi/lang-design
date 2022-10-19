@@ -220,13 +220,19 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
 The overall algorithm (defined below) produces an element type `T`.  If that `T` is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
-* There is a set of types and expressions called `dictionary key set` a set of types and expressions called `dictionary value set`.  These sets will either both be empty, or both be non-empty.  There is also a set called `remainder set`.
+### Natural Element Type
 
-* Each `e_n` has its type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.  Otherwise, the `e_n` *expression* is added to `remainder set`.
+Computing the *natural element type* starts with a set of types and expressions called `dictionary key set` a set of types and expressions called `dictionary value set`, and a set of expressions and types called `remainder set`.
 
-* Each  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`. Otherwise, the *iteration type* is added to `remainder set`.
+These `dictionary` sets will either both be empty, or both be non-empty.
 
-* Each `k_n:v_n` adds `k_n` and `v_n` to `dictionary key set` and `dictionary value set` repectively.
+Each element of the literal is examined in the following fashion:
+
+* An element `e_n` has its *type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.  Otherwise, the `e_n` *expression* is added to `remainder set`.
+
+* An element  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`. Otherwise, the *iteration type* is added to `remainder set`.
+
+* An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
 * If `dictionary key/value set` are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively.
 
