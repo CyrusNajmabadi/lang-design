@@ -288,7 +288,7 @@ If they all have such a property the literal is considered to have a *known leng
 
     * Each `spread_element` can have a different type and a different `Length` or `Count` property than the other elements.
 
-    * Having a *known-length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
+    * Having a *known length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
 * A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
 
@@ -307,14 +307,14 @@ If they all have such a property the literal is considered to have a *known leng
     ```
 -->
 
-### Known-length translation
+### Known length translation
 [known-length-translation]: #known-length-translation
 
-Having a *known-length* allows for efficient construction of a result with the potential for no copying of data and no unnecessary slack space in a result.
+Having a *known length* allows for efficient construction of a result with the potential for no copying of data and no unnecessary slack space in a result.
 
-Not having a *known-length* does not prevent any result from being created. However, it may result in extra CPU and memory costs producing the data, then moving to the final destination.
+Not having a *known length* does not prevent any result from being created. However, it may result in extra CPU and memory costs producing the data, then moving to the final destination.
 
-* For a *known-length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
+* For a *known length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
@@ -408,10 +408,10 @@ Not having a *known-length* does not prevent any result from being created. Howe
         I<T1> __result = __list;
         ```
 
-### Unknown-length translation
+### Unknown length translation
 [unknown-length-translation]: #unknown-length-translation
 
-* Given a target type `T` for an *unknown-length* literal:
+* Given a target type `T` for an *unknown length* literal:
 
     - If `T` supports [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), then the literal is translated as:
 
@@ -574,7 +574,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     Resolution: We evaluate all elements first, then everything else follows that.
 
-* Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
+* Can an *unknown length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
     Resolution: Yes, we allow creating a fixes-length collection from an *unknown length* literal.  The compiler is permitted to implement this in as efficient a manner as possible.
 
@@ -582,7 +582,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     <details>
 
-    Users could always make an *unknown-length* literal into a *known-length* one with code like:
+    Users could always make an *unknown length* literal into a *known length* one with code like:
 
     ```c#
     ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
@@ -631,7 +631,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     | `ImmutableArray<T>` | 1 | No | No | Yes | No* |
     | `ValueArray<T, N>` | ? | ? | ? | ? | ? |
 
-    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Construct` method used by *known-length* translation in order to support `ImmutableArray<T>` and any other collection.
+    \* `T[]`, `Span<T>` and `ImmutableArray<T>` might potentially work for 'all literal forms' if we extend this spec greatly with some sort of builder mechanism that allows us to tell it about all the pieces, with a final `T[]` or `Span<T>` obtained from the builder which can also then be passed to the `Construct` method used by *known length* translation in order to support `ImmutableArray<T>` and any other collection.
 
     Only `List<T>` gives us a `Yes` for all columns. However, getting `Yes` for everything is not necessarily what we desire.  For example, if we believe the future is one where immutable is the most desirable, the types like `T[]`, `Span<T>`, or `List<T>` may not compliment that well.  Similarly if we believe that people will want to use these without paying for allocations, then `Span<T>` and `ReadOnlySpan<T>` seem the most viable.
 
