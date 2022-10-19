@@ -590,6 +590,8 @@ Hopefully small questions:
 
 * Can an *unknown-length* literal create a collection type that needs a *known length*, like an array, span, or Construct(array/span) collection?  This would be harder to do efficiently, but it might be possible through clever use of pooled arrays and/or builders.
 
+    Resolution: Yes, we allow creating a fixes-length collection from an *unknown length* literal.  The compiler is permitted to implement this in as efficient a manner as possible.
+
     Users could always make an *unknown-length* literal into a *known-length* one with code like:
 
     ```c#
