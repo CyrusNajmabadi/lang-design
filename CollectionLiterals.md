@@ -103,7 +103,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
     * Similarly, while a collection literal has a natural type of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
-    * Collections are assumed to be well-behaved.  For example:
+    * Collections are assumed to be well behaved.  For example:
     
         * It is assumed that the value of `Count` on a collection  will produce that same value as the count of elements when enumerated.
         
