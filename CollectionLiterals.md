@@ -85,7 +85,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 [spec-clarifications]: #spec-clarifications
 
 * For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
-* `expression_element` instances will commonly be referred to as `e1`, `en`, etc.
+* `expression_element` instances will commonly be referred to as `e1`, `e_n`, etc.
 * `dictionary_element` instances will commonly be referred to as `k1:v1`, `k_n:v_n`, etc.
 * `spread_element` instances will commonly be referred to as `..s1`, `..s_n`, etc.
 * *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
