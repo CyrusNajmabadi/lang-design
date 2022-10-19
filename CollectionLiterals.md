@@ -211,7 +211,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
     * If `BCT` is some `KeyValuePair<,>` then the *natural type* will be some `Dictionary<,>`.
 
-        * The `TKey` type of the dictionary is determined by running the `best-common-type` algorithm again with the `TKey` type of the `KeyValuePair<,>` and all the `k_n` expressions for all the `dictionary_element` `k_n : v_n` in the literal.
+        * The `TKey` type of the dictionary is determined by running the `best-common-type` algorithm again with the `TKey` type of the `BCT` `KeyValuePair<,>` and all the `k_n` expressions for all the `dictionary_element` `k_n : v_n` in the literal.
 
         * The `TValue` type of the dictionary is determined by running the `best-common-type` algorithm again with the `TValue` type of the `KeyValuePair<,>` and all the `v_n` expressions for all the `dictionary_element` `k_n : v_n` in the literal.
 
