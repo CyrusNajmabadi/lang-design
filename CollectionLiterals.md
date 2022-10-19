@@ -85,8 +85,8 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
 
-* To single dimensional arrays.
-* To spans.
+* To single dimensional arrays (e.g. `T[]`).
+* To spans (e.g. `Span<T>`)
 * To a type with a suitable [`Construct` method](#construct-methods).
 * Instantiations of the `List<T>` type.
     * Any interface type `I<>` implemented by `List<T>` that has a single type parameter and which is instantiated as `I<T>` on `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
