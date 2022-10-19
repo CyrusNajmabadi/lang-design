@@ -106,7 +106,7 @@ The following types can be constructed using a collection literal.  Actual trans
     - Literals with no `expression_element` in them.
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
-* In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s1` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+* In the following sections, examples of literals without a `k1:v1` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 * `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
 * Much of the following spec will be defined in terms of a translation of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
 * An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
