@@ -247,14 +247,16 @@ Each element of the literal is examined in the following fashion:
         * If the second round succeds, `BCT_Final` is the *natural element type*.
         * The algorithm ends.
 
-* The *fallback case* (only allowed when there are no `k_n:v_n` elements):
+* The *fallback case*:
 
-    * All `e_n` *expressions* are added to `remainder set`
-    * All `..s_n` *iteration types* are added to `remainder set`
-    * The *natural element type* is the `best-common-type` of the `remainder set`.
-    * The algorithm ends.
+    * If there are no `k_n:v_n` elements:
 
-* Anything else produces no *natural element type*.
+        * All `e_n` *expressions* are added to `remainder set`
+        * All `..s_n` *iteration types* are added to `remainder set`
+        * The *natural element type* is the `best-common-type` of the `remainder set`.
+        * The algorithm ends.
+
+    * Otherwise, there is no no *natural element type*.
 
 ---
 
