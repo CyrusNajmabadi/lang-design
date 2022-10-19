@@ -207,7 +207,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
     * The inputs to a first round of the `best-common-type` algorithm are the following expressions and types, which produce type `BCT`:
 
         * For a `e_n` the input is the expression `e_n`.
-        * For a `spread_element` `'..s_n'` the input is *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
+        * For a `..s_n` the input is *iteration type* of `s_n` as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
     * If `BCT` is some `KeyValuePair<,>` then the *natural type* will be some `Dictionary<,>`.
 
