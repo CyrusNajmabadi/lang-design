@@ -85,7 +85,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 [spec-clarifications]: #spec-clarifications
 
 * For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
-* `expression_element` instances will commonly be referred to as `e1`, `e_n`, etc.
+* `expression_element` instances will commonly be referred to as `e1`, `en`, etc.
 * `dictionary_element` instances will commonly be referred to as `k1:v1`, `k_n:v_n`, etc.
 * `spread_element` instances will commonly be referred to as `..s1`, `..s_n`, etc.
 * *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
@@ -326,9 +326,9 @@ Not having a *known-length* does not prevent any result from being created. Howe
         T1[] __result = new T1[__len];
         int __index = 0;
 
-        __result[__index++] = e1;
+        __result[__index++] = __e1;
         __result[__index++] = new T1(k1, v1);
-        foreach (T1 __v in s1)
+        foreach (T1 __v in __s1)
             __result[__index++] = __v;
 
         // further assignments of the remaining elements
