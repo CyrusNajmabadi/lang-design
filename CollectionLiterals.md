@@ -216,7 +216,9 @@ In the absence of a *target type* a non-empty literal can have a *natural type*.
 
 The natural type is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-* All `e_n` have their type determined.
+* There is a set of types and expressions called `
+
+* All `e_n` have their type determined.  If that type is some `KeyValuePair<,>`
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
