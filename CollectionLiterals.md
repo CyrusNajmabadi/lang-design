@@ -271,7 +271,7 @@ The natural type is determined using the [`best-common-type`](https://github.com
 [collection-literal-translation]: #collection-literal-translation
 
 * The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
-If all elements do have either property the literal is considered to have a *known length*.
+If they all have such a property the literal is considered to have a *known length*.
 
     * In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
