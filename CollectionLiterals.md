@@ -105,7 +105,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
     * Collections are assumed to be well-behaved.  For example, it is assumed that the value of `Count` on a collection  will produce that same value as the count of elements when enumerated.  Behavior with collections that are not well-behaved is undefined.
 
-### Constructible collection types
+## Constructible collection types
 [constructible-collection-types]: #constructible-collection-types
 
 The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
