@@ -174,7 +174,9 @@ Through the use of the [`init`](#init-methods) modifier, support can also be add
     foreach (var __v in s1)
         __builder.Add(__v);
 
-    // add remainder of values 
+    // Add remainder of values.
+
+    // Create final result. __builder is now garbage.
     ImmutableArray<int> __result = __builder.MoveToImmutable();
     ```
 
