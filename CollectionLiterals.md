@@ -647,7 +647,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
 * Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
 
-For example:
+    For example:
 
     ```c#
     void DoWork(IEnumerable<long> values) { ... }
