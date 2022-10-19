@@ -571,45 +571,6 @@ However, given the breadth and consistency brought by the new literal syntax, we
     </details>
 
 
-## Unresolved questions
-[unresolved]: #unresolved-questions
-
-Hopefully small questions:
-
-* Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
-
-* Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
-
-* Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
-
-* Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
-
-    If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
-
-    ```c#
-    void DoWork(IEnumerable<long> values) { ... }
-    // ...
-    DoWork([1, 2, 3]);
-    ```
-
-    The following text exists to record the original discussion of this topic.
-
-    <details>
-
-    Considering the case of the element types matching (both being `int`):
-
-    ```c#
-    void DoWork(IEnumerable<int> values) { ... }
-    // ...
-    DoWork([1, 2, 3]);
-    ```
-
-    The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
-
-    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
-
-    </details>
-
 * Should a `collection_literal_expression` have a natural type?  In other words, should it be legal to write the following:
     ```c#
     var x = [1, 2, 3];
@@ -664,6 +625,48 @@ Hopefully small questions:
     I believe the only other reasonable alternative would be `ImmutableArray<T>`, but either with the caveat that that it cannot support `spread_elements` of *unknown length*, or that we will have to add a fair amount of complexity to this specification to allow for some API pattern to allow it to participate.  That said, we should strongly consider adding that complexity if we believe this will be the recommended collection type that we and the BCL will be encouraging people to use.
 
     Finally, we could consider having different natural types in different contexts (like in an async context, pick a type that isn't a ref struct), but that seems rather confusing and distasteful.
+
+    </details>
+
+
+
+
+## Unresolved questions
+[unresolved]: #unresolved-questions
+
+Hopefully small questions:
+
+* Should it be legal to create and immediately index into a collection literal?  Note: this requires an answer to the unresolved question below of whether collection literals have a natural type.
+
+* Stack allocations for huge collections might blow the stack.  Should the compiler have a heuristic for placing this data on the heap?  Should the language be unspecified to allow for this flexibility?  We should follow what the spec/impl does for [`params Span<T>`](https://github.com/dotnet/csharplang/issues/1757).
+
+* Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
+
+* Can a `collection_literal_expression` be target-typed to an `IEnumerable<T>` or other collection interfaces?
+
+    If `collection_literal_expression` is not target-typed to an `IEnumerable<T>`, then its natural type of `List<T>` allows it to be assigned to a compatible `IEnumerable<T>`. This would disallow `IEnumerable<long> x = [1, 2, 3];` since `List<int>` is not assignable to `IEnumerable<long>`. This feels like it will come up. For example:
+
+    ```c#
+    void DoWork(IEnumerable<long> values) { ... }
+    // ...
+    DoWork([1, 2, 3]);
+    ```
+
+    The following text exists to record the original discussion of this topic.
+
+    <details>
+
+    Considering the case of the element types matching (both being `int`):
+
+    ```c#
+    void DoWork(IEnumerable<int> values) { ... }
+    // ...
+    DoWork([1, 2, 3]);
+    ```
+
+    The open question here is determining what underlying type to actually create.  One option is to look at the proposal for [`params IEnumerable<T>`](https://github.com/dotnet/csharplang/issues/179).  There, we would generate an array to pass the values along, similar to what happens with `params T[]`.
+
+    A downside to using an array would be if a natural type is added for collection literals and that natural type is not `T[]`. There would be a potentially surprising difference when refactoring between `var x = [1, 2, 3];` and `IEnumerable<int> x = [1, 2, 3];`.
 
     </details>
 
