@@ -220,9 +220,11 @@ The natural type is determined using the [`best-common-type`](https://github.com
 
 * There is a set of types and expressions called `dictionary key set` and a set of types and expressions called `dictionary value set`.
 
-* All `e_n` have their type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
+* Each `e_n` has its type determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
 
-* All `..s_n` 
+* Each  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.
+
+* Each `k_n:v_n` adds `k_n` and `v_n` to `dictionary key set` and `dictionary value set` repectively.
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
