@@ -235,17 +235,21 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-If the `dictionary *** set` sets are empty:
+* If the `dictionary *** set` sets are empty, then there was definitely no `k_n:v_n` elements.  In that case:
 
+    * All `e_n` *expressions* are added to `remainder set`
+    * All `..s_n` *iteration types* are added to `remainder set`
+    * The *natural element type* is the `best-common-type` of the `remainder set`.
 
-
-If `dictionary key/value set` are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively. 
+* If `dictionary *** set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on each set to determine `BCT_Key` and `BCT_Value` respectively. 
 
     * If this succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  The *natural element type* is the `best-common-type` of `remainder set`.
 
     * If this fails for either set, and there is a `dictionary_element`, there is no *natural element type*
 
     * If this fails for either set, and there is `dictionary_element`
+
+
 
 * If the literal contains at least one `expression_element` or `spread_element`:
 
