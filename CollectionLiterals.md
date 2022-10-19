@@ -756,7 +756,6 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 ## Upcoming agenda items
 
 
-
 * We proposed that collections have a natural-type of `List<T>` which would allow for code like so:
 
     ```c#
