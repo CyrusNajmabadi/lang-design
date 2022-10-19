@@ -313,12 +313,10 @@ Not having a *known-length* does not prevent any result from being created. Howe
     ```c#
     int __len = count_of_expression_elements +
                 count_of_dictionary_elements +
-                s1.Count;
+                __s1.Count;
                 ...
-                sn.Count;
+                __sn.Count;
     ```
-
-    Note that the references to `s1`–`sn` refer to the prior evaluated result of each `spread_element` expression.
 
 * Given a target type `T` for that literal:
 
