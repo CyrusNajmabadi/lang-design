@@ -101,7 +101,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 * `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
 
-* The specification defines a [translation](#collection-literal-translation) of the literal to existing C# constructs.  The literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
+* The specification defines a [translation](#collection-literal-translation) of the literal to existing C# constructs.  Similar to the [`query expression translation`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#11173-query-expression-translation) the literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
 
 * An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
 
