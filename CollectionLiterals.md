@@ -355,22 +355,23 @@ If they all have such a property the literal is considered to have a *known leng
 ### Interface translation
 [interface-translation]: #interface-translation
 
-* Given a target type `T` for a literal:
+Given a target type `T` for a literal:
 
-    * If `T` is some interface `I<TKey,TValue>` where that interface is implemented by `Dictionary<TKey,TValue>`, then the literal is translated as:
+* If `T` is some interface `I<TKey,TValue>` where that interface is implemented by `Dictionary<TKey,TValue>`, then the literal is translated as:
 
-        ```c#
-        Dictionary<TKey,TValue> __temp = [...]; /* standard translation */
-        I<TKey,TValue> __result = __temp;
-        ```
+    ```c#
+    Dictionary<TKey,TValue> __temp = [...]; /* standard translation */
+    I<TKey,TValue> __result = __temp;
+    ```
 
-    * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
+* If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
-        ```c#
-        List<T1> __temp = [...]; /* standard translation */
-        I<T1> __result = __temp;
-        ```
+    ```c#
+    List<T1> __temp = [...]; /* standard translation */
+    I<T1> __result = __temp;
+    ```
 
+In other words, the translation works by using the specified rules with the concrete `List<T>` or `Dictionary<TKey,TValue>` types as the target type.  That translated value is then implicitly converted to the resultant interface type.
 
 ### Known length translation
 [known-length-translation]: #known-length-translation
