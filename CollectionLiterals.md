@@ -244,7 +244,7 @@ Each element of the literal is examined in the following fashion:
 
     * If the first round fails for either set, the *fallback case* runs below.
 
-    * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key,BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
+    * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key, BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
 
         * If the second round fails, the *fallback* case runs below.
         * If the second round succeds, `BCT_Final` is the *natural element type*.
@@ -259,7 +259,7 @@ Each element of the literal is examined in the following fashion:
         * The *natural element type* is the `best-common-type` of the `remainder set`.
         * The algorithm ends.
 
-    * Otherwise, there is no no *natural element type*.
+    * Otherwise, there is no *natural element type*.
 
 ---
 
@@ -281,7 +281,7 @@ Each element of the literal is examined in the following fashion:
     var d3 = [..d1, ..d2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{string,object}` to the determination of the `TKey` type and `{object,string}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{string, object}` to the determination of the `TKey` type and `{object, string}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
 
 * Given:
 
