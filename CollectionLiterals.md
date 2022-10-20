@@ -238,7 +238,7 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n: v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-* If the `dictionary key/value set` sets are empty, then there were definitely no `k_n: v_n` elements. In that case the *fallback case* runs below.
+* If the `dictionary key/value set` sets are empty, then there were definitely no `k_n: v_n` elements. In that case, the *fallback case* runs below.
 
 * If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
 
