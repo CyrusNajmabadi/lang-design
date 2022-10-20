@@ -423,8 +423,7 @@ Not having a *known length* does not prevent any result from being created. Howe
     * If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
 
         ```c#
-        // Generate raw array-type or span-type value using 
-        // one of the above rules.
+        // Generate raw array-type or span-type value using one of the above rules.
         T1[] __storage = ...
         // or
         Span<T1> __storage = ...
@@ -494,7 +493,7 @@ Not having a *known length* does not prevent any result from being created. Howe
         T1[] __result = __list.ToArray();
         ```
 
-        The above is inefficient though as it creates the intermediary list, and then creates a copy of the final array from it.  Implementations are free to optimize this away, for example, producing code like so:
+        The above is inefficient though; it creates the intermediary list, and then creates a copy of the final array from it.  Implementations are free to optimize this away, for example producing code like so:
 
         ```c#
         T1[] __result = <private_details>.CreateArray<T1>(
