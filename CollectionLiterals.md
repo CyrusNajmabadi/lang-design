@@ -693,7 +693,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     * `List<T>` is a viable final form for any potential list literal (including those with spreads of *unknown length*)
     * Spans types and ValueArray are too esoteric, and the inability to use ref structs within async-contexts is likely a deal breaker for broad acceptance.
 
-    As such, while it unfortunate that it has two allocations, `List<T>` seems be the most broadly applicable. This is likely what we would want from the natural type.
+    As such, while it unfortunate that it has two allocations, `List<T>` seems be the most broadly applicable. This is likely what we would want from the *natural type*.
 
     I believe the only other reasonable alternative would be `ImmutableArray<T>`, but either with the caveat that that it cannot support `spread_elements` of *unknown length*, or that we will have to add a fair amount of complexity to this specification to allow for some API pattern to allow it to participate.  That said, we should strongly consider adding that complexity if we believe this will be the recommended collection type that we and the BCL will be encouraging people to use.
 
