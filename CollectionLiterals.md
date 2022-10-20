@@ -10,14 +10,14 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 ## Summary
 [summary]: #summary
 
-Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1:v1, ..d1]` form is also supported for creating dictionaries.
+Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1: v1, ..d1]` form is also supported for creating dictionaries.
 
 Several collection-like types can be created without requiring external BCL support.  These types are:
 * [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
-* [`Span<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=net-5.0) and [`ReadOnlySpan<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.readonlyspan-1?view=net-5.0).
-* Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-5.0) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0).
+* [`Span<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.span-1) and [`ReadOnlySpan<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1).
+* Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2).
 
-Further support is present for collection-like types not covered under the above, such as [`ImmutableArray<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1?view=net-5.0), through a new API pattern that can be adopted directly on the type itself or through extension methods.
+Further support is present for collection-like types not covered under the above, such as [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), through a new API pattern that can be adopted directly on the type itself or through extension methods.
 
 ## Motivation
 [motivation]: #motivation
@@ -36,13 +36,13 @@ Further support is present for collection-like types not covered under the above
 
 * C# has also added [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md) in C# 10.  This pattern allows matching and deconstruction of list-like values using a clean and intuitive syntax.  However, unlike almost all other pattern constructs, this matching/deconstruction syntax lacks the corresponding construction syntax.
 
-* Getting the best performance for constructing each collection type can be tricky, with simple solutions often wasting both CPU and memory.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  Very often the compiler will be able to do better, and the specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
+* Getting the best performance for constructing each collection type can be tricky. Simple solutions often waste both CPU and memory.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  Very often the compiler will be able to do better, and the specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
 
 An inclusive solution is needed for C#. It should meet the vast majority of casse for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
 
 This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, ..c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, ..p2, p3]`.
 
-A form for dictionary-like collections is also supported where the elements of the literal are written as `k:v` like `[k1:v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1:var v1]`) would be desirable here.
+A form for dictionary-like collections is also supported where the elements of the literal are written as `k: v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable.
 
 ## Detailed design
 [design]: #detailed-design
@@ -86,7 +86,7 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
 * For brevity, `collection_literal_expression` will be referred to as "literal" in the following sections.
 * `expression_element` instances will commonly be referred to as `e1`, `e_n`, etc.
-* `dictionary_element` instances will commonly be referred to as `k1:v1`, `k_n:v_n`, etc.
+* `dictionary_element` instances will commonly be referred to as `k1: v1`, `k_n: v_n`, etc.
 * `spread_element` instances will commonly be referred to as `..s1`, `..s_n`, etc.
 * *span type* means either `Span<T>` or `ReadOnlySpan<T>`.
 * Literals will commonly be shown as `[e1, ..s1, e2, ..s2, etc]` to convey any number of elements in any order.  Importantly, this form will be used to represent all cases such as:
@@ -95,15 +95,15 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
     - Literals with no `spread_element` in them.
     - Literals with arbitrary ordering of any element type.
 
-* In the following sections, examples of literals without a `k:v` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
+* In the following sections, examples of literals without a `k: v` element should assumed to not have any `dictionary_element` in them. Any usages of `..s` should be assumed to be a spread of a non-dictionary value.  Sections that refer to dictionary behavior will call that out.
 
 * The *iteration type* of `..s_n` is the type of the *iteration variable* determined as if `s_n` were used as the expression being iterated over in a [`foreach_statement`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/statements.md#1295-the-foreach-statement).
 
 * Variables starting with `__name` are used to represent the results of the evaluation of `name`, stored in a location so that it is only evaluated once.  For example `__e1` is the evaluation of `e1`.
 
-* `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>`  refer to the respective types in the `System.Collections.Generic` namespace.
+* `List<T>`, `Dictionary<TKey, TValue>` and `KeyValuePair<TKey, TValue>` refer to the respective types in the `System.Collections.Generic` namespace.
 
-* The specification defines a [translation](#collection-literal-translation) of the literal to existing C# constructs.  Similar to the [`query expression translation`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#11173-query-expression-translation) the literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied here (for example, about convertibility of expressions when assigned to storage locations).
+* The specification defines a [translation](#collection-literal-translation) of the literal to existing C# constructs.  Similar to the [`query expression translation`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#11173-query-expression-translation), the literal is itself only legal if the translation would result in legal code.  The purpose of this rule is to avoid having to repeat other rules of the language that are implied (for example, about convertibility of expressions when assigned to storage locations).
 
 * An implementation is not required to translate literals exactly as specified below.  Any translation is legal as long as the same result is produced and there are no observable differences (outside of timing) in the production of the result.
 
@@ -111,10 +111,10 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 
     * Similarly, while a collection literal has a *natural type* of `List<T>`, it is permissable to avoid such an allocation if the result would not be observable.  For example, `foreach (var toggle in [true, false])`.  Because the elements are all that the user's code can refer to, the above could be optimized away into a direct stack allocation.
 
-* Collections are assumed to be well behaved.  For example:
+* Collections are assumed to be well-behaved.  For example:
 
     * It is assumed that the value of `Count` on a collection will produce that same value as the number of elements when enumerated.
-    
+
     * The types used in this spec defined in the `System.Collections.Generic` namespace are presumed to be side-effect free.  As such, the compiler can optimize scenarios where such types might be used as intermediary values, but otherwise not be exposed.
 
     * The behavior of collection literals with collections that are not well-behaved is undefined.
@@ -122,13 +122,13 @@ Collection literals are [target-typed](https://github.com/dotnet/csharplang/blob
 ## Constructible collection types
 [constructible-collection-types]: #constructible-collection-types
 
-The following types can be constructed using a collection literal.  Actual translation of  the literal to the corresponding is defined [below](#collection-literal-translation).
+The following types can be constructed using a collection literal.  Actual translation of the literal to the corresponding is defined [below](#collection-literal-translation).
 
 * Single dimensional arrays (e.g. `T[]`).
 * Spans (e.g. `Span<T>`)
 * Types with a suitable [`Construct` method](#construct-methods).
 * Instantiations of any interface type `I<T>` implemented by `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
-* Instantiations of any interface type `I<TKey,TValue>` implemented by `Dictionary<TKey,TValue>`.  For example, `IDictionary<TKey,TValue>`, `IReadOnlyDictionary<TKey,TValue>`.
+* Instantiations of any interface type `I<TKey,TValue>` implemented by `Dictionary<TKey, TValue>`.  For example, `IDictionary<TKey, TValue>`, `IReadOnlyDictionary<TKey, TValue>`.
 * Types that support [`collection initializers`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
 
 `List<T>` and `Dictionary<TKey, TValue>` are both constructible by virtue of them both supporting `collection initializers`.
@@ -141,9 +141,9 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 * the `Construct` method is found on an instance of `T` (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
-* `CollectionType` is some other type known to be some [`constructible`](constructible-collection-types) type.
+* `CollectionType` is some other type known to be a [`constructible`](constructible-collection-types) type.
 
-If found, the collection can be constructed by creating a fresh instance of its type using `new T()`, producing the corresponding argument to pass to `Construct` and then calling that method on the fresh instance.  `new T()` supports all structs, including those without a `parameterless struct constructor`.
+If found, the collection can be constructed by creating a fresh instance of its type using `new T()`, producing the corresponding argument to pass to `Construct`, and then calling that method on the fresh instance.  `new T()` supports all structs, including those without a `parameterless struct constructor`.
 
 The allowance for extension methods means that collection literal support can be added to a existing API without needing direct support on that API already.
 
