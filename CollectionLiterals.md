@@ -290,7 +290,7 @@ Each element of the literal is examined in the following fashion:
 
     The *natural type* of `d` is `Dictionary<string, string>`.  This is because the `k_n:v_n` elements will construct the set `{null,"a"}`for the determination of the `TKey` type and `{null,"b"}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `string`.
 
-    For example, given:
+* Given:
 
     ```c#
     var values = x ? [1, 2, 3] : [];
