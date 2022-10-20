@@ -281,7 +281,7 @@ Each element of the literal is examined in the following fashion:
     var d3 = [..d1, ..d2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{string, object}` to the determination of the `TKey` type and `{object, string}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `..d1` will have a *iteration type* of `KeyValuePair<string, object>` and `..d2` will have a *iteration type* of `KeyValuePair<object, string>`. These will contribute `{string, object}` to the determination of the `TKey` type and `{object, string}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
 * Given:
 
@@ -289,7 +289,7 @@ Each element of the literal is examined in the following fashion:
     var d = [null: null, "a": "b"];
     ```
 
-    The *natural type* of `d` is `Dictionary<string, string>`.  This is because the `k_n: v_n` elements will construct the set `{null,"a"}`for the determination of the `TKey` type and `{null,"b"}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `string`.
+    The *natural type* of `d` is `Dictionary<string, string>`.  This is because the `k_n: v_n` elements will construct the set `{null, "a"}` for the determination of the `TKey` type and `{null, "b"}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `string`.
 
 * Given:
 
