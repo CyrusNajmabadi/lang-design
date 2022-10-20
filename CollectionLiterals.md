@@ -420,13 +420,11 @@ Not having a *known length* does not prevent any result from being created. Howe
 
     The above forms (for arrays and spans) are the base representations of the literal value and are used for the following translation rules.
 
-    * If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is either an array or span type, then the literal is translated as:
+    * If `T` supports [object creation](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#object-creation-expressions), then [member lookup](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#member-lookup) on `T` is performed to find an accessible `void Construct(T1 values)` method. If found, and if `T1` is a [*constructible*](#constructible-collection-types) collection type, then the literal is translated as:
 
         ```c#
-        // Generate raw array-type or span-type value using one of the above rules.
-        T1[] __storage = ...
-        // or
-        Span<T1> __storage = ...
+        // Generate __storage using existing rules.
+        T1 __storage = [...];
 
         T __result = new T();
         __result.Construct(__storage);
