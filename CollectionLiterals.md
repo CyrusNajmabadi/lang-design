@@ -446,11 +446,18 @@ Not having a *known length* does not prevent any result from being created. Howe
 
             This allows creating the target type, albeit with no capacity optimization to prevent internal reallocation of storage.
 
+    * If `T` is some interface `I<TKey,TValue>` where that interface is implemented by `Dictionary<TKey,TValue>`, then the literal is translated as:
+
+        ```c#
+        Dictionary<TKey,TValue> __temp = [...]; /* initialized using predefined rules */
+        I<TKey,TValue> __result = __temp;
+        ```
+
     * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
         ```c#
-        List<T1> __list = [...]; /* initialized using predefined rules */
-        I<T1> __result = __list;
+        List<T1> __temp = [...]; /* initialized using predefined rules */
+        I<T1> __result = __temp;
         ```
 
 ### Unknown length translation
