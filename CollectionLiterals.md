@@ -12,7 +12,7 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 
 Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1:v1, ..d1]` form is also supported for creating dictionaries.
 
-Several collection-like target types are supported without requiring external BCL support.  These types are:
+Several collection-like types can be created without requiring external BCL support.  These types are:
 * [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
 * [`Span<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=net-5.0) and [`ReadOnlySpan<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.readonlyspan-1?view=net-5.0).
 * Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-5.0) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0).
