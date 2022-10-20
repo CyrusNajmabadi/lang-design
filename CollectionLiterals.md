@@ -145,7 +145,7 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 If found, the collection can be constructed by creating a fresh instance of its type using `new T()`, producing the corresponding argument to pass to `Construct`, and then calling that method on the fresh instance.  `new T()` supports all structs, including those without a `parameterless struct constructor`.
 
-The allowance for extension methods means that collection literal support can be added to a existing API which does not already have direct support.
+The allowance for extension methods means that collection literal support can be added to a existing API which does not already directly support this.
 
 Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
 
