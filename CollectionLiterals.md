@@ -782,7 +782,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
     - `Dictionary<int, string> x = [ { 1, "x" }, { 2, "y" } ];`
     - `Dictionary<int, string> x = [1:"x", 2:"y"];`
     - etc.
-    
+
     </details>
 
 
