@@ -877,7 +877,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     public void M(List<T> values);
     ```
 
-    What happens with `M([1, 2, 3])`.  We likely need to define 'betterness' for these conversions.
+    What happens with `M([1, 2, 3])`?  We likely need to define 'betterness' for these conversions.
 
 
 * Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
