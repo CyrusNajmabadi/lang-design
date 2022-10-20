@@ -238,7 +238,7 @@ Each element of the literal is examined in the following fashion:
 
 * An element `k_n: v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
-* If the `dictionary key/value set` sets are empty, then there was definitely no `k_n:v_n` elements. In that case the *fallback case* runs below.
+* If the `dictionary key/value set` sets are empty, then there was definitely no `k_n: v_n` elements. In that case the *fallback case* runs below.
 
 * If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
 
@@ -252,7 +252,7 @@ Each element of the literal is examined in the following fashion:
 
 * The *fallback case*:
 
-    * If there are no `k_n:v_n` elements:
+    * If there are no `k_n: v_n` elements:
 
         * All `e_n` *expressions* are added to `remainder set`
         * All `..s_n` *iteration types* are added to `remainder set`
@@ -286,10 +286,10 @@ Each element of the literal is examined in the following fashion:
 * Given:
 
     ```c#
-    var d = [null:null, "a":"b"];
+    var d = [null: null, "a": "b"];
     ```
 
-    The *natural type* of `d` is `Dictionary<string, string>`.  This is because the `k_n:v_n` elements will construct the set `{null,"a"}`for the determination of the `TKey` type and `{null,"b"}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `string`.
+    The *natural type* of `d` is `Dictionary<string, string>`.  This is because the `k_n: v_n` elements will construct the set `{null,"a"}`for the determination of the `TKey` type and `{null,"b"}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `string`.
 
 * Given:
 
@@ -304,10 +304,10 @@ Each element of the literal is examined in the following fashion:
     ```c#
     string s1, s2;
     objec o1, o2;
-    var d = [s1:o1, o2:s2];
+    var d = [s1: o1, o2: s2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n:v_n` elements will construct the set `{s1,o1}`for the determination of the `TKey` type and `{o2,s2}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n: v_n` elements will construct the set `{s1,o1}`for the determination of the `TKey` type and `{o2,s2}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
 
 * Given:
 
@@ -380,7 +380,7 @@ Having a *known length* allows for efficient construction of a result with the p
 
 Not having a *known length* does not prevent any result from being created. However, it may result in extra CPU and memory costs producing the data, then moving to the final destination.
 
-* For a *known length* literal `[e1, k1:v1, ..s1, e2, k2:v2, ..s2, etc]`, the translation first starts with the following:
+* For a *known length* literal `[e1, k1: v1, ..s1, e2, k2: v2, ..s2, etc]`, the translation first starts with the following:
 
     ```c#
     int __len = count_of_expression_elements +
@@ -548,7 +548,7 @@ While collection literals can be used for many scenarios, there are a few that t
         var v = [ a ? [b] : c ];
         ```
 
-        This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k:v"` where `a?[b]` is `k`, and `c` is `v`.
+        This could be interpreted as `expression_element` where the `expression` is a `conditional_expression` (e.g. `[ (a ? [b] : c) ]`).  Or it could be interpreted as a `dictionary_element` `"k: v"` where `a?[b]` is `k`, and `c` is `v`.
 
 * There are two cases where there isn't a true ambiguity but where the syntax greatly increases parsing complexity.  While not a problem given engineering time, this does still increase cognitive overhead for users when looking at code.
 
@@ -742,7 +742,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
 * How would we proceed on this in the future to get dictionary literals?
 
-    Resolution: The form `[k:v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k:v, ..d]`) The following text exists to record the original discussion of this topic.
+    Resolution: The form `[k: v]` is supported for dictionary literals.  Dictionary literals also support spreading (e.g. `[k: v, ..d]`) The following text exists to record the original discussion of this topic.
 
     <details>
 
