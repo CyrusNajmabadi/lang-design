@@ -317,13 +317,13 @@ Each element of the literal is examined in the following fashion:
     var d = [KeyValuePair.Create(s1, o1), KeyValuePair.Create(o2, s2)];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `e_n` elements are `KeyValuePair<string,object>` and `KeyValuePair<object,string>` respectively.  These will construct the set `{string,object}`for the determination of the `TKey` type and `{object,string}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `e_n` elements are `KeyValuePair<string, object>` and `KeyValuePair<object, string>` respectively.  These will construct the set `{string, object}`for the determination of the `TKey` type and `{object, string}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
 
 * The types of each `spread_element` expression are examined to see if they contain an accessible instance `int Length { get; }` or `int Count { get; }` property in the same fashion as [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md).  
-If they all have such a property the literal is considered to have a *known length*.
+If they all have such a property, the literal is considered to have a *known length*.
 
     * In examples below, references to `.Count` refer to this computed length, however it was obtained.
 
@@ -335,7 +335,7 @@ If they all have such a property the literal is considered to have a *known leng
 
     * Having a *known length* does not affect what collections can be created.  It only affects how efficiently the construction can happen. For example, a *known length* literal is statically guaranteed to efficiently create an array or span at runtime.  Specifically, allocating the precise storage needed, and placing all values in the right location once.
 
-* A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount?view=net-7.0) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
+* A literal without a *known length* does not have a guarantee around efficient construction.  However, such a literal may still be efficient at runtime.  For example, the compiler is free to use helpers like [`TryGetNonEnumeratedCount(IEnumerable<T>, out int count)`](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.trygetnonenumeratedcount) to determine *at runtime* the capacity needed for the constructed collection.  As above, in examples below, references to `.Count` refer to this computed length, however it was obtained.
 
 * All elements expressions are evaluated left to right (similar to [array_creation_expression](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#array-creation-expressions)).  These expressions are only evaluated once and any further references to them will refer to the result of that evaluation.
 
