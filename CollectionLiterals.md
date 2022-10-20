@@ -593,7 +593,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
         Without complex lookahead, it would be impossible to tell without consuming the entirety of the literal.
 
-        Note: this is a problem even without a *natural type* because target-typing applies through `conditional_expressions`.
+        Note: this is a problem even without a *natural type* because target typing applies through `conditional_expressions`.
 
         As with the others, we could require parentheses to disambiguate.  In other words, presume the `null_conditional_operation` interpretation unless written like so: `x ? ([1, 2, 3]) :`.  However, that seems rather unfortunate. This sort of code does not seem unreasonable to write and will likely trip people up.
 
