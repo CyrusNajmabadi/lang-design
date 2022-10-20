@@ -128,7 +128,7 @@ The following types can be constructed using a collection literal.  Actual trans
 * Spans (e.g. `Span<T>`)
 * Types with a suitable [`Construct` method](#construct-methods).
 * Instantiations of any interface type `I<T>` implemented by `List<T>`.  For example, `IEnumerable<T>`, `IList<T>`, `IReadOnlyList<T>`.
-* Instantiations of any interface type `I<TKey,TValue>` implemented by `Dictionary<TKey, TValue>`.  For example, `IDictionary<TKey, TValue>`, `IReadOnlyDictionary<TKey, TValue>`.
+* Instantiations of any interface type `I<TKey, TValue>` implemented by `Dictionary<TKey, TValue>`.  For example, `IDictionary<TKey, TValue>`, `IReadOnlyDictionary<TKey, TValue>`.
 * Types that support [`collection initializers`](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#117154-collection-initializers).
 
 `List<T>` and `Dictionary<TKey, TValue>` are both constructible by virtue of them both supporting `collection initializers`.
@@ -215,13 +215,13 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
 ## Natural Type
 [natural-type]: #natural-type
 
-In the absence of a *target type* a non-empty literal can have a *natural type*.
+In the absence of a *target type*, a non-empty literal can have a *natural type*.
 
 The *natural type* is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
-A [*natural element type*](#natural-element-type) `T` is first determiend.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey,TValue>`, then the *natural type* of the collection is `Dictionary<TKey,TValue>`, otherwise the *natural type* of the collection is `List<T>`.
+A [*natural element type*](#natural-element-type) `T` is first determined.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey, TValue>`, then the *natural type* of the collection is `Dictionary<TKey, TValue>`, otherwise the *natural type* of the collection is `List<T>`.
 
-This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<TKey,TValue>>` (though it certainly can be `target-typed` to that type).
+This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<TKey, TValue>>` (though it certainly can be `target-typed` to that type).
 
 ### Natural Element Type
 [natural-element-type]: #natural-element-type
@@ -232,9 +232,9 @@ The `dictionary key/value set` sets will either both be empty, or both be non-em
 
 Each element of the literal is examined in the following fashion:
 
-* An element `e_n` has its *type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.  Otherwise, the `e_n` *expression* is added to `remainder set`.
+* An element `e_n` has its *type* determined.  If that type is some `KeyValuePair<TKey, TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`.  Otherwise, the `e_n` *expression* is added to `remainder set`.
 
-* An element  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey,TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`. Otherwise, the *iteration type* is added to `remainder set`.
+* An element  `..s_n` has its *iteration type* determined.  If that type is some `KeyValuePair<TKey, TValue>`, then `TKey` is added to `dictionary key set` and `TValue` is added to `dictionary value set`. Otherwise, the *iteration type* is added to `remainder set`.
 
 * An element `k_n:v_n` adds the `k_n` and `v_n` *expressions* to `dictionary key set` and `dictionary value set` repectively.
 
@@ -357,11 +357,11 @@ If they all have such a property the literal is considered to have a *known leng
 
 Given a target type `T` for a literal:
 
-* If `T` is some interface `I<TKey,TValue>` where that interface is implemented by `Dictionary<TKey,TValue>`, then the literal is translated as:
+* If `T` is some interface `I<TKey, TValue>` where that interface is implemented by `Dictionary<TKey, TValue>`, then the literal is translated as:
 
     ```c#
-    Dictionary<TKey,TValue> __temp = [...]; /* standard translation */
-    I<TKey,TValue> __result = __temp;
+    Dictionary<TKey, TValue> __temp = [...]; /* standard translation */
+    I<TKey, TValue> __result = __temp;
     ```
 
 * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
@@ -371,7 +371,7 @@ Given a target type `T` for a literal:
     I<T1> __result = __temp;
     ```
 
-In other words, the translation works by using the specified rules with the concrete `List<T>` or `Dictionary<TKey,TValue>` types as the target type.  That translated value is then implicitly converted to the resultant interface type.
+In other words, the translation works by using the specified rules with the concrete `List<T>` or `Dictionary<TKey, TValue>` types as the target type.  That translated value is then implicitly converted to the resultant interface type.
 
 ### Known length translation
 [known-length-translation]: #known-length-translation
