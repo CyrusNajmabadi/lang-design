@@ -519,11 +519,11 @@ Not having a *known length* does not prevent any result from being created. Howe
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  These include:
 
-* Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
+* Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all collection literals are either linear or map structures only.
 
 * Collections which pass special values to their constructors.  For example `new Dictionary<string, object>(CaseInsensitiveComparer.Instance)`.  There is no facility to access the constructor being used in either target or natural-typing scenarios.
 
-* Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay as it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
+* Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay since it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
 
 ## Syntax Ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
