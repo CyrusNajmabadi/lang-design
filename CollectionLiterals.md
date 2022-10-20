@@ -185,7 +185,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
 
 ## Empty Collection Literal
 
-* In the absence of a *target type* the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any [`constructible`](#constructible-collection-types) collection type.
+* In the absence of a *target type*, the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any [`constructible`](#constructible-collection-types) collection type.
 
     For example, the following is not legal as there is no *target type* and there are no other conversions involved:
 
@@ -209,7 +209,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
     var v = [x, y, .. b ? [1, 2, 3] : []];
     ```
 
-    Here, if `b` is false it is not required that any value actually be constructed for the empty literal as it would immediately be spread into zero values in the final literal.
+    Here, if `b` is false it is not required that any value actually be constructed for the empty literal since it would immediately be spread into zero values in the final literal.
 
 
 ## Natural Type
