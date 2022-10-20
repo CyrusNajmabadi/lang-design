@@ -209,7 +209,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
     var v = [x, y, .. b ? [1, 2, 3] : []];
     ```
 
-    Here, if `b` is false it is not required that any value actually be constructed for the empty literal since it would immediately be spread into zero values in the final literal.
+    Here, if `b` is false, it is not required that any value actually be constructed for the empty literal since it would immediately be spread into zero values in the final literal.
 
 
 ## Natural Type
