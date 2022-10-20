@@ -633,7 +633,7 @@ However, given the breadth and consistency brought by the new literal syntax, we
 
     <details>
 
-    Users could always make an *unknown length* literal into a *known length* one with code like:
+    Users could always make an *unknown length* literal into a *known length* one with code like this:
 
     ```c#
     ImmutableArray<int> x = [a, ..unknownLength.ToArray(), b];
