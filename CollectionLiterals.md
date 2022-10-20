@@ -217,7 +217,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
 
 In the absence of a *target type*, a non-empty literal can have a *natural type*.
 
-The *natural type* is determined using the [`best-common-type`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
+The *natural type* is determined using the [*best common type*](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#116315-finding-the-best-common-type-of-a-set-of-expressions) algorithm.
 
 A [*natural element type*](#natural-element-type) `T` is first determined.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey, TValue>`, then the *natural type* of the collection is `Dictionary<TKey, TValue>`; otherwise, the *natural type* of the collection is `List<T>`.
 
@@ -240,11 +240,11 @@ Each element of the literal is examined in the following fashion:
 
 * If the `dictionary key/value set` sets are empty, then there were definitely no `k_n: v_n` elements. In that case, the *fallback case* runs below.
 
-* If `dictionary key/value set` sets are non-empty, then a first round of the `best-common-type` algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
+* If `dictionary key/value set` sets are non-empty, then a first round of the *best common type* algorithm in performed on those sets to determine `BCT_Key` and `BCT_Value` respectively.
 
     * If the first round fails for either set, the *fallback case* runs below.
 
-    * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key, BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the `best-common-type` algorithm is performed on this set to determine `BCT_Final`.
+    * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key, BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the *best common type* algorithm is performed on this set to determine `BCT_Final`.
 
         * If the second round fails, the *fallback* case runs below.
         * If the second round succeds, `BCT_Final` is the *natural element type*.
@@ -256,7 +256,7 @@ Each element of the literal is examined in the following fashion:
 
         * All `e_n` *expressions* are added to `remainder set`
         * All `..s_n` *iteration types* are added to `remainder set`
-        * The *natural element type* is the `best-common-type` of the `remainder set`.
+        * The *natural element type* is the *best common type* of the `remainder set`.
         * The algorithm ends.
 
     * Otherwise, there is no *natural element type*.
@@ -297,7 +297,7 @@ Each element of the literal is examined in the following fashion:
     var values = x ? [1, 2, 3] : [];
     ```
 
-    The best-common-type between `[1, 2, 3]` and `[]` causes `[]` to take on the type `[1, 2, 3]`, which is `List<int>` as per the existing *natural type* rules. As this is a constructible collection literal type, `[]` is treated as being target-typed to that collection type.
+    The *best common type* between `[1, 2, 3]` and `[]` causes `[]` to take on the type `[1, 2, 3]`, which is `List<int>` as per the existing *natural type* rules. As this is a constructible collection literal type, `[]` is treated as being target-typed to that collection type.
 
 * Given:
 
@@ -307,7 +307,7 @@ Each element of the literal is examined in the following fashion:
     var d = [s1: o1, o2: s2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n: v_n` elements will construct the set `{s1,o1}`for the determination of the `TKey` type and `{o2,s2}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n: v_n` elements will construct the set `{s1,o1}`for the determination of the `TKey` type and `{o2,s2}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
 * Given:
 
@@ -317,7 +317,7 @@ Each element of the literal is examined in the following fashion:
     var d = [KeyValuePair.Create(s1, o1), KeyValuePair.Create(o2, s2)];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `e_n` elements are `KeyValuePair<string,object>` and `KeyValuePair<object,string>` respectively.  These will construct the set `{string,object}`for the determination of the `TKey` type and `{object,string}` to the determination of the `TValue` type.  In both cases, the best-common-type of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `e_n` elements are `KeyValuePair<string,object>` and `KeyValuePair<object,string>` respectively.  These will construct the set `{string,object}`for the determination of the `TKey` type and `{object,string}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
