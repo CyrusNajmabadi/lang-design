@@ -147,7 +147,7 @@ If found, the collection can be constructed by creating a fresh instance of its 
 
 The allowance for extension methods means that collection literal support can be added to a existing API which does not already directly support this.
 
-Through the use of the [`init`](#init-methods) modifier, support can also be added to existing APIs in a manner that allows for no-overhead production of the data the final collection will store.
+Through the use of the [`init`](#init-methods) modifier, existing APIs can directly support collection literals in a manner that allows for no-overhead production of the data the final collection will store.
 
 ### `init Construct` methods
 [init-methods]: #init-methods
