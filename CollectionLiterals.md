@@ -393,7 +393,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 * Given a target type `T` for that literal:
 
     * If `T` is some `T1[]`, then the literal is translated as:
-    
+
         ```c#
         T1[] __result = new T1[__len];
         int __index = 0;
@@ -409,7 +409,7 @@ Not having a *known length* does not prevent any result from being created. Howe
         In this translation, `dictionary_element` is only supported if `T1` is some `KeyValuePair<,>`.
 
     *  If `T` is some `Span<T1>`, then the literal is translated as the same as above, except that the `__result` initialization is translated as:
-    
+
         ```c#
         Span<T1> __result = stackalloc T1[__len];
 
