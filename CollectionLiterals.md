@@ -345,7 +345,7 @@ If they all have such a property, the literal is considered to have a *known len
 
 
 <!--
-* When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural-type of the `spread_element`.  This difference can be demonstrated with:
+* When evaluating a `spread_element`, the evaluation should happen with a target-type equivalent to the type of the collection being produced.  If such a evaluation is not allowed, then the evaluation should happen using the natural type of the `spread_element`.  This difference can be demonstrated with:
 
     ```c#
     Span<int> span = [a, ..b ? [c, d] : [], f];
