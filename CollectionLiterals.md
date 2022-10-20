@@ -367,7 +367,7 @@ If they all have such a property the literal is considered to have a *known leng
     * If `T` is some interface `I<T1>` where that interface is implemented by `List<T1>`, then the literal is translated as:
 
         ```c#
-        List<T1> __temp = [...]; /* initialized using predefined rules */
+        List<T1> __temp = [...]; /* standard translation */
         I<T1> __result = __temp;
         ```
 
