@@ -360,7 +360,7 @@ If they all have such a property the literal is considered to have a *known leng
     * If `T` is some interface `I<TKey,TValue>` where that interface is implemented by `Dictionary<TKey,TValue>`, then the literal is translated as:
 
         ```c#
-        Dictionary<TKey,TValue> __temp = [...]; /* initialized using predefined rules */
+        Dictionary<TKey,TValue> __temp = [...]; /* standard translation */
         I<TKey,TValue> __result = __temp;
         ```
 
