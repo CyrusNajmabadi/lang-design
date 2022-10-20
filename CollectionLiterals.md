@@ -228,7 +228,7 @@ This means there is no way for a literal to have a *natural type* of some `List<
 
 Computing the *natural element type* starts with three sets of types and expressions called `dictionary key set`, `dictionary value set`, and `remainder set`.
 
-The `dictionary key/value set` sets will either both be empty, or both be non-empty.
+The `dictionary key/value set` sets will either both be empty or both be non-empty.
 
 Each element of the literal is examined in the following fashion:
 
