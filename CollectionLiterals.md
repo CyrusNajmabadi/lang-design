@@ -303,17 +303,17 @@ Each element of the literal is examined in the following fashion:
 
     ```c#
     string s1, s2;
-    objec o1, o2;
+    object o1, o2;
     var d = [s1: o1, o2: s2];
     ```
 
-    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n: v_n` elements will construct the set `{s1,o1}`for the determination of the `TKey` type and `{o2,s2}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
+    The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `k_n: v_n` elements will construct the set `{s1, o1}` for the determination of the `TKey` type and `{o2, s2}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
 * Given:
 
     ```c#
     string s1, s2;
-    objec o1, o2;
+    object o1, o2;
     var d = [KeyValuePair.Create(s1, o1), KeyValuePair.Create(o2, s2)];
     ```
 
