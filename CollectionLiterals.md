@@ -499,7 +499,7 @@ Not having a *known length* does not prevent any result from being created. Howe
         T1[] __result = <private_details>.CreateArray<T1>(
             count_of_expression_elements + count_of_dictionary_elements);
         __result = 0;
-        
+
         <private_details>.Add(ref __result, __index++, __e1);
         <private_details>.Add(ref __result, __index++, new T1(__k1, __v1));
         foreach (var __t in __s1)
@@ -517,7 +517,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 ## Unsupported Scenarios
 [unsupported-scenarios]: #unsupported-scenarios
 
-While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  This includes:
+While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  These include:
 
 * Multi-dimensional arrays (e.g. `new int[5, 10] { ... }`). There is no facility to include the dimensions, and all literals are either linear or map structures only.
 
