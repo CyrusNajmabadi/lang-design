@@ -341,7 +341,7 @@ If they all have such a property, the literal is considered to have a *known len
 
 * Evaluation of the element expressions happens entirely first.  Only after all those evaluations happen are calls to `Count` (or `Length` or `TryGetNonEnumeratedCount`) and all enumerations made.
 
-* Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `"__kvp"`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
+* Certain translations below attempt to find a suitable `Add` method by which to add either `expression_element` or `spread_element` members to the collection.  If such an `Add` method cannot be found *and* the value being added is some `KeyValuePair<,>` `__kvp`, then the translation will instead try to emit `__result[__kvp.Key] = __kvp.Value;`.
 
 
 <!--
