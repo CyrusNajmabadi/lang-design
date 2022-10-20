@@ -866,7 +866,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     __result.Add(__e1);
     foreach (var __t in __s1)
         __result.Add(__t);
-        
+
     // and so on.
     ```
 
@@ -881,7 +881,3 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 
 * Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
-
-
-
-* Do we need to target-type `spread_element`?  Consider, for example:
