@@ -319,6 +319,10 @@ Each element of the literal is examined in the following fashion:
 
     The *natural type* of `d3` is `Dictionary<object, object>`.  This is because the `e_n` elements are `KeyValuePair<string, object>` and `KeyValuePair<object, string>` respectively.  These will construct the set `{string, object}`for the determination of the `TKey` type and `{object, string}` to the determination of the `TValue` type.  In both cases, the *best common type* of each of these sets is `object`.
 
+## Span types
+[span-types]: #span-types
+
+
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
 
