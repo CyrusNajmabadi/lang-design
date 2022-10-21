@@ -223,6 +223,8 @@ The *natural type* is determined using the [*best common type*](https://github.c
 
 A [*natural element type*](#natural-element-type) `T` is first determined.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey, TValue>`, then the *natural type* of the collection is `Dictionary<TKey, TValue>`; otherwise, the *natural type* of the collection is `List<T>`.
 
+If the *natural type* of the collection is `List<T>` the literal is not allowed to contain a `dictionary_element`.
+
 This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<TKey, TValue>>` (though it certainly can be *target-typed* to that type).
 
 
