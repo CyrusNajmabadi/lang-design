@@ -352,6 +352,13 @@ foreach (var x in y)
 
 This approach ensures the stack does not grow in an unbounded fashion, though it may not be possible in all collection-literal cases.
 
+If the compiler decides to allocate on the heap, the translation for `Span<T>` is simply:
+
+```c#
+T[] __array = [...]; // using existing rules
+Span<T> __result = __array;
+```
+
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
 
