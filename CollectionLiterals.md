@@ -258,8 +258,7 @@ Each element of the literal is examined in the following fashion:
 
         * All `e_n` *expressions* are added to `remainder set`
         * All `..s_n` *iteration types* are added to `remainder set`
-        * The *natural element type* is the *best common type* of the `remainder set` 
-        * The algorithm ends.
+        * The *natural element type* is the *best common type* of the `remainder set` and the algorithm ends.
 
 ---
 
