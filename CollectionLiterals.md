@@ -527,7 +527,7 @@ While collection literals can be used for many scenarios, there are a few that t
 
 * Nested collection initializers, e.g. `new Widget { Children = { w1, w2, w3 } }`.  This form needs to stay since it has very different semantics from `Children = [w1, w2, w3]`.  The former calls `.Add` repeatedly on `.Children` while the latter would assign a new collection over `.Children`.  We could consider having the latter form fall back to adding to an existing collection if `.Children` can't be assigned, but that seems like it could be extremely confusing.
 
-## Syntax Ambiguities
+## Syntax ambiguities
 [syntax-ambiguities]: #syntax-ambiguities
 
 * There are two "true" syntactic ambiguities where there are multiple legal syntactic interpretations of code that uses a `collection_literal_expression`.
