@@ -342,6 +342,7 @@ foreach (var x in y)
     __buffer[0] = a
     __buffer[1] = b
     __buffer[2] = c;
+    Span<int> span = __buffer;
     // do things with span
 }
 ```
@@ -875,6 +876,7 @@ https://github.com/dotnet/csharplang/blob/main/meetings/2022/LDM-2022-09-28.md#c
 
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-06.md
 https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-14.md
+https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collection-literals/CL-2022-10-21.md
 
 ## Upcoming agenda items
 
