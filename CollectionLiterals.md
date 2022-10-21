@@ -149,6 +149,7 @@ The allowance for extension methods means that collection literal support can be
 
 Through the use of the [`init`](#init-methods) modifier, existing APIs can directly support collection literals in a manner that allows for no-overhead production of the data the final collection will store.
 
+
 ### `init Construct` methods
 [init-methods]: #init-methods
 
@@ -182,6 +183,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
     // Create final result. __builder is now garbage.
     ImmutableArray<int> __result = __builder.MoveToImmutable();
     ```
+
 
 ## Empty collection literal
 
@@ -222,6 +224,7 @@ The *natural type* is determined using the [*best common type*](https://github.c
 A [*natural element type*](#natural-element-type) `T` is first determined.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey, TValue>`, then the *natural type* of the collection is `Dictionary<TKey, TValue>`; otherwise, the *natural type* of the collection is `List<T>`.
 
 This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<TKey, TValue>>` (though it certainly can be *target-typed* to that type).
+
 
 ### Natural Element Type
 [natural-element-type]: #natural-element-type
@@ -322,7 +325,7 @@ Each element of the literal is examined in the following fashion:
 ## Span types
 [span-types]: #span-types
 
-The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types)
+The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types).  Support for them follows the design for [`params Span<T>`](https://github.com/dotnet/csharplang/blob/main/proposals/params-span.md). 
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
