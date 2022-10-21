@@ -325,7 +325,7 @@ Each element of the literal is examined in the following fashion:
 ## Span types
 [span-types]: #span-types
 
-The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types).  Support for them follows the design for [`params Span<T>`](https://github.com/dotnet/csharplang/blob/main/proposals/params-span.md). 
+The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types).  Support for them follows the design for [`params Span<T>`](https://github.com/dotnet/csharplang/blob/main/proposals/params-span.md). Specifically, constructing either of those spans will result in an array T[] created on the [stack](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/unsafe-code.md#229-stack-allocation) if the params array is within limits (if any) set by the compiler. Otherwise the array will be allocated on the heap.
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
