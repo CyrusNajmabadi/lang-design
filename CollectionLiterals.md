@@ -257,14 +257,10 @@ Each element of the literal is examined in the following fashion:
 
 * The *fallback case*:
 
-    * If there are no `k_n: v_n` elements:
-
         * All `e_n` *expressions* are added to `remainder set`
         * All `..s_n` *iteration types* are added to `remainder set`
         * The *natural element type* is the *best common type* of the `remainder set`.
         * The algorithm ends.
-
-    * Otherwise, there is no *natural element type*.
 
 ---
 
