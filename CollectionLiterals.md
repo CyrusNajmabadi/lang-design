@@ -322,7 +322,7 @@ Each element of the literal is examined in the following fashion:
 ## Span types
 [span-types]: #span-types
 
-
+The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types)
 
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
