@@ -930,4 +930,4 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
     M([1, 2, 3]);
     ```
 
-    Here, `Immutable<T>` is constructible through an `init void Construct(T[] values)` method.  So the `T[] values` type would be used with inference against `[1, 2, 3]` leading to an inference of `int` for `T`
+    Here, `Immutable<T>` is constructible through an `init void Construct(T[] values)` method.  So the `T[] values` type would be used with inference against `[1, 2, 3]` leading to an inference of `int` for `T`.
