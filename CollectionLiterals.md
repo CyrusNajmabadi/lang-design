@@ -516,7 +516,7 @@ Not having a *known length* does not prevent any result from being created. Howe
 
         The counts passed to `CreateArray` are used to provide a starting size hint to prevent wasteful resizes.
 
-## Unsupported Scenarios
+## Unsupported scenarios
 [unsupported-scenarios]: #unsupported-scenarios
 
 While collection literals can be used for many scenarios, there are a few that they are not capable of replacing.  These include:
