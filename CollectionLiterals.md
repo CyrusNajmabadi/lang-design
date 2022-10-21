@@ -183,7 +183,7 @@ Through the use of the [`init`](#init-methods) modifier, existing APIs can direc
     ImmutableArray<int> __result = __builder.MoveToImmutable();
     ```
 
-## Empty Collection Literal
+## Empty collection literal
 
 * In the absence of a *target type*, the empty literal `[]` has no type.  However, similar to the [`null-literal`](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/lexical-structure.md#6457-the-null-literal), this literal can be converted to any [`constructible`](#constructible-collection-types) collection type.
 
