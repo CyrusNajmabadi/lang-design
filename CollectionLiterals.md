@@ -252,13 +252,13 @@ Each element of the literal is examined in the following fashion:
     * If the first rounds succeeds for both sets, there is a `KeyValuePair<BCT_Key, BCT_Value>` type produced.  This type is added to `remainder set`.  A second round of the *best common type* algorithm is performed on this set to determine `BCT_Final`.
 
         * If the second round fails, the *fallback* case runs below.
-        * If the second round succeds, `BCT_Final` is the *natural element type* and the algorithm ends.
+        * Otherwise `BCT_Final` is the *natural element type* and the algorithm ends.
 
 * The *fallback case*:
 
         * All `e_n` *expressions* are added to `remainder set`
         * All `..s_n` *iteration types* are added to `remainder set`
-        * The *natural element type* is the *best common type* of the `remainder set`.
+        * The *natural element type* is the *best common type* of the `remainder set` 
         * The algorithm ends.
 
 ---
