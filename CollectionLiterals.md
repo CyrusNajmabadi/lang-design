@@ -915,3 +915,19 @@ https://github.com/dotnet/csharplang/blob/main/meetings/working-groups/collectio
 
 
 * Should we expand on collection initializers to look for the very common `AddRange` method? It could be used by the underlying constructed type to perform adding of spread elements potentially more efficiently.  We might also want to look for things like `.CopyTo` as well.  There may be drawbacks here as those methods might end up causing excess allocations/dispatches versus directly enumerating in the translated code.
+
+* Generic type inference should be updated to flow type information to/from collection literals.  For example:
+
+    ```C#
+    void M<T>(T[] values);
+    M([1, 2, 3]);
+    ```
+
+    It seems natural that this should be something the inference algorithm can be made aware of.  Once this is supported for the 'base' constructible collection type cases (`T[]`, `I<T>`, `Span<T>` `new T()`), then it should also fall out of the `Collect(constructible_type)` case.  For example:
+
+    ```C#
+    void M<T>(ImmutableArray<T> values);
+    M([1, 2, 3]);
+    ```
+
+    Here, `Immutable<T>` is constructible through an `init void Construct(T[] values)` method.  So the `T[] values` type would be used with inference against `[1, 2, 3]` leading to an inference of `int` for `T.
