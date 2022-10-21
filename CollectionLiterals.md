@@ -327,6 +327,31 @@ Each element of the literal is examined in the following fashion:
 
 The span types `ReadOnlySpan<T>` and `Span<T>` are both [*constructible collection types*](#constructible-collection-types).  Support for them follows the design for [`params Span<T>`](https://github.com/dotnet/csharplang/blob/main/proposals/params-span.md). Specifically, constructing either of those spans will result in an array T[] created on the [stack](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/unsafe-code.md#229-stack-allocation) if the params array is within limits (if any) set by the compiler. Otherwise the array will be allocated on the heap.
 
+If the compiler chooses to allocate on the stack, it is not required to translate a literal directly to a `stackalloc` at that specific point.  For example, given:
+
+```c#
+foreach (var x in y)
+{
+    Span<int> span = [a, b, c];
+    // do things with span
+}
+```
+
+The compiler is allowed to translate that using `stackalloc` however it wants, as long as the `Span` meaning stays the same and [`span-safety`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.2/span-safety.md) is maintained.  For example, it can translate the above to:
+
+```c#
+Span<int> __buffer = stackalloc int[3];
+foreach (var x in y)
+{
+    __buffer[0] = a
+    __buffer[1] = b
+    __buffer[2] = c;
+    // do things with span
+}
+```
+
+This approach ensures the stack does not grow in an unbounded fashion, though it may not be possible in all collection-literal cases.
+
 ## Collection literal translation
 [collection-literal-translation]: #collection-literal-translation
 
