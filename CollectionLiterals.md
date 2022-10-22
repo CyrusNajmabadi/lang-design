@@ -223,7 +223,7 @@ The *natural type* is determined using the [*best common type*](https://github.c
 
 A [*natural element type*](#natural-element-type) `T` is first determined.  If that cannot be determined, the literal has no *natural type*.  If `T` can be determined and it is some `KeyValuePair<TKey, TValue>`, then the *natural type* of the collection is `Dictionary<TKey, TValue>`; otherwise, the *natural type* of the collection is `List<T>`.
 
-If the *natural type* of the collection is `List<T>` the literal is not allowed to contain a `dictionary_element`.
+If the *natural type* of the collection is `List<T>`, the literal is not allowed to contain a `dictionary_element`.
 
 This means there is no way for a literal to have a *natural type* of some `List<KeyValuePair<TKey, TValue>>` (though it certainly can be *target-typed* to that type).
 
@@ -333,21 +333,21 @@ foreach (var x in y)
 }
 ```
 
-The compiler is allowed to translate that using `stackalloc` however it wants, as long as the `Span` meaning stays the same and [`span-safety`](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.2/span-safety.md) is maintained.  For example, it can translate the above to:
+The compiler is allowed to translate that using `stackalloc` however it wants, as long as the `Span` meaning stays the same and [span safety](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.2/span-safety.md) is maintained.  For example, it can translate the above to:
 
 ```c#
 Span<int> __buffer = stackalloc int[3];
 foreach (var x in y)
 {
-    __buffer[0] = a
-    __buffer[1] = b
+    __buffer[0] = a;
+    __buffer[1] = b;
     __buffer[2] = c;
     Span<int> span = __buffer;
     // do things with span
 }
 ```
 
-This approach ensures the stack does not grow in an unbounded fashion, though it may not be possible in all collection-literal cases.
+This approach ensures that the stack does not grow in an unbounded fashion, though it may not be possible in all collection-literal cases.
 
 If the compiler decides to allocate on the heap, the translation for `Span<T>` is simply:
 
