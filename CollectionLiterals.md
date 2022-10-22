@@ -333,7 +333,7 @@ foreach (var x in y)
 }
 ```
 
-The compiler is allowed to translate that using `stackalloc` however it wants, as long as the `Span` meaning stays the same and [span safety](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.2/span-safety.md) is maintained.  For example, it can translate the above to:
+The compiler is allowed to translate that using `stackalloc` however it wants, as long as the meaning of the variable stays the same (e.g. its scope) and [span safety](https://github.com/dotnet/csharplang/blob/main/proposals/csharp-7.2/span-safety.md) is maintained.  For example, it can translate the above to:
 
 ```c#
 Span<int> __buffer = stackalloc int[3];
