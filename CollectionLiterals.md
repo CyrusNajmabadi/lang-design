@@ -141,7 +141,7 @@ While certain types (like arrays and spans) can always be constructed with a col
 
 * the `Construct` method is found on an instance of `T` (including through [extension methods](https://github.com/dotnet/csharpstandard/blob/draft-v7/standard/expressions.md#11783-extension-method-invocations)), and
 
-* `CollectionType` is some other type known to be a [`constructible`](constructible-collection-types) type.
+* `CollectionType` is some other type known to be a [`constructible`](#constructible-collection-types) type.
 
 If found, the collection can be constructed by creating a fresh instance of its type using `new T()`, producing the corresponding argument to pass to `Construct`, and then calling that method on the fresh instance.  `new T()` supports all structs, including those without a `parameterless struct constructor`.
 
