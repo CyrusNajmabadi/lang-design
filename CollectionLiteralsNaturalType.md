@@ -221,3 +221,5 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
     ```
 
     Should this be illegal (because 'T' was inferred to be `int` from th literal)? Or legal (because both the literal and mutation methods contribute)?
+
+5. Should we allow boxing these types into `object`/`dynamic`.  If we did, we would certainly disallow the span-usage form.  However, even if wrapping an array, it feels like it would be extremely difficult to use such a value effectively.  Perhaps best to disallow.
