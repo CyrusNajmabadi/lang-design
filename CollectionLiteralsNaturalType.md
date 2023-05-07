@@ -214,7 +214,7 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
 
     This is conceivably allowable as long as the compiler heap allocates the data for 'v' in the cases where the capturing code is converted to a delegate (the lambda case, or the local function case when 'f' is converted and not just called directly).  The compiler could still stack allocate in the case of a local function not converted to a delegate. 
 
-4. If a literal is provided initial values, should we also see how it is mutated, and feel both the initial literal values and the mutation values into best-common-type?  For example:
+4. If a literal is provided initial values, should we also see how it is mutated, and feed both the initial literal values and the mutation values into best-common-type?  For example:
 
     ```c#
     anonymous_type`<double> v = [1, 2, 3]; // inffered as double because of 'Add' call below
