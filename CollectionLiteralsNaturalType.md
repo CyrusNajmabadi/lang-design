@@ -136,7 +136,7 @@ TakesImmutableArray(v);
 ```c#
 var v = [1, 2, 3];
 
-// v is references after this line.  Compiler will construct fresh ImmutableArray, but keep the original data available.
+// v is referenced after this line.  Compiler will construct fresh ImmutableArray, but keep the original data available.
 TakesImmutableArray(v);
 
 // 'v' is now locally [1, 2, 3, 4].  ImmutableArray is unaffected.
