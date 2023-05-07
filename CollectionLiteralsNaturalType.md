@@ -186,7 +186,7 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
         => values.Add(4);
     ```
 
-    If we do copy in these cases, should there be methods that allow non-copying wrapping?  For example:
+    If we do copy in these cases, should there be explicit helper methods that allow non-copying wrapping?  For example:
     
     ```c#
     anonymous_list`<int> v = [1, 2, 3];
