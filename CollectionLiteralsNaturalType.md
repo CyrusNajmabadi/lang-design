@@ -120,7 +120,7 @@ await T;
 ```
 
 ```c#
-// Compiler should represent this as an array as it is not mutated, butdoes cross the `await`.
+// Compiler should represent this as an array as it is not mutated, but does cross the `await`.
 var v = [a, b, c];
 await T;
 foreach (var x in v) ...
