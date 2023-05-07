@@ -217,7 +217,7 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
 4. If a literal is provided initial values, should we also see how it is mutated, and feed both the initial literal values and the mutation values into best-common-type?  For example:
 
     ```c#
-    anonymous_type`<double> v = [1, 2, 3]; // inffered as double because of 'Add' call below
+    anonymous_type`<double> v = [1, 2, 3]; // inferred as double because of 'Add' call below
     v.Add(0.0);
     ```
 
