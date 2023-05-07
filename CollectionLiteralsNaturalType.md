@@ -30,9 +30,16 @@ ref struct anonymous_list1`<T>
     private T[]? _arrayFromPool;
     private int _pos;
 
+    // Construction
+    public anonymous_list1`(Span<T> span);
+    public anonymous_list1`(T[] arrayFromPool);
+
     // Required members:
     public int Count { get; }
-    public T this[int index] { get; set; }
+    public ref T this[int index] { get; set; }
+
+    // Returns array to pool
+    public void Dispose();
 
     // Mutation:
 
@@ -45,14 +52,24 @@ ref struct anonymous_list1`<T>
     // Query:
     public bool Contains(T item);
     public int IndexOf(T item);
+    public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
+    public int BinarySearch(T item);
+    public int BinarySearch(T item, IComparer<T>? comparer);
 
     // Convert:
+    public void CopyTo(T[] array);
     public void CopyTo(T[] array, int arrayIndex);
+    public void CopyTo(int index, T[] array, int arrayIndex, int count);
 
 
     // Optional members?
 
     // Might be good for caller to know this for perf reasons
     public int Capacity { get; }
+    public int EnsureCapacity(int capacity);
+
+    // Unclear about referring to other collection types within this type.
+    // Would we need overloads for other collections?
+    public void AddRange(IEnumerable<T> collection);
 }
 ``` 
