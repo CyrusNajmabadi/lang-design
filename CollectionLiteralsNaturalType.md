@@ -110,6 +110,47 @@ var v = [a, b, c];
 foreach (var x in v) ...
 ```
 
+```c#
+// Compiler should represent this as a stackalloc'ed Span<T>.  It doesn't cross the `await` so it can stay on the stack
+var v = [a, b, c];
+foreach (var x in v) ...
+
+await T;
+```
+
+```c#
+// Compiler should represent this as an array as it is not mutated, butdoes cross the `await`.
+var v = [a, b, c];
+await T;
+foreach (var x in v) ...
+```
+
+```c#
+var v = [1, 2, 3];
+
+// v is not mutated used after this line.  Compiler is free to represent 'v' as an array whose ownership it directly passed to the ImmutableArray.
+TakesImmutableArray(v);
+```
+
+```c#
+var v = [1, 2, 3];
+
+// v is references after this line.  Compiler will construct fresh ImmutableArray, but keep the original data available.
+TakesImmutableArray(v);
+
+// 'v' is now locally [1, 2, 3, 4].  ImmutableArray is unaffected.
+v.Add(4);
+```
+
+```c#
+var v = [1, 2, 3];
+
+// v is references after this line.  Compiler will construct fresh List, but keep the original data available.
+TakesList(v);
+
+// 'v' is now locally [1, 2, 3, 4].  List passed to TakesList is still the values "1, 2, 3".  No sharing of data
+v.Add(4);
+```
 
 ## Important questions
 
