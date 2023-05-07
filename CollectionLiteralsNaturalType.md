@@ -106,7 +106,7 @@ var v = [1];
 
 ```c#
 // Compiler should represent this as a stackalloc'ed Span<T> as it is not
-// mutated and is in a context thaat supports ref-structs.
+// mutated and is in a context that supports ref-structs.
 var v = [a, b, c];
 foreach (var x in v) ...
 ```
