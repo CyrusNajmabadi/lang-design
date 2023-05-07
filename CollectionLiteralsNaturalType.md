@@ -69,9 +69,9 @@ Important aspects of this type:
 
 1. While this is a ref-type, it can be used in contexts where ref-types are normally not allowed (like an async method).
     1. The compiler can still instantiate the `unspeakable_list` using a `Span<T>` if safe to do so (for example, if not used across an `await` call).  
-    1. When not safe to use a `Span<T>` the unspeakable_list is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
-1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `unspeakable_list directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
-1. Converting this to a `constructible collection type` has copy semantics.  In other words, the new collection will have the values of the  `unspeakable_list when the new collection is created.  Further mutations to either will not be seen by the other.  If the variable is not referenced after conversion, the compiler is free though to intelligently pass ownership of the data in the `unspeakable_list to the newly constructed collection.
+    1. When not safe to use a `Span<T>` the `unspeakable_list` is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
+1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `unspeakable_list` directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
+1. Converting this to a `constructible collection type` has copy semantics.  In other words, the new collection will have the values of the  `unspeakable_list` when the new collection is created.  Further mutations to either will not be seen by the other.  If the variable is not referenced after conversion, the compiler is free though to intelligently pass ownership of the data in the `unspeakable_list` to the newly constructed collection.
 
 ### Inference
 
