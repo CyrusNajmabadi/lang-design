@@ -61,7 +61,7 @@ ref struct anonymous_list1`<T>
     public int BinarySearch(T item, IComparer<T>? comparer);
     public bool Exists(Predicate<T> match);
     public T? Find(Predicate<T> match);
-    
+
     public int FindIndex(int startIndex, int count, Predicate<T> match);
     public int FindIndex(int startIndex, Predicate<T> match);
     public int FindIndex(Predicate<T> match);
@@ -89,5 +89,7 @@ ref struct anonymous_list1`<T>
     // Unclear about referring to other collection types within this type.
     // Would we need overloads for other collections?
     public void AddRange(IEnumerable<T> collection);
+    public void InsertRange(int index, IEnumerable<T> collection);
+
 }
 ``` 
