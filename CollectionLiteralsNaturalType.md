@@ -93,11 +93,23 @@ Important aspects of this type:
 
 ## Examples:
 
-1. The following is illegal.  No element types are provided, and 'v' is not mutated later.
-
 ```c#
+// The following is illegal.  No element types are provided, and 'v' is not mutated later.
 var v = [];
 ```
+
+```c#
+// v has type anonymous_type`<int> because of best-common-type on the literal elements.
+var v = [1];
+```  
+
+```c#
+// Compiler should represent this as a stackalloc'ed Span<T> as it is not
+// mutated and is in a context thaat supports ref-structs.
+var v = [a, b, c];
+foreach (var x in v) ...
+```
+
 
 ## Important questions
 
