@@ -92,7 +92,7 @@ ref struct anonymous_list1`<T>
 
     public void ForEach(Action<T> action);
 
-        public bool TrueForAll(Predicate<T> match);
+    public bool TrueForAll(Predicate<T> match);
 
 
     // Convert:
