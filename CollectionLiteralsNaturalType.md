@@ -9,7 +9,6 @@
 1. Support broad number of user use cases in a natural/intuitive fashion.
 
 
-
 ### Non-goals:
 
 1. Introduce a new *real* type that users would explicitly use themselves.  While there may be new helper types introduced in the BCL (ideally in System.Compiler.RuntimeServices), they may have advanced/confusing semantics and might only be intended for compilers to use.
