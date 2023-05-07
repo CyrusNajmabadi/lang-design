@@ -50,13 +50,13 @@ ref struct anonymous_list1`<T>
 
     public void Add(T item);
     public bool Remove(T item);
-    public void Clear();
     public void Insert(int index, T item);
+    public void Clear();
     public void RemoveAt(int index);
 
-    public void Add(Span<T> span);
-    public void Insert(int index, Span<T> span);
+    public void Add(params Span<T> span);
     public void Remove(Span<T> span)
+    public void Insert(int index, Span<T> span);
 }
 ```
 
