@@ -59,6 +59,8 @@ ref struct anonymous_list1`<T>
     public void Remove(int start, int count);
 
     public void Clear();
+
+    // This list is not exhaustive, and is subject to a lot of concerns.  See 'Important Questions' below.
 }
 ```
 
