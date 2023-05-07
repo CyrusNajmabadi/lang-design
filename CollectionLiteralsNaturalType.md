@@ -38,6 +38,10 @@ ref struct anonymous_list1`<T>
     public int Count { get; }
     public ref T this[int index] { get; set; }
 
+    // Might be good for caller to know this for perf reasons
+    public int Capacity { get; }
+    public int EnsureCapacity(int capacity);
+
     public ReadOnlySpan<T> AsSpan();
 
     // Returns array to pool
@@ -51,72 +55,20 @@ ref struct anonymous_list1`<T>
     public void Insert(int index, T item);
     public void RemoveAt(int index);
 
-    public bool Remove(T item);
-    public int RemoveAll(Predicate<T> match);
-    public void RemoveAt(int index);
-    public void RemoveRange(int index, int count);
-
-    public void Reverse();
-    public void Reverse(int index, int count);
-
-    public void Sort();
-    public void Sort(Comparison<T> comparison);
-    public void Sort(IComparer<T>? comparer);
-    public void Sort(int index, int count, IComparer<T>? comparer);
-
-
-    // Query:
-    public bool Contains(T item);
-
-    public int IndexOf(T item);
-    public int IndexOf(T item, int index);
-    public int IndexOf(T item, int index, int count);
-    public int IndexOf(T item, int startIndex, IEqualityComparer<T>? equalityComparer);
-    public int IndexOf(T item, int startIndex, int count, IEqualityComparer<T>? equalityComparer);
-
-
-    public int LastIndexOf(T item);
-    public int LastIndexOf(T item, int index);
-    public int LastIndexOf(T item, int index, int count);
-    public int LastIndexOf(T item, int startIndex, int count, IEqualityComparer<T>? equalityComparer);
-
-
-    public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
-    public int BinarySearch(T item);
-    public int BinarySearch(T item, IComparer<T>? comparer);
-    public bool Exists(Predicate<T> match);
-    public T? Find(Predicate<T> match);
-
-    public int FindIndex(int startIndex, int count, Predicate<T> match);
-    public int FindIndex(int startIndex, Predicate<T> match);
-    public int FindIndex(Predicate<T> match);
-
-    public T? FindLast(Predicate<T> match);
-    public int FindLastIndex(int startIndex, int count, Predicate<T> match);
-    public int FindLastIndex(int startIndex, Predicate<T> match);
-    public int FindLastIndex(Predicate<T> match);
-
-    public void ForEach(Action<T> action);
-
-    public bool TrueForAll(Predicate<T> match);
-
-
-    // Convert:
-    public void CopyTo(T[] array);
-    public void CopyTo(T[] array, int arrayIndex);
-    public void CopyTo(int index, T[] array, int arrayIndex, int count);
-
-
-    // Optional members?
-
-    // Might be good for caller to know this for perf reasons
-    public int Capacity { get; }
-    public int EnsureCapacity(int capacity);
-
-    // Unclear about referring to other collection types within this type.
-    // Would we need overloads for other collections?
-    public void AddRange(IEnumerable<T> collection);
-    public void InsertRange(int index, IEnumerable<T> collection);
-
+    public void Add(Span<T> span);
+    public void Insert(int index, Span<T> span);
+    public void Remove(Span<T> span)
 }
-``` 
+```
+
+There are a whole host of other methods that could possibly be added (found in `IList<T>/List<T>/ImmutableArray<T>/extensions`). Such as:
+
+1. RemoveAll
+1. Reverse
+1. Sort
+1. Contains
+1. IndexOf/LastIndexOf
+1. BinarySearch
+1. FindIndex/FindLast/FindLastIndex
+1. ForEach/TrueForAll
+1. CopyTo
