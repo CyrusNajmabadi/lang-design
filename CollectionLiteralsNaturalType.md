@@ -38,6 +38,8 @@ ref struct anonymous_list1`<T>
     public int Count { get; }
     public ref T this[int index] { get; set; }
 
+    public ReadOnlySpan<T> AsSpan();
+
     // Returns array to pool
     public void Dispose();
 
