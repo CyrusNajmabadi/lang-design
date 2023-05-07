@@ -129,7 +129,7 @@ foreach (var x in v) ...
 ```c#
 var v = [1, 2, 3];
 
-// v is not references used after this line.  Compiler is free to represent 'v' as an array whose ownership is directly passed to the ImmutableArray.
+// v is not referenced used after this line.  Compiler is free to represent 'v' as an array whose ownership is directly passed to the ImmutableArray.
 TakesImmutableArray(v);
 ```
 
