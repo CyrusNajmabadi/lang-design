@@ -19,3 +19,40 @@ For the purposes of *discussion/design* only, a new language-only type is introd
 
 In code samples ``anonymous_list`<T>`` will be used to indicate that this it the type of a variable in place of the `var` that a user would have to write in real code.  This will clarify that the `var` is not some other type (like `Span<T>`, `T[]`, `List<T>`, etc.), while also helping see what the element type `T` is in a particular context.  For example: ``anonymous_type`<int> v = [1, 2, 3];``
 
+The ``anonymous_list`<T>`` type has roughly the same semantics as the following type:
+
+```c#
+ref struct anonymous_list1`<T>
+{
+    // Original span list was constructed with.  Or wraps _arrayFromPool if that is present.
+    private Span<T> _span;
+    // Heap location if provided at creation, or if original span was not large enough
+    private T[]? _arrayFromPool;
+    private int _pos;
+
+    // Required members:
+    public int Count { get; }
+    public T this[int index] { get; set; }
+
+    // Mutation:
+
+    public void Add(T item);
+    public bool Remove(T item);
+    public void Clear();
+    public void Insert(int index, T item);
+    public void RemoveAt(int index);
+
+    // Query:
+    public bool Contains(T item);
+    public int IndexOf(T item);
+
+    // Convert:
+    public void CopyTo(T[] array, int arrayIndex);
+
+
+    // Optional members?
+
+    // Might be good for caller to know this for perf reasons
+    public int Capacity { get; }
+}
+``` 
