@@ -48,15 +48,17 @@ ref struct anonymous_list1`<T>
 
     // Mutation:
 
+    // Possibly redundant if we have params-span
     public void Add(T item);
-    public bool Remove(T item);
     public void Insert(int index, T item);
-    public void Clear();
-    public void RemoveAt(int index);
 
     public void Add(params Span<T> span);
-    public void Remove(int start, int count);
     public void Insert(int index, params Span<T> span);
+
+    public bool Remove(T item);
+    public void Remove(int start, int count);
+
+    public void Clear();
 }
 ```
 
