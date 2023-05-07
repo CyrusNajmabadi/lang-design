@@ -49,6 +49,20 @@ ref struct anonymous_list1`<T>
     public void Insert(int index, T item);
     public void RemoveAt(int index);
 
+    public bool Remove(T item);
+    public int RemoveAll(Predicate<T> match);
+    public void RemoveAt(int index);
+    public void RemoveRange(int index, int count);
+
+    public void Reverse();
+    public void Reverse(int index, int count);
+
+    public void Sort();
+    public void Sort(Comparison<T> comparison);
+    public void Sort(IComparer<T>? comparer);
+    public void Sort(int index, int count, IComparer<T>? comparer);
+
+
     // Query:
     public bool Contains(T item);
 
