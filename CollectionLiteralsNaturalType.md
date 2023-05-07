@@ -6,7 +6,7 @@
 1. Support literal usage like `var v = [x, y, ..z];` (elements provided within the literal).
 1. Support literal usage like `var v = []; /*...*/ v.Add(x);` (empty literal with elements provided afterwards).
 1. Provide broad leeway for compiler to produce heavily optimized code (i.e. 'do not leave perf on the table').
-1. Support broad number of use cases in a natural/intuitive fashion.
+1. Support a broad number of use cases in a natural/intuitive fashion.
 
 ### Non-goals:
 
