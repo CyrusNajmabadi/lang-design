@@ -46,7 +46,7 @@ ref struct anonymous_list1`<T>
     // Span methods, or construct collection instances.
     public ReadOnlySpan<T> AsSpan();
 
-    // Returns array to pool
+    // Returns array to pool if present
     public void Dispose();
 
     public void Add(T item);
