@@ -25,7 +25,7 @@ The ``anonymous_list`<T>`` type has *roughly* the same semantics as the followin
 ```c#
 ref struct anonymous_list1`<T>
 {
-    // Original span list was constructed with.  Or wraps _arrayFromPool if that is present.
+    // Original span list was constructed with.  Or wraps _arrayFromPool if that was originally provided (or created in reaction to a mutation operation).
     private Span<T> _span;
     // Heap location if provided at creation, or if original span was not large enough
     private T[]? _arrayFromPool;
