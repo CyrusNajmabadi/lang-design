@@ -91,6 +91,14 @@ Important aspects of this type:
 
 1. It is illegal to have a natural type for the empty literal that is itself not mutated (which would also be useless in practice).
 
+## Examples:
+
+1. The following is illegal.  No element types are provided, and 'v' is not mutated later.
+
+```c#
+var v = [];
+```
+
 ## Important questions
 
 1. There are a whole host of other methods that could possibly be added (found in `IList<T>/List<T>/ImmutableArray<T>/extensions`). Such as:
