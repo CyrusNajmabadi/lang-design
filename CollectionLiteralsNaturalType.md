@@ -53,8 +53,8 @@ ref struct unspeakable_list1<T>
     public void Add(T item);
     public void Insert(int index, T item);
 
-    public void AddRange(params Span<T> span);
-    public void InsertRange(int index, params Span<T> span);
+    public void AddRange(params ReadOnlySpan<T> span);
+    public void InsertRange(int index, params ReadOnlySpan<T> span);
 
     public bool Remove(T item);
     public void Remove(int start, int count);
