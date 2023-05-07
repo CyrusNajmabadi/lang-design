@@ -78,6 +78,7 @@ ref struct anonymous_list1`<T>
     public int LastIndexOf(T item);
     public int LastIndexOf(T item, int index);
     public int LastIndexOf(T item, int index, int count);
+    public int LastIndexOf(T item, int startIndex, int count, IEqualityComparer<T>? equalityComparer);
 
 
     public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
