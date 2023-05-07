@@ -55,8 +55,8 @@ ref struct anonymous_list1`<T>
     public void RemoveAt(int index);
 
     public void Add(params Span<T> span);
-    public void Remove(Span<T> span)
-    public void Insert(int index, Span<T> span);
+    public void Remove(int start, int count);
+    public void Insert(int index, params Span<T> span);
 }
 ```
 
