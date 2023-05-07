@@ -10,7 +10,7 @@
 
 ### Non-goals:
 
-1. Introduce a new *real* type that users would explicitly use themselves.  While there may be new helper types introduced in the BCL (ideally in System.Compiler.RuntimeServices), they may have advanced/confusing semantics and might only be intended for compilers to use.
+1. Introduce a new *real* type that users would be expected to  themselves.  While there may be new helper types introduced in the BCL (ideally in System.Compiler.RuntimeServices), they may have advanced/confusing semantics and might only be intended for compilers to use.
     1. A corollary of this is that any explicit (non-capture) passing across method/function boundaries would need to be explicit about what type was being used to pass the data. 
 1. Have no 'cracks'.  Complex scenarios may reveal non-ideal semantics.  (e.g. how `T?` in unconstrained generics doesn't cleanly work with reference and value types).
 
