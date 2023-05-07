@@ -73,3 +73,9 @@ There are a whole host of other methods that could possibly be added (found in `
 1. FindIndex/FindLast/FindLastIndex
 1. ForEach/TrueForAll
 1. CopyTo
+
+Important aspects of this type:
+
+1. While this is a ref-type, it can be used in contexts where ref-types are normally not allowed (like an async method).
+    1. The compiler can still instantiate the `anonymous_list` using a `Span<T>` if safe to do so (for example, if not used across an `await` call).  
+    2. When not safe to use a `Span<T>` the anonmous_list is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
