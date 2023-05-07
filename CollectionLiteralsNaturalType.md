@@ -49,12 +49,11 @@ ref struct anonymous_list1`<T>
     // Returns array to pool
     public void Dispose();
 
-    // Possibly redundant if we have params-span
     public void Add(T item);
     public void Insert(int index, T item);
 
-    public void Add(params Span<T> span);
-    public void Insert(int index, params Span<T> span);
+    public void AddRange(params Span<T> span);
+    public void InsertRange(int index, params Span<T> span);
 
     public bool Remove(T item);
     public void Remove(int start, int count);
@@ -73,7 +72,24 @@ Important aspects of this type:
 1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `anonymous_list` directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
 1. Converting this to a `constructible collection type` has copy semantics.  In other words, the new collection will have the values of the  `anonymous_list` when the new collection is created.  Further mutations to either will not be seen by the other.  If the variable is not used after conversion, the compiler is free though to intelligently pass ownership of the data in the `anonymous_list` to the newly constructed collection.
 
+### Inference
 
+1. As the user cannot specify the ``anonymous_list`<T>`` instantiation directly, it must be inferred.  If the literal contains elements:
+
+    ```c#
+    var v = [x, y, ..e];
+    ```
+
+    then the element type `T` is determined using the best-common-type algorithm specified at https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type.
+
+1. However, if the literal contains no elements, then the element type `T` is determined by how that particular variable is mutated (specifically by the Add/AddRange/Insert/InsertRange/Remove methods).  The variable types passed into these feed into a best-common-type algorithm (spec out) that determines the `T` type. For example:   
+
+    ```c#
+    anonymous_type`<int> v = [];
+    v.Add(1);
+    ```
+
+1. It is illegal to have a natural type for the empty literal that is itself not mutated (which would also be useless in practice).
 
 ## Important questions
 
@@ -128,3 +144,12 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
     ```
 
     This is conceivably allowable as long as the compiler heap allocates the data for 'v' in the cases where the capturing code is converted to a delegate (the lambda case, or the local function case, if 'f' is converted and not just called directly).  The compiler could still stack allocate in the case of a local function not converted to a delegate. 
+
+4. If a literal is provided initial values, should we also see how it is mutated, and feel both the initial literal values and the mutation values into best-common-type?  For example:
+
+    ```c#
+    anonymous_type`<double> v = [1, 2, 3]; // inffered as double because of 'Add' call below
+    v.Add(0.0);
+    ```
+
+    Should this be illegal (because 'T' was inferred to be `int` from th literal)? Or legal (because both the literal and mutation methods contribute)?
