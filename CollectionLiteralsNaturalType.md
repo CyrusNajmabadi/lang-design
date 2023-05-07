@@ -11,7 +11,7 @@
 ### Non-goals:
 
 1. Introduce a new *real* type that users would explicitly use themselves.  While there may be new helper types introduced in the BCL (ideally in System.Compiler.RuntimeServices), they may have advanced/confusing semantics and might only be intended for compilers to use.
-    1. A corollary of this is that any passing across method/function boundaries would need to be explicit about what type was being used to pass the data. 
+    1. A corollary of this is that any explicit (non-capture) passing across method/function boundaries would need to be explicit about what type was being used to pass the data. 
 1. Have no 'cracks'.  Complex scenarios may reveal non-ideal semantics.  (e.g. how `T?` in unconstrained generics doesn't cleanly work with reference and value types).
 
 ## Detailed design:
@@ -73,6 +73,8 @@ Important aspects of this type:
 1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `anonymous_list` directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
 1. Converting this to a `constructible collection type` has copy semantics.  In other words, the new collection will have the values of the  `anonymous_list` when the new collection is created.  Further mutations to either will not be seen by the other.  If the variable is not used after conversion, the compiler is free though to intelligently pass ownership of the data in the `anonymous_list` to the newly constructed collection.
 
+
+
 ## Important questions
 
 1. There are a whole host of other methods that could possibly be added (found in `IList<T>/List<T>/ImmutableArray<T>/extensions`). Such as:
@@ -111,3 +113,18 @@ Should we attempt to provide a maximal, minimal, or somewhere-in-between surface
     ```
 
     Note: wrapping would mean that ``anonymous_list`<T>`` would be a ref-struct that also supported interfaces (another deviation from normal ref-structs).  This would only be safe as long as the compiler ensured if such wrapping happened that the data not be stored in a `Span<T>` (i.e. the `T[]` construction pattern woudl be used instead).
+
+3. Should it be possible to capture these values across local-function/lambda bodies?  For example:
+
+    ```c#
+    anonymous_list`<int> v = [1, 2, 3];
+    Func<bool> f = () => v.Contains(0);
+
+    // or
+    bool f()
+    {
+        return v.Contains(0);
+    }
+    ```
+
+    This is conceivably allowable as long as the compiler heap allocates the data for 'v' in the cases where the capturing code is converted to a delegate (the lambda case, or the local function case, if 'f' is converted and not just called directly).  The compiler could still stack allocate in the case of a local function not converted to a delegate. 
