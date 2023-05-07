@@ -146,14 +146,14 @@ v.Add(4);
 ```c#
 var v = [1, 2, 3];
 
-// v is not references used after this line.  Compiler is free to represent 'v' as an array whose ownership is directly passed to the List.
+// v is not referenced used after this line.  Compiler is free to represent 'v' as an array whose ownership is directly passed to the List.
 TakesList(v);
 ```
 
 ```c#
 var v = [1, 2, 3];
 
-// v is references after this line.  Compiler will construct fresh List, but keep the original data available.
+// v is referenced after this line.  Compiler will construct fresh List, but keep the original data available.
 TakesList(v);
 
 // 'v' is now locally [1, 2, 3, 4].  List passed to TakesList is still the values "1, 2, 3".  No sharing of data
