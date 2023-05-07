@@ -71,6 +71,9 @@ ref struct anonymous_list1`<T>
     public int IndexOf(T item);
     public int IndexOf(T item, int index);
     public int IndexOf(T item, int index, int count);
+    public int IndexOf(T item, int startIndex, IEqualityComparer<T>? equalityComparer);
+    public int IndexOf(T item, int startIndex, int count, IEqualityComparer<T>? equalityComparer);
+
 
     public int LastIndexOf(T item);
     public int LastIndexOf(T item, int index);
