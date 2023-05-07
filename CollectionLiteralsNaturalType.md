@@ -78,4 +78,5 @@ Important aspects of this type:
 
 1. While this is a ref-type, it can be used in contexts where ref-types are normally not allowed (like an async method).
     1. The compiler can still instantiate the `anonymous_list` using a `Span<T>` if safe to do so (for example, if not used across an `await` call).  
-    2. When not safe to use a `Span<T>` the anonmous_list is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
+    1. When not safe to use a `Span<T>` the anonmous_list is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
+1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `anonymous_list` directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
