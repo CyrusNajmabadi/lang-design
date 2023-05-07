@@ -19,7 +19,7 @@
 
 For the purposes of *discussion/design* only, a new language-only type is introduced called ``unspeakable_list<T>``.  Similar to [anonymous types](https://github.com/dotnet/csharpstandard/blob/standard-v6/standard/expressions.md#117157-anonymous-object-creation-expressions), this is not a type that can be directly referenced by the user, but has semantics the language defines, and which a compiler is free to implement or emit however it wants as long as those semantics are preserved.
 
-In code samples ``unspeakable_list<T>`` will be used to indicate that this it the type of a variable in place of the `var` that a user would have to write in real code.  This will clarify that the `var` is not some other type (like `Span<T>`, `T[]`, `List<T>`, etc.), while also helping see what the element type `T` is in a particular context.  For example: ``unspeakable_list<int> v = [1, 2, 3];``
+In code samples, ``unspeakable_list<T>`` will be used to indicate that this it the type of a variable in place of the `var` that a user would have to write in real code.  This will clarify that the `var` is not some other type (like `Span<T>`, `T[]`, `List<T>`, etc.), while also helping see what the element type `T` is in a particular context.  For example: ``unspeakable_list<int> v = [1, 2, 3];``
 
 The ``unspeakable_list<T>`` type has *roughly* the same semantics as the following type, with several important distinctions outlined below:
 
