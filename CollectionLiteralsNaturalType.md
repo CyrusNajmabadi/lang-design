@@ -40,7 +40,6 @@ ref struct anonymous_list1`<T>
 
     // Might be good for caller to know this for perf reasons
     public int Capacity { get; set; }
-    public int EnsureCapacity(int capacity);
 
     public ReadOnlySpan<T> AsSpan();
 
