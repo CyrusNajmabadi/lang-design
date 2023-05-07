@@ -41,12 +41,12 @@ ref struct anonymous_list1`<T>
     // Might be good for caller to know this for perf reasons
     public int Capacity { get; set; }
 
+    // Used to get at the data, to actually pass to 
+    // Span methods, or construct collection instances.
     public ReadOnlySpan<T> AsSpan();
 
     // Returns array to pool
     public void Dispose();
-
-    // Mutation:
 
     // Possibly redundant if we have params-span
     public void Add(T item);
@@ -62,21 +62,49 @@ ref struct anonymous_list1`<T>
 }
 ```
 
-There are a whole host of other methods that could possibly be added (found in `IList<T>/List<T>/ImmutableArray<T>/extensions`). Such as:
-
-1. RemoveAll
-1. Reverse
-1. Sort
-1. Contains
-1. IndexOf/LastIndexOf
-1. BinarySearch
-1. FindIndex/FindLast/FindLastIndex
-1. ForEach/TrueForAll
-1. CopyTo
-
 Important aspects of this type:
 
 1. While this is a ref-type, it can be used in contexts where ref-types are normally not allowed (like an async method).
     1. The compiler can still instantiate the `anonymous_list` using a `Span<T>` if safe to do so (for example, if not used across an `await` call).  
     1. When not safe to use a `Span<T>` the anonmous_list is created with the constructor that takes an array.  This value then only points at heap data, and can be used safely.
 1. The type has a mix of non-mutating and mutating methods.  If the user code does not mutate the variable, the compiler is free to emit the `anonymous_list` directly as a `Span<T>` or `T[]` (depending on if Spans are allowed and the compiler determines if placing on the stack is appropriate).
+1. Converting this to a `constructible collection type` has copy semantics.  In other words, the new collection will have the values of the  `anonymous_list` when the new collection is created.  Further mutations to either will not be seen by the other.  If the variable is not used after conversion, the compiler is free though to intelligently pass ownership of the data in the `anonymous_list` to the newly constructed collection.
+
+## Important questions
+
+1. There are a whole host of other methods that could possibly be added (found in `IList<T>/List<T>/ImmutableArray<T>/extensions`). Such as:
+
+    1. RemoveAll
+    1. Reverse
+    1. Sort
+    1. Contains
+    1. IndexOf/LastIndexOf
+    1. BinarySearch
+    1. FindIndex/FindLast/FindLastIndex
+    1. ForEach/TrueForAll
+    1. CopyTo
+
+Should we attempt to provide a maximal, minimal, or somewhere-in-between surface area?
+
+2. Should it be possible to capture these values into interfaces which do *not* copy?  For example:
+
+    ```c#
+    anonymous_list`<int> v = [1, 2, 3];
+    TakesIList(v); // copy?  or wrap?
+
+    void TakesIList(IList<int> values)
+        => values.Add(4);
+    ```
+
+    If we do copy in these cases, should there be methods that allow non-copying wrapping?  For example:
+    
+    ```c#
+    anonymous_list`<int> v = [1, 2, 3];
+    TakesIList(v); // copies.
+    TakesIList(v.AsIList()); // wraps.
+
+    void TakesIList(IList<int> values)
+        => values.Add(4);
+    ```
+
+    Note: wrapping would mean that ``anonymous_list`<T>`` would be a ref-struct that also supported interfaces (another deviation from normal ref-structs).  This would only be safe as long as the compiler ensured if such wrapping happened that the data not be stored in a `Span<T>` (i.e. the `T[]` construction pattern woudl be used instead).
