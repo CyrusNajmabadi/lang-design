@@ -1,0 +1,1 @@
+# Collection literals natural type
