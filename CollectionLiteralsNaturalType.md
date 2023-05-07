@@ -51,10 +51,28 @@ ref struct anonymous_list1`<T>
 
     // Query:
     public bool Contains(T item);
+
     public int IndexOf(T item);
+    public int IndexOf(T item, int index);
+    public int IndexOf(T item, int index, int count);
+
     public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
     public int BinarySearch(T item);
     public int BinarySearch(T item, IComparer<T>? comparer);
+    public bool Exists(Predicate<T> match);
+    public T? Find(Predicate<T> match);
+    
+    public int FindIndex(int startIndex, int count, Predicate<T> match);
+    public int FindIndex(int startIndex, Predicate<T> match);
+    public int FindIndex(Predicate<T> match);
+
+    public T? FindLast(Predicate<T> match);
+    public int FindLastIndex(int startIndex, int count, Predicate<T> match);
+    public int FindLastIndex(int startIndex, Predicate<T> match);
+    public int FindLastIndex(Predicate<T> match);
+
+    public void ForEach(Action<T> action);
+
 
     // Convert:
     public void CopyTo(T[] array);
