@@ -242,12 +242,19 @@ void AddElements(IEnumerable<object> list);
 ```
 
 ```c#
-// Has type List<object> due to upper bound of 'AddElements' and lower bound of 'Add'. 
+// Has type List<object> due to upper bound of 'Sort'.
+IComparer<object> c = ...; 
 var v = [];
-AddElements(v);
-v.Add("");
+v.Sort(c);
+```
 
-void AddElements(IEnumerable<object> list);
+```c#
+// Has type List<string> due to upper bound of 'Sort' and lower bound of 'Add'
+IComparer<object> c = ...; 
+var v = [];
+v.Add(1);
+
+v.Sort(c);
 ```
 
 ### Optimization examples
