@@ -27,14 +27,22 @@ This document continues the original design for the [natural type](https://githu
 
 ### Natural type element inference
 
-1. Given a literal of the form `[x, y, ..z]`, the natural element type `T` for `List<T>` is determined using the same  algorithm in the [original spec](https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type).  Effectively, using `best-common-type` on the element-expressions, and the `iterator type` of spread-elements.
+The natural type of a list literal is always some `List<T>`.  Determining the `T` is done in the following fashion.
+
+1. Given a literal of the form `[x, y, ..z]`, `T` is determined using the same  algorithm in the [original spec](https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type).  Effectively, using `best-common-type` on the element-expressions, and the `iterator type` of spread-elements.
 
 1. Given a literal of the form `var v = [];` type inference for `T` is performed based on the subsequent usage of `v` in the method body, finding lower and upper bounds for `T`. If no suitable bounds can be found, the literal is not legal. Specifically:
     1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>` (e.g. `IList<X>`), then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *out variant* `I<out X>` interfaces implemented by `List<X>` (e.g. `IEnumerable<X>`), then `T` gets an upper bound of `X`. (TODO: should we also support `I<in X>` interfaces?  Currently there are none on `List<T>`, but we could consider spec'ing it).
-    1. Method calls on `v` are examined. If those methods have arguments that uses `T`, `I<out T>`, `I<in T>`, `T[]` then those arguments add appropriate bounds to inference.  For example:
+    1. Method calls on `v` are examined. If those methods have arguments that uses `T`, `I<out T>`, `I<in T>`, `T[]` then those arguments add appropriate bounds to inference.  Note: `I<>` refers to both interfaces and delegate types.  For example:
         1. `v.Add("")` adds a lower bound of `string`.  `T` case.
         1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
         1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
         1. `v.CopyTo(stringArray)`.  Adds a lower and upper bound of `string`. `T[]` case.
+
+1. Because the natural type can only be determined for an empty literal based on how the variable it is assigned is used, there is no natural type for an empty literal in any other location.
+
+### Allowable performance optimizations
+
+
