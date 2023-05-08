@@ -20,7 +20,18 @@ This document continues the original design for the [natural type](https://githu
 ### Non-goals
 
 1. Support all use cases *directly*, with the same perf, that are provided with `target typed` collection literals.
-2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics.
+2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics. For example:
+
+    ```c#
+    // Directly creates and adds to hash-set in-line.  Legal
+    TakesHashSet([1, 2, 3]);
+
+    // versus
+
+    // Illegal. 'v' is a List<int>.  User must convert to the final HashSet.
+    var v = [1, 2, 3];
+    TakesHashSet(v);
+    ```
 3. Support optimized code-gen in all BCL versions.  For example, optimal codegen may depend on new types/methods/attributes being available not present on downlevel versions.
 
 ## Detailed design
