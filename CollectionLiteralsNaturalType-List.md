@@ -206,7 +206,7 @@ v.Add(1);
 // Has type List<double> due to 'Add'
 var v = [];
 v.Add(1);
-v.Add(0.0)
+v.Add(0.0);
 ```
 
 ```c#
