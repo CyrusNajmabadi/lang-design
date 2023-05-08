@@ -172,7 +172,7 @@ Specific optimizations:
     ```c#
     // Should allocate an int[] to allow values to survive on the heap for the delegate.
     var v = [1, 2, 3]
-    Action x = v;
+    Action x = f;
 
     void f()
     {
