@@ -3,7 +3,7 @@
 This document continues the original design for the [natural type](https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type) of a collection literal.  Specifically, the design is extended in two important ways:
 
 1. The inference system is expanded to support certain cases where a natural element type `T` for `List<T>` can be determined for the empty literal `[]` (previously illegal).
-1. Continuing the requirement that the `List<T>` be "well behaved" (i.e. it will not make observable changes outside of its own elements), the language permits a compliant compiler to replace fresh instances of `List<T>` within a method body with more efficient values, as long as such replacement is otherwise not observable.
+1. Continuing the requirement that the `List<T>` be "well behaved" (i.e. it will not make observable changes outside of its own elements), the language permits a compliant compiler to replace fresh instances of `List<T>` within a method body with more efficient values (specifically, with different types), as long as such replacement is otherwise not observable.
 
 ### Goals
 
