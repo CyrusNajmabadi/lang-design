@@ -326,6 +326,11 @@ var v = [a, b, c];
 await T;
 foreach (var x in v) ...
 ```
+```c#
+// Compiler should represent this as a stackalloc'ed Span<T> as it is not mutated
+var v = [a, b, c];
+foreach (var x in v) ...
+```
 
 ```c#
 // 'v' is a List<int> as its type could be examined.
