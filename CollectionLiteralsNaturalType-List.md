@@ -79,7 +79,7 @@ The natural type of a list literal is always some `List<T>`.  Determining the `T
         1. `v.Add("")` adds a lower bound of `string`.  `T` case.
         1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
         1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
-        1. `v.CopyTo(stringArray)`.  Adds a lower and upper bound of `string`. `T[]` case.
+        1. `v.CopyTo(stringArray)`.  Adds a lower bound of `string`. `T[]` case.
 
 1. Because the natural type can only be determined for an empty literal based on how the variable it is assigned is used, there is no natural type for an empty literal in any other location.
 
@@ -250,6 +250,14 @@ v.Sort(c);
 
 ```c#
 // Has type List<string> due to upper bound of 'Sort' and lower bound of 'Add'
+IComparer<object> c = ...; 
+var v = [];
+v.Add("");
+v.Sort(c);
+```
+
+```c#
+// Has type List<string> due to invariant bound T[]
 IComparer<object> c = ...; 
 var v = [];
 v.Add("");
