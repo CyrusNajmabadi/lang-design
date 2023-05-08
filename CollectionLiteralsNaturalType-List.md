@@ -269,7 +269,7 @@ var v = [];
 object o = "";
 v.Add(o)
 string[] s = ...;
-v.CopyTo(s);
+v.CopyTo(s); // string[] is-a object[] so this is all legal
 ```
 
 ### Optimization examples
