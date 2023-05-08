@@ -125,7 +125,7 @@ Specific optimizations:
     ```
 
     ```c#
-    // can be stack alloc'ed.  Does not live across await/yield operation.
+    // can be stack alloc'ed.  Does not cross await/yield operation.
     var v = [a, b, c];
     foreach (var x in v)
     {
