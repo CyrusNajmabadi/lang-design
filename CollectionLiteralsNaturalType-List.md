@@ -358,3 +358,6 @@ foreach (var x in v)
     ```
 
     If only the literal is examined, this would be illegal (as `v` would have the `List<int>` type).  However, if the usage was examined, this would be legal as inference would infer `double` given the bounds provided.
+
+3. Instead of presuming that `List<T>` is well behaved, and can be optimized/replaced with alternative types, would it be better to define attributes the runtime could use to state this, and point at the alternate types to use when possible?
+
