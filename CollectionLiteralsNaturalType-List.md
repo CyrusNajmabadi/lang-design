@@ -252,7 +252,7 @@ v.Sort(c);
 // Has type List<string> due to upper bound of 'Sort' and lower bound of 'Add'
 IComparer<object> c = ...; 
 var v = [];
-v.Add(1);
+v.Add("");
 
 v.Sort(c);
 ```
