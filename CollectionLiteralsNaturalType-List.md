@@ -361,4 +361,4 @@ foreach (var x in v)
 
 3. Instead of presuming that `List<T>` is well behaved, and can be optimized/replaced with alternative types, would it be better to define attributes the runtime could use to state this, and point at the alternate types to use when possible?
 
-4. 
+4. What is the best way to determine if usage of a `List<T>` variable ends up changing the length or not?  For example `Sort` does not change the length, while `Add` does.  Should the compiler hardcode in knowledge?  Or would attributes be better?  IMO attributes seem sensible so that the runtime can continue to add methods to `List<>` without the compiler doing something wrong.
