@@ -38,7 +38,26 @@ This document continues the original design for the [natural type](https://githu
 
 ### `List<T>` natively supported
 
-Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
+1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).
+
+1. A `List<T>` is implicitly convertible to a `Span<T>`.  This will require new APIs present in the BCL.  For example:
+
+    ```c#
+    // This works without any overhead.
+    var v = [1, 2, 3];
+    TakesSpan(v);
+    ```
+
+1. If an existing conversion does not already exist, a `List<T>` is explicitly convertible to any constructible collection type.  For example:
+
+    ```C#
+    var v = [1, 2, 3];
+    TasksImmutableArray((ImmutableArray<int>)v);
+    ```
+
+    The goal of this (as opposed to utilizing some existing method to do the conversion) is that the compiler is free to implement this as efficiently as possible in the cases where 'v' is no longer used post conversion.  In the above, this would allow a single array allocation for 'v' and  direct ownership transfer to the ImmutableArray.
+
+    Note: this level of support may not be necessary/desirable.
 
 
 ### Natural type element inference
