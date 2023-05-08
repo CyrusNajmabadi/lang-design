@@ -228,6 +228,13 @@ TakesIList(v);
 foreach (var x in v)
 ```
 
+```c#
+// 'v' is a List<int> as its type could be examined (unless compiler wants to track through other variables as well)
+var v = [1, 2, 3];
+var x = v;
+foreach (var x in v)
+```
+
 ## Important questions
 
 1. `T` inference can happen with the entire metho and interface surface area of `List<T>`.  This is quite a large surface area.  We could consider limiting to just core methods like `Add/AddRange/this[]`.
