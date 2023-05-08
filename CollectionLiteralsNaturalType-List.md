@@ -36,6 +36,11 @@ This document continues the original design for the [natural type](https://githu
 
 ## Detailed design
 
+### `List<T>` natively supported
+
+Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
+
+
 ### Natural type element inference
 
 The natural type of a list literal is always some `List<T>`.  Determining the `T` is done in the following fashion.
@@ -56,4 +61,28 @@ The natural type of a list literal is always some `List<T>`.  Determining the `T
 
 ### Allowable performance optimizations
 
+The compiler is free to perform any or all of the following optimizations for fresh `List<T>` instances within a method body.  These optimizations apply regardless if a collection literal is used, or `new List<T>()` is used (without a capacity).
 
+These optimizations depend on the list not being used in any fashion that could observe its type (e.g. assigning to another variable, passing to any methods as an argument, etc.).  The optimizations also depend on knowing which methods of `List<T>` can affect the size of the collection, as opposed to just operating on the elements within (for example `Add` vs `Sort`).  
+
+1. Eliding the list entirely.  For example:
+
+    ```c#
+    foreach (var x in [1, 2, 3])
+
+    // can be rewritten to:
+
+    for (int x = 1; x <= 3; x++);
+    ```
+
+    This also applies to:
+
+    ```c#
+    foreach (var x in new List<int> { 1, 2, 3 })
+
+    // can be rewritten to:
+
+    for (int x = 1; x <= 3; x++);
+    ```
+
+2. Using a `Span<T>` when the list elements are provided up front, no size-mutating list methods are used, and 
