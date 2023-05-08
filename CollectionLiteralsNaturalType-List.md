@@ -191,7 +191,7 @@ var v = [1];
 
 ```c#
 // v has type List<int> because of best-common-type on the literal elements.
-var v = [1];
+object v = [1];
 ```
 
 ```c#
