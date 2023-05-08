@@ -372,7 +372,7 @@ foreach (var x in v)
 
 ## Important questions
 
-1. `T` inference can happen with the entire method and inheritance surface area of `List<T>`.  This is quite a large surface area.  We could consider limiting to just core methods like `Add/AddRange/this[]`.
+1. `T` inference can happen with the entire method and inheritance surface area of `List<T>`.  This is quite a large surface area.  We could consider limiting to just core methods like `Add/AddRange/this[]`, and if the variable is target typed to `List<T>/I<T>`.
 
 2. `T` inference for a `var v = [x, y, ..z]` literal only uses the elements in the literal itself.  We could consider also feeding in the usage information of `v` (like in the `var v = []` case) to inform the inference.  This would change the following:
 
