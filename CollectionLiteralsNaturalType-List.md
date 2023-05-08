@@ -326,9 +326,12 @@ var v = [a, b, c];
 await T;
 foreach (var x in v) ...
 ```
+
 ```c#
-// Compiler should represent this as a stackalloc'ed Span<T> as it is not mutated
+// Compiler should represent this as lightweight list-like Span/Array wrapping helper (like ValueListBuilder) as it is mutated
 var v = [a, b, c];
+v.Add(d);
+
 foreach (var x in v) ...
 ```
 
