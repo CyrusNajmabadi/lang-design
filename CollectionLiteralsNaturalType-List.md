@@ -234,7 +234,7 @@ v.Add(0.0);
 ```
 
 ```c#
-// Illegal.  No comptible bounds found.
+// Illegal.  No compatible bounds found.
 var v = [];
 v.Add(1);
 v.Add("");
