@@ -161,3 +161,38 @@ These optimizations depend on the list not being used in any fashion that could 
             // ...   
     }
     ```
+
+## Examples
+
+```c#
+// The following is illegal.  No element types are provided, and 'v' is not mutated later.
+var v = [];
+```
+
+```c#
+// v has type List<int> because of best-common-type on the literal elements.
+var v = [1];
+```  
+
+```c#
+// Compiler should represent this as a stackalloc'ed Span<T> as it is not
+// mutated
+var v = [a, b, c];
+foreach (var x in v) ...
+```
+
+```c#
+// Compiler should represent this as a stackalloc'ed Span<T>.  It doesn't cross the `await` so it can stay on the stack
+var v = [a, b, c];
+foreach (var x in v) ...
+
+await T;
+```
+
+```c#
+// Compiler should represent this as an array as it is not mutated, but does cross the `await`.
+var v = [a, b, c];
+await T;
+foreach (var x in v) ...
+```
+
