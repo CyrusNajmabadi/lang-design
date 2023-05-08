@@ -62,7 +62,7 @@ This document continues the original design for the [natural type](https://githu
 
     The goal of this (as opposed to utilizing some existing method to do the conversion) is that the compiler is free to implement this as efficiently as possible in the cases where 'v' is no longer used post conversion.  In the above, this would allow a single array allocation for 'v' and  direct ownership transfer to the ImmutableArray.
 
-    Note: this level of support may not be necessary/desirable.
+    Note: this level of support may not be necessary/desirable.  We could consider not doing this and having users have to explicitly create these other types themselves (e.g. `v.ToImmutableArray()`).
 
 
 ### Natural type element inference
