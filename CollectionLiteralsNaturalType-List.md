@@ -361,3 +361,4 @@ foreach (var x in v)
 
 3. Instead of presuming that `List<T>` is well behaved, and can be optimized/replaced with alternative types, would it be better to define attributes the runtime could use to state this, and point at the alternate types to use when possible?
 
+4. 
