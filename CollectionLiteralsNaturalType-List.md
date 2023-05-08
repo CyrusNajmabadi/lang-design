@@ -40,7 +40,9 @@ This document continues the original design for the [natural type](https://githu
 
 ### `List<T>` natively supported
 
-1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).
+1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
+
+1. `List<T>` is presumed to only have the semantics specified [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0).
 
 1. A `List<T>` is implicitly convertible to a `Span<T>`.  This will require new APIs present in the BCL.  For example:
 
