@@ -21,4 +21,9 @@ This document continues the original design for the [natural type](https://githu
 
 1. Support all use cases *directly*, with the same perf, that are provided with `target typed` collection literals.
 2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics.
+3. Support optimized code-gen in all BCL versions.  For example, optimal codegen may depend on new types/methods/attributes being available not present on downlevel versions.
+
+## Detailed design
+
+### Inference
 
