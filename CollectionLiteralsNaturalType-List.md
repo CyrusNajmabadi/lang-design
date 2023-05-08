@@ -80,6 +80,7 @@ The natural type of a list literal is always some `List<T>`.  Determining the `T
         1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
         1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
         1. `v.CopyTo(stringArray)`.  Adds a lower bound of `string`. `T[]` case.
+    1. Extension method calls count as `target-typing` cases as `v` is passed as an argument to the extension method's `this` parameter. 
 
 1. Because the natural type can only be determined for an empty literal based on how the variable it is assigned is used, there is no natural type for an empty literal in any other program location.
 
