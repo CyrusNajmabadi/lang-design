@@ -187,7 +187,12 @@ object o = [];
 ```c#
 // v has type List<int> because of best-common-type on the literal elements.
 var v = [1];
-```  
+```
+
+```c#
+// v has type List<int> because of best-common-type on the literal elements.
+var v = [1];
+```
 
 ```c#
 // Compiler should represent this as a stackalloc'ed Span<T> as it is not
