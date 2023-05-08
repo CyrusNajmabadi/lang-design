@@ -124,6 +124,16 @@ Specific optimizations:
     foreach (var x in v)
     ```
 
+    ```c#
+    // can be stack alloc'ed.  Does not live across await/yield operation.
+    var v = [a, b, c];
+    foreach (var x in v)
+    {
+
+    }
+    await task;
+    ```
+
 3. Using a `T[]` when the list elements are provided up front and the list size is not mutated, but using the stack is not safe.  For example:
 
     ```c#
