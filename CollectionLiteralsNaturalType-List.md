@@ -168,9 +168,21 @@ Specific optimizations:
             // ...
     }
     ```
+    
+    ```c#
+    // Should allocate an int[] to allow values to survive on the heap for the delegate.
+    var v = [1, 2, 3]
+    Action x = v;
+
+    void f()
+    {
+        foreach (var x in v)
+            // ...
+    }
+    ```
 
     ```c#
-    // Should allocate an int[] to allow values to survive on the heap for the lambda.
+    // Should allocate an int[] to allow values to survive on the heap for the delegate.
     var v = [1, 2, 3]
     Action a = () =>
     {
