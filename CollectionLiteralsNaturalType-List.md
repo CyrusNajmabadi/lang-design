@@ -264,6 +264,14 @@ v.CopyTo(s);
 ```
 
 ```c#
+// Has type List<string>.
+var v = [];
+v.Add("")
+string[] s = ...;
+v.CopyTo(s); // string[] is-a object[] so this is all legal
+```
+
+```c#
 // Has type List<object>.
 var v = [];
 object o = "";
