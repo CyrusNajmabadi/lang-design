@@ -31,7 +31,7 @@ This document continues the original design for the [natural type](https://githu
 
 1. Given a literal of the form `var v = [];` type inference for `T` is performed based on the subsequent usage of `v` in the method body, finding lower and upper bounds for `T`. If no suitable bounds can be found, the literal is not legal. Specifically:
     1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
-    1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>`, then `T` gets an upper and lower bound of `X`.
+    1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>` (e.g. `IList<X>`), then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *out variant* `I<out X>` interfaces implemented by `List<X>`, then `T` gets an upper bound of `X`. (TODO: should we also support `I<in X>` interfaces?  Currently there are none on `List<T>`, but we could consider spec'ing it).
     1. Method calls on `v` are examined. If those methods have arguments that uses `T`, `I<out T>`, `I<in T>`, `T[]` then those arguments add appropriate bounds to inference.  For example:
         1. `v.Add("")` adds a lower bound of `string`.  `T` case.
