@@ -224,6 +224,14 @@ AddElements(v);
 void AddElements(List<int> list);
 ```
 
+```c#
+// Has type List<object> due to 'AddElements'
+var v = [];
+AddElements(v);
+
+void AddElements(List<int> list);
+```
+
 ### Optimization examples
 
 ```c#
