@@ -268,7 +268,7 @@ v.CopyTo(s);
 var v = [];
 v.Add("")
 string[] s = ...;
-v.CopyTo(s); // string[] is-a object[] so this is all legal
+v.CopyTo(s);
 ```
 
 ```c#
