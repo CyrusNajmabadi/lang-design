@@ -33,3 +33,8 @@ This document continues the original design for the [natural type](https://githu
     1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>`, then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *out variant* `I<out X>` interfaces implemented by `List<X>`, then `T` gets an upper bound of `X`. (TODO: should we also support `I<in X>` interfaces?  Currently there are none on `List<T>`, but we could consider spec'ing it).
+    1. Method calls on `v` are examined. If those methods have arguments that uses `T`, `I<out T>`, `I<in T>`, `T[]` then those arguments add appropriate bounds to inference.  For example:
+        1. `v.Add("")` adds a lower bound of `string`.  `T` case.
+        1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
+        1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
+        1. `v.CopyTo(stringArray)`.  Adds a lower and upper bound of `string`. `T[]` case.
