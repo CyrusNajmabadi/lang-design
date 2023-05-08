@@ -257,11 +257,19 @@ v.Sort(c);
 ```
 
 ```c#
-// Has type List<string> due to invariant bound T[]
-IComparer<object> c = ...; 
+// Has type List<string> due to lower bound string[]
 var v = [];
-v.Add("");
-v.Sort(c);
+string[] s = ...;
+v.CopyTo(s);
+```
+
+```c#
+// Has type List<object>.
+var v = [];
+object o = "";
+v.Add(o)
+string[] s = ...;
+v.CopyTo(s);
 ```
 
 ### Optimization examples
