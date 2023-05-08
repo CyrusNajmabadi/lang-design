@@ -75,7 +75,7 @@ The natural type of a list literal is always some `List<T>`.  Determining the `T
     1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>` (e.g. `IList<X>`), then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *out variant* `I<out X>` interfaces implemented by `List<X>` (e.g. `IEnumerable<X>`), then `T` gets an upper bound of `X`. (TODO: should we also support `I<in X>` interfaces?  Currently there are none on `List<T>`, but we could consider spec'ing it if that ever happens).
-    1. Method calls on `v` are examined. If those methods have arguments that use `T`, `I<out T>`, `I<in T>`, `T[]` then those arguments add appropriate bounds to inference.  Note: `I<>` refers to both interfaces and delegate types. Also, these interfaces/delegates can have multiple type parameters.   For example:
+    1. Method calls on `v` are examined. If those methods have arguments that use `T`, `I<out T>`, `I<in T>`, or `T[]` then those arguments add appropriate bounds to inference.  Note: `I<>` refers to both interfaces and delegate types. Also, these interfaces/delegates can have multiple type parameters.  These rules only apply to the usage of the `T` type parameter in the in that case .   For example:
         1. `v.Add("")` adds a lower bound of `string`.  `T` case.
         1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
         1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
