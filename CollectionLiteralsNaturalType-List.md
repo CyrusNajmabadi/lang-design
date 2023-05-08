@@ -20,7 +20,7 @@ This document continues the original design for the [natural type](https://githu
 ### Non-goals
 
 1. Support all use cases *directly*, with the same perf, that are provided with `target typed` collection literals.
-2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics. For example:
+2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics.  This is similar to how the language works already for things like lambdas, formattable strings, interpolated string handlers, numeric values, etc. For example:
 
     ```c#
     // Directly creates and adds to hash-set in-line.  Legal
