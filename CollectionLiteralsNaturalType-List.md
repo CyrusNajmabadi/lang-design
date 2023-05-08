@@ -194,6 +194,31 @@ var v = [1];
 object v = [1];
 ```
 
+### Inference examples
+
+```c#
+// Has type List<int> due to 'Add'
+var v = [];
+v.Add(1);
+```
+
+```c#
+// Has type List<double> due to 'Add'
+var v = [];
+v.Add(1);
+v.Add(0.0)
+```
+
+```c#
+// Has type List<int> due to 'AddElements'
+var v = [];
+AddElements(v);
+
+void AddElements(List<int> list);
+```
+
+### Optimization examples
+
 ```c#
 // Compiler should represent this as a stackalloc'ed Span<T> as it is not
 // mutated
