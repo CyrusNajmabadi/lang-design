@@ -63,7 +63,7 @@ The natural type of a list literal is always some `List<T>`.  Determining the `T
 
 The compiler is free to perform any or all of the following optimizations for fresh `List<T>` instances within a method body.  These optimizations apply regardless if a collection literal is used, or `new List<T>()` is used (without a capacity).
 
-These optimizations depend on the list not being used in any fashion that could observe its type (e.g. assigning to another variable, passing to any methods as an argument, etc.).  The optimizations also depend on knowing which methods of `List<T>` can affect the size of the collection, as opposed to just operating on the elements within (for example `Add` vs `Sort`).  
+These optimizations depend on the list not being used in any fashion that could observe its type (e.g. assigning to another variable, passing to any methods as an argument, etc.).  The optimizations also depend on knowing which methods of `List<T>` can affect the size of the collection, as opposed to just operating on the elements within (for example `Add` vs `Sort`).  It may be appropriate for attributes to be provided on these methods to provide the compiler this information.
 
 1. Eliding the list entirely.  For example:
 
