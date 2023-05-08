@@ -32,3 +32,4 @@ This document continues the original design for the [natural type](https://githu
 1. Given a literal of the form `var v = [];` type inference for `T` is performed based on the subsequent usage of `v` in the method body, finding lower and upper bounds for `T`.  Specifically
     1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
     1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>`, then `T` gets an upper and lower bound of `X`.
+    1. When 'v' is assigned to types of concrete *out variant* `I<out X>` interfaces implemented by `List<X>`, then `T` gets an upper bound of `X`. (TODO: should we also support `I<in X>` interfaces?  Currently there are none on `List<T>`, but we could consider spec'ing it).
