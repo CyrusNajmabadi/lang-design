@@ -85,4 +85,60 @@ These optimizations depend on the list not being used in any fashion that could 
     for (int x = 1; x <= 3; x++);
     ```
 
-2. Using a `Span<T>` when the list elements are provided up front, no size-mutating list methods are used, and 
+2. Using a `Span<T>` when the list elements are provided up front and the list size is not mutated.  For example:
+
+    ```c#
+    // can be stack alloc'ed
+    foreach (var x in [a, b, c])
+    ```
+
+    ```c#
+    // can be stack alloc'ed
+    var v = [a, b, c];
+    foreach (var x in v)
+    ```
+
+3. Using a `T[]` when the list elements are provided up front and the list size is not mutated.  For example:
+
+    ```c#
+    // Needs to be in heap to survive across await call.
+    var v = [a, b, c];
+    await task;
+    foreach (var x in v)
+    ```
+
+4. Using lighter weight implementations of `List<T>` when it would not be observable.  For example, a ref-struct/value-type version similar to [ValueListBuilder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/ValueListBuilder.cs).  These types would likely need to be provided in `System.Compiler.RuntimeServices` and be kept in sync with `List<T>` by the runtime team.  For example:
+
+    ```c#
+    var v = [];
+    // complex logic that mutates 'v', for example:
+    v.Add(a);
+
+    foreach (var x in v)
+    ```
+
+    The above could use a helper type that provided growable span/array semantics, without the additional heap allocation that `List<T>` incurs.
+
+5. Capturing these fresh list values in lambda methods and local functions should ideally still allow varying levels of optimization depending on if a delegate instance is created (always true for lambdas, sometimes true for local functions).  For example:
+
+    ```c#
+    // Should be able to stack-alloc
+    var v = [1, 2, 3]
+    f();
+
+    void f()
+    {
+        foreach (var x in v)
+            // ...
+    }
+    ```
+
+    ```c#
+    // Should allocate an int[] to allow values to survive on the heap for the lambda.
+    var v = [1, 2, 3]
+    Action a = () =>
+    {
+        foreach (var x in v)
+            // ...   
+    }
+    ```
