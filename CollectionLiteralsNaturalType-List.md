@@ -328,7 +328,7 @@ foreach (var x in v) ...
 ```
 
 ```c#
-// Compiler should represent this as lightweight list-like Span/Array wrapping helper (like ValueListBuilder) as it is mutated
+// Compiler should represent this as lightweight list-like Span/Array wrapping helper (like ValueListBuilder) as it is mutated, but can stay on the stack.
 var v = [a, b, c];
 v.Add(d);
 
