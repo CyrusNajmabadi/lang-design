@@ -200,3 +200,22 @@ await T;
 foreach (var x in v) ...
 ```
 
+```c#
+// 'v' is a List<int> as its type is examined.
+var v = [0, 1, 2];
+var t = v.GetType();
+foreach (var x in v)
+```
+
+## Important questions
+
+1. `T` inference can happen with the entire metho and interface surface area of `List<T>`.  This is quite a large surface area.  We could consider limiting to just core methods like `Add/AddRange/this[]`.
+
+2. `T` inference for a `var v = [x, y, ..z]` literal only uses the elements in the literal itself.  We could consider also feeding in the usage information of `v` (like in the `var v = []` case) to inform the inference.  This would change the following:
+
+    ```c#
+    var v = [1, 2, 3];
+    v.Add(0.0);
+    ```
+
+    If only the literal is examined, this would be illegal (as `v` would have the `List<int>` type).  However, if the usage was examined, this would be legal as inference would infer `double` given the bounds provided.
