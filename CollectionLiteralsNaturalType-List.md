@@ -336,6 +336,14 @@ foreach (var x in v) ...
 ```
 
 ```c#
+// Compiler should represent this as lightweight list-like Array wrapping helper as needs the data on the heap.
+var v = [a, b, c];
+v.Add(d);
+await task;
+foreach (var x in v) ...
+```
+
+```c#
 // 'v' is a List<int> as its type could be examined.
 var v = [0, 1, 2];
 var t = v.GetType();
