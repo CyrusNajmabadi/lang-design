@@ -201,9 +201,23 @@ foreach (var x in v) ...
 ```
 
 ```c#
-// 'v' is a List<int> as its type is examined.
+// 'v' is a List<int> as its type could be examined.
 var v = [0, 1, 2];
 var t = v.GetType();
+foreach (var x in v)
+```
+
+```c#
+// 'v' is a List<int> as its type could be examined.
+var v = [0, 1, 2];
+TakesObject(v);
+foreach (var x in v)
+```
+
+```c#
+// 'v' is a List<int> as its type could be examined.
+var v = [0, 1, 2];
+TakesList(v);
 foreach (var x in v)
 ```
 
