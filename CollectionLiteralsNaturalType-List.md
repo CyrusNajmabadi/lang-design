@@ -7,12 +7,12 @@ This document continues the original design for the [natural type](https://githu
 
 ### Goals
 
-1. Support literal usage like `var v = [x, y, ..z];` (elements provided within the literal).
-1. Support literal usage like `var v = []; /*...*/ v.Add(x);` (empty literal with elements provided afterwards).
-1. Support literal usage like `var v = [] /*..*/ FillList(v); ProcessList(v);` (empty literal passed to concrete List processing code).
+1. Support literal usage like:
+    1. `var v = [x, y, ..z];` (elements provided within the literal).
+    1. `var v = []; /*...*/ v.Add(x);` (empty literal with elements provided afterwards).
+    1. `var v = [] /*..*/ FillList(v); ProcessList(v);` (empty literal passed to concrete List processing code).
 1. Use a well known type, deeply familiar to the .Net/C# ecosystems, with well understood semantics.
-1. Support a broad number of use cases in a natural/intuitive fashion.
-1. Natural extendible to dictionaries.
+1. Naturally extendible to dictionaries.1. Support a broad number of use cases in a natural/intuitive fashion.
 1. Provide broad leeway for compiler to produce heavily optimized code (i.e. 'do not leave perf on the table').  Including for code that uses ``new List<T>()` directly, not just collection literals.
 1. These optimizations must not violate the stated contract of [List<T>](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0).  However, some undocumented differences may be observable in practice.
     1. For example `GetHashCode()` may produce different results, as may operations like [Capacity](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.capacity?view=net-8.0).
@@ -232,6 +232,13 @@ foreach (var x in v)
 // 'v' is a List<int> as its type could be examined (unless compiler wants to track through other variables as well)
 var v = [1, 2, 3];
 var x = v;
+foreach (var x in v)
+```
+
+```c#
+// 'v' is a List<int> as its type could be examined in the extension method on IEnumerable
+var v = [1, 2, 3];
+var x = v.Select(w => w.ToString());
 foreach (var x in v)
 ```
 
