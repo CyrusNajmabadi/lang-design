@@ -9,7 +9,7 @@ This document continues the original design for the [natural type](https://githu
 
 1. Support literal usage like `var v = [x, y, ..z];` (elements provided within the literal).
 1. Support literal usage like `var v = []; /*...*/ v.Add(x);` (empty literal with elements provided afterwards).
-1. Support literal usage like `var v = [] /*..*/ FillList(v);` (empty literal passed to concrete List processing code).
+1. Support literal usage like `var v = [] /*..*/ FillList(v); ProcessList(v);` (empty literal passed to concrete List processing code).
 1. Support a broad number of use cases in a natural/intuitive fashion.
 1. Use a well known type, deeply familiar to the .Net/C# ecosystems, with well understood semantics.
 1. Provide broad leeway for compiler to produce heavily optimized code (i.e. 'do not leave perf on the table').  Including for code that uses `List<T>` directly, not just collection literals.
