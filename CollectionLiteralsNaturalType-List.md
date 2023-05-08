@@ -232,6 +232,15 @@ AddElements(v);
 void AddElements(IEnumerable<object> list);
 ```
 
+```c#
+// Has type List<string> due to upper bound of 'AddElements' and lower bound of 'Add'. 
+var v = [];
+AddElements(v);
+v.Add("");
+
+void AddElements(IEnumerable<object> list);
+```
+
 ### Optimization examples
 
 ```c#
