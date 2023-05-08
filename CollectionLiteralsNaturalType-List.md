@@ -213,7 +213,7 @@ v.Add(0.0);
 // Illegal.  No comptible bounds found.
 var v = [];
 v.Add(1);
-v.Add(0.0);
+v.Add("");
 ```
 
 ```c#
