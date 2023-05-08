@@ -17,6 +17,7 @@ This document continues the original design for the [natural type](https://githu
 1. These optimizations must not violate the stated contract of [List<T>](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0).  However, some undocumented differences may be observable in practice.
     1. For example `GetHashCode()` may produce different results, as may operations like [Capacity](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.capacity?view=net-8.0).
     1. The contract includes 'reflection' operations.  e.g. `GetType()` must still return the System.Type instance for `List<T>`.
+1. Provide hidden diagnostics and/or analyzers to let users disallow certain scenarios (for example, only allowing collection-literal natural types if they would stack-alloc and not heap alloc).
 
 ### Non-goals
 
@@ -24,7 +25,7 @@ This document continues the original design for the [natural type](https://githu
 2. Allow taking a target-typed collection, and moving it to a natural-typed location without a change in semantics.  This is similar to how the language works already for things like lambdas, formattable strings, interpolated string handlers, numeric values, etc. For example:
 
     ```c#
-    // Directly creates and adds to hash-set in-line.  Legal.
+    // Directly creates and adds to HashSet in-line.  Legal.
     TakesHashSet([1, 2, 3]);
 
     // versus
