@@ -175,6 +175,16 @@ var v = [];
 ```
 
 ```c#
+// Illegal.  `[]` only has a natural type in the `var v = [];` case.
+foreach (var v in [])
+```
+
+```c#
+// Illegal.  `[]` only has a natural type in the `var v = [];` case.
+object o = [];
+```
+
+```c#
 // v has type List<int> because of best-common-type on the literal elements.
 var v = [1];
 ```  
