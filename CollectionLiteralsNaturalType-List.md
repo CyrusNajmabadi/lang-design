@@ -307,8 +307,7 @@ v.CopyTo(s); // string[] is-a object[] so this is all legal
 ### Optimization examples
 
 ```c#
-// Compiler should represent this as a stackalloc'ed Span<T> as it is not
-// mutated
+// Compiler should represent this as a stackalloc'ed Span<T> as it is not mutated
 var v = [a, b, c];
 foreach (var x in v) ...
 ```
