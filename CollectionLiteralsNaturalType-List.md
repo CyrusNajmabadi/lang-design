@@ -253,7 +253,6 @@ v.Sort(c);
 IComparer<object> c = ...; 
 var v = [];
 v.Add("");
-
 v.Sort(c);
 ```
 
