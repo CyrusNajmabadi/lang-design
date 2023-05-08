@@ -210,6 +210,13 @@ v.Add(0.0);
 ```
 
 ```c#
+// Illegal.  No comptible bounds found.
+var v = [];
+v.Add(1);
+v.Add(0.0);
+```
+
+```c#
 // Has type List<int> due to 'AddElements'
 var v = [];
 AddElements(v);
