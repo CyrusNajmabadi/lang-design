@@ -124,7 +124,7 @@ Specific optimizations:
     foreach (var x in v)
     ```
 
-3. Using a `T[]` when the list elements are provided up front and the list size is not mutated.  For example:
+3. Using a `T[]` when the list elements are provided up front and the list size is not mutated, but using the stack is not safe.  For example:
 
     ```c#
     // Needs to be in heap to survive across await call.
