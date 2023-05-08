@@ -25,5 +25,10 @@ This document continues the original design for the [natural type](https://githu
 
 ## Detailed design
 
-### Inference
+### Natural type element inference
 
+1. Given a literal of the form `[x, y, ..z]`, the natural element type `T` for `List<T>` is determined using the same  algorithm in the [original spec](https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type).  Effectively, using `best-common-type` on the element-expressions, and the `iterator type` of spread-elements.
+
+1. Given a literal of the form `var v = [];` type inference for `T` is performed based on the subsequent usage of `v` in the method body, finding lower and upper bounds for `T`.  Specifically
+    1. When 'v' is assigned to types (note: is there a word for that?) of concrete `List<X>` instantiations, then `T` gets an upper and lower bound of `X`.
+    1. When 'v' is assigned to types of concrete *invariant* `I<X>` interfaces implemented by `List<X>`, then `T` gets an upper and lower bound of `X`.
