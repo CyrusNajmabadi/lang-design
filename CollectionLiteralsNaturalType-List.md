@@ -225,11 +225,11 @@ void AddElements(List<int> list);
 ```
 
 ```c#
-// Has type List<object> due to 'AddElements'
+// Has type List<object> due to upper bound of 'AddElements'
 var v = [];
 AddElements(v);
 
-void AddElements(List<int> list);
+void AddElements(IEnumerable<object> list);
 ```
 
 ### Optimization examples
