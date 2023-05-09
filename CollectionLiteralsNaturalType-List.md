@@ -11,12 +11,12 @@ This document continues the original design for the [natural type](https://githu
     1. `var v = [x, y, ..z];` (elements provided within the literal).
     1. `var v = []; /*...*/ v.Add(x);` (empty literal with elements provided afterwards).
     1. `var v = [] /*..*/ FillList(v); ProcessList(v);` (empty literal passed to concrete List processing code).
-1. Use a well known type, deeply familiar to the .Net/C# ecosystems, with well understood semantics.
+1. Use a well known type, deeply familiar to the .NET/C# ecosystems, with well understood semantics.
 1. Design should be naturally extendible to dictionaries.
 1. Support a broad number of use cases in a natural/intuitive fashion.
-1. Provide broad leeway for compiler to produce heavily optimized code (i.e. 'do not leave perf on the table').  Including for code that uses ``new List<T>()` directly, not just collection literals.
-1. These optimizations must not violate the stated contract of [List<T>](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0).  However, some undocumented differences may be observable in practice.
-    1. For example `GetHashCode()` may produce different results, as may operations like [Capacity](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.capacity?view=net-8.0).
+1. Provide broad leeway for compiler to produce heavily optimized code (i.e. 'do not leave perf on the table').  Including for code that uses `new List<T>()` directly, not just collection literals.
+1. These optimizations must not violate the stated contract of [List<T>](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1).  However, some undocumented differences may be observable in practice.
+    1. For example `GetHashCode()` may produce different results, as may operations like [Capacity](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.capacity).
     1. The contract includes 'reflection' operations.  e.g. `GetType()` must still return the System.Type instance for `List<T>`.
 1. Provide hidden diagnostics and/or analyzers to let users disallow certain scenarios (for example, only allowing collection-literal natural types if they would stack-alloc and not heap alloc).
 
@@ -43,7 +43,7 @@ This document continues the original design for the [natural type](https://githu
 
 1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
 
-1. `List<T>` is presumed to only have the semantics specified [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0).
+1. `List<T>` is presumed to only have the semantics specified [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1).
 
 1. A `List<T>` is implicitly convertible to a `Span<T>`.  This will require new APIs present in the BCL.  For example:
 
