@@ -1,4 +1,4 @@
-# Collection literals natural type (List<T>)
+# Collection literals natural type (`List<T>`)
 
 This document continues the original design for the [natural type](https://github.com/dotnet/csharplang/blob/main/proposals/collection-literals.md#natural-type) of a collection literal.  Specifically, the design is extended in two important ways:
 
