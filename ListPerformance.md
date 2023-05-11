@@ -218,7 +218,7 @@ In order to support these optimizations, the BCL will be expanded to include the
 1. `System.Runtime.CompilerServices.RefList<T>`
 1. `System.Runtime.CompilerServices.ValueList<T>`
 
-These types are not intended for users to use.  But, at the same time, nothing blocks that.  The types will have complex and subtle (especially in ref-struct/value-struct space) semantics, which is why these exist in `CompilerServices` and not `System.Collections.Generic`.
+These types are not intended for end user use.  But, at the same time, nothing blocks that.  The types will have complex and subtle (especially in ref-struct/value-struct space) semantics, which is why these exist in `CompilerServices` and not `System.Collections.Generic`.
 
 The APIs will mirror the API of `List<T>`.  When `List<T>` receives any api changes, they should be placed in the appropriate apis above (depending on if they might change the size of the list or not).  These apis have the following characteristics:
 
