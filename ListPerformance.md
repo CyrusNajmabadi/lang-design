@@ -116,6 +116,15 @@ Specific optimizations:
     }
     ```
 
+6. `new List<T>(capacity: ...)` is also something that should be supported.  Depending on if the capacity is constant or not, and if the variable is ref-safe, the appropriate collection will be picked.  For example:
+
+```c#
+// Should use RefList<int> here
+var v = new List<int>(capacity: 3);
+v.Add(1);
+v.Add(2);
+```
+
 ### Optimization examples
 
 ```c#
