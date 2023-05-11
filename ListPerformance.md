@@ -250,7 +250,7 @@ public ref struct FixedSizeRefList<T>
     public void ForEach(Action<T> action);
     public int IndexOf(T item); // And the other IndexOf/LastIndexOf overloads.
     public void Reverse(); // And the other Reverse overloads.
-    public void Sort()
+    public void Sort();
 
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
