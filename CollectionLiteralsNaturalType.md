@@ -18,7 +18,11 @@ The natural type of a collection literal is some `List<T>` where the `T` is dete
 An `inferred generic type` is a type that can be used on a local variable, indicating that the actual instantiation should be determined from code that follows.  For example:
 
 ```c#
-X<> v;
+X<> v1;
+Y<,> v2;
 
-// X<>'s type argument determined by how 'v' is used later.
+// X<> and Y<,> type arguments determined by how 'v1' and v2 is used later.  
 ```
+
+The rules for inference work as follows:
+
