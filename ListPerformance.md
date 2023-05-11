@@ -223,7 +223,7 @@ These types are not intended for end user use.  But, at the same time, nothing b
 The APIs will mirror the API of `List<T>`.  When `List<T>` receives any api changes, they should be placed in the appropriate apis above (depending on if they might change the size of the list or not).  These apis have the following characteristics:
 
 1. `FixedSizeRefList<T>` and `RefList<T>` are ref-structs.
-1. `FixedSizeValueList<T>` and `ValueList<T>` are structs.
+1. `FixedSizeValueList<T>` and `ValueList<T>` are normal structs.
 1. The `FixedSizeXXX<T>` types do not have any method on them that could affect the `Count` of items in the list.
 1. The `XXXRefList<T>` types can point at a span holding the data.
 1. The `RefList<T>` type can also point at a rented array that holds the data (in the case that its `Span` isn't large enough)
