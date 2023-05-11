@@ -331,3 +331,9 @@ public struct ValueList<T>
     public Enumerator GetEnumerator();
     public struct Enumerator { ... }
 }
+
+## Pros/Cons
+
+Cons: 
+1. Several new types the BCL needs to define, implement, test and maintain.
+2. Potential JIT/Runtime costs of the new generic types, and all their instantiations.
