@@ -247,6 +247,15 @@ public ref struct FixedSizeRefList<T>
     public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
     // And the other CopyTo overloads.
     public void CopyTo(T[] array);
+    public bool Exists(Predicate<T> match);
+    // And the FindAll/FindIndex/FindLast/FindLastIndex overloads
+    public T? Find(Predicate<T> match);
+    public void ForEach(Action<T> action);
+    public List<T> GetRange(int index, int count);
+    public List<T> Slice(int start, int length);
+
+    public Enumerator GetEnumerator();
+    public ref struct Enumerator { ... }
 }
 
 public ref struct RefList<T>
@@ -263,4 +272,7 @@ public ref struct RefList<T>
     public void Add(T item);
     public void AddRange(IEnumerable<T> collection);
     public void Clear();
+    public int EnsureCapacity(int capacity);
+
+    public ref struct Enumerator { ... }
 }
