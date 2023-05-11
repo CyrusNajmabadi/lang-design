@@ -253,6 +253,7 @@ public ref struct FixedSizeRefList<T>
     public void ForEach(Action<T> action);
     // And the other IndexOf/LastIndexOf overloads.
     public int IndexOf(T item);
+    public void Reverse();
 
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
@@ -278,9 +279,8 @@ public ref struct RefList<T>
     public int EnsureCapacity(int capacity);
     public void Insert(int index, T item);
     public void InsertRange(int index, IEnumerable<T> collection);
+    // And the RemoveAll/RemoveAt/RemoveRange overloads.
     public bool Remove(T item);
-    public int RemoveAll(Predicate<T> match);
-    public void RemoveAt(int index);
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
