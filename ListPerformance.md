@@ -205,5 +205,12 @@ In order to support these optimizations, the BCL will be expanded to include the
 
 1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
 1. `System.Runtime.CompilerServices.FixedSizeValueList<T>`
-1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
-1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
+1. `System.Runtime.CompilerServices.RefList<T>`
+1. `System.Runtime.CompilerServices.ValueList<T>`
+
+These types are not intended for users to use.  But, at the same time, nothing blocks that.  The types will have complex and subtle (especially in ref-struct/value-struct space) semantics, which is why these exist in `CompilerServices` and not `System.Collections.Generic`.
+
+The APIs will mirror the API of `List<T>` with the following characteristics:
+
+1. `FixedSizeRefList<T>` and `RefList<T>` are ref-structs.
+1. `RefList<T>` and `ValueList<T>` are ref-structs.
