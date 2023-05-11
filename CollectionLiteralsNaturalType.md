@@ -9,6 +9,6 @@ The natural type of a collection literal is some `List<T>` where the `T` is dete
     * The type of each element e_n, and
     * The iteration type of each element ..s_n.
 
-1. For an empty literal of the form `var v = [];` the the natural type of `v` is `List<>`.  This is an [`inferred generic type`](InferredGenericType.md) whose type argument is determined by how it is used in the rest of the user's code.
+1. For an empty literal of the form `var v = [];` the the natural type of `v` is `List<>`.  This is an [`inferred generic type`](InferredGenericType.md) whose type argument is determined by how `v` is used in the rest of the user's code.
 
 1. `[]` in any other context is illegal
