@@ -257,11 +257,11 @@ public ref struct FixedSizeRefList<T>
     public void Reverse(); // And the other Reverse overloads.
     public void Sort(); // And the other Sort overloads.
 
+    public T[] ToArray();
+
     public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
-
-    public T[] ToArray();
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
