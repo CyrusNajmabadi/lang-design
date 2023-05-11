@@ -300,4 +300,6 @@ public struct ValueList<T>
 {
     private int _pos;
     private T[] _rentedArray;
+
+    // Same api as RefList<T>
 }
