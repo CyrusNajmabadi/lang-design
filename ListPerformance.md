@@ -287,7 +287,17 @@ public ref struct RefList<T>
     public ref struct Enumerator { ... }
 }
 
+// Can be disposed if not captured.  Returns rented array if present.
 public struct FixedSizeValueList<T>
 {
-    private readonly 
+    private readonly T[] _rentedArray;
+
+    // Same api as FixedSizeRefList<T>
+}
+
+// Can be disposed if not captured.  Returns rented array if present.
+public struct ValueList<T>
+{
+    private int _pos;
+    private T[] _rentedArray;
 }
