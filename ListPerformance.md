@@ -237,7 +237,7 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 4. If the variables do not escape, and involve rented arrays, those arrays are returned to the pool when the variable goes out of scope.
 5. The compiler is free to eschew using these types as well if such work is considered desirable/reasonable.  For example, emitting a `Span<T>` directly and operating on it itself.  This should only be done though if there are tangible benefits, and the cost of having the compiler understand and implement a subset of `List<T>` operations on `Span<T>` is acceptable.
 
-### New BCL types shape
+### Sketches of the new BCL types
 
 Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.
 
