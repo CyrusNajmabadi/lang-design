@@ -256,7 +256,7 @@ public ref struct FixedSizeRefList<T>
     public FixedSizeRefList<T>(Span<T> data);
 
     // All the same members from List<T>.  Nothing is virtual and inline-ability 
-    // should be very good.  All impls should match the same semantics as List<T>
+    // should be very good.  All impls should match the same semantics as List<T>.
 
     public int Capacity { get; } // no setter
     public int Count { get; }
