@@ -28,3 +28,89 @@ The rules for inference for the type argument `T` for the `inferred generic type
     1. `v.CopyTo(stringArray)`.  Adds a lower bound of `string`. `T[]` case.
 
 1. Extension method calls count as `target-typing` cases as `v` is passed as an argument to the extension method's `this` parameter. 
+
+### Inference examples
+
+```c#
+// Has type List<int> due to 'Add'
+List<> v = ...;
+v.Add(1);
+```
+
+```c#
+// Has type List<double> due to 'Add'
+List<> v = ...;
+v.Add(1);
+v.Add(0.0);
+```
+
+```c#
+// Illegal.  No compatible bounds found.
+List<> v = ...;
+v.Add(1);
+v.Add("");
+```
+
+```c#
+// Has type List<int> due to 'AddElements'
+List<> v = ...;
+AddElements(v);
+
+void AddElements(List<int> list);
+```
+
+```c#
+// Has type List<object> due to upper bound of 'AddElements'
+List<> v = ...;
+AddElements(v);
+
+void AddElements(IEnumerable<object> list);
+```
+
+```c#
+// Has type List<string> due to upper bound of 'AddElements' and lower bound of 'Add'. 
+List<> v = ...;
+AddElements(v);
+v.Add("");
+
+void AddElements(IEnumerable<object> list);
+```
+
+```c#
+// Has type List<object> due to upper bound of 'Sort'.
+IComparer<object> c = ...; 
+List<> v = ...;
+v.Sort(c);
+```
+
+```c#
+// Has type List<string> due to upper bound of 'Sort' and lower bound of 'Add'
+IComparer<object> c = ...; 
+List<> v = ...;
+v.Add("");
+v.Sort(c);
+```
+
+```c#
+// Has type List<string> due to lower bound string[]
+List<> v = ...;
+string[] s = ...;
+v.CopyTo(s);
+```
+
+```c#
+// Has type List<string>.
+List<> v = ...;
+v.Add("")
+string[] s = ...;
+v.CopyTo(s);
+```
+
+```c#
+// Has type List<object>.
+List<> v = ...;
+object o = "";
+v.Add(o)
+string[] s = ...;
+v.CopyTo(s); // string[] is-a object[] so this is all legal
+```
