@@ -227,7 +227,7 @@ The APIs will mirror the API of `List<T>`.  When `List<T>` receives any api chan
 1. The `FixedSizeXXX<T>` types do not have any methods on them that could affect the `Count` of items in the list.
 1. The `FixedSizeRefList<T>` and `RefList<T> types can point at a span holding the data.
 1. The `RefList<T>` type can also point at a rented array that holds the data (in the case that its `Span` isn't large enough)
-2. The `XXXValueList<T>` types point at a rented array that holds the data.
+2. The `FixedValueList<T>` and `ValueList<T>` types point at a rented array that holds the data.
 
 Analysis of how a fresh `List<T>` variable is used will determine which of the above types to use.  Specifically:
 
