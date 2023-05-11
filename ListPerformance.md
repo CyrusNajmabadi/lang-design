@@ -68,7 +68,7 @@ Specific optimizations:
     foreach (var x in v)
     ```
 
-4. Using lighter-weight implementations of `List<T>` when it would not be observable.  For example, a ref-struct/value-type version similar to [ValueListBuilder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/ValueListBuilder.cs).  These types would likely need to be provided in `System.Compiler.RuntimeServices` and be kept in sync with `List<T>` by the runtime team.  For example:
+4. Using lighter-weight implementations of `List<T>` when it would not be observable.  For example, a ref-struct/value-type version similar to [ValueListBuilder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/ValueListBuilder.cs).  These types would likely need to be provided in `System.Compiler.RuntimeServices` and be kept in sync with `List<T>` by the runtime team. See [New BCL Types](#new-bcl-types) for more information.
 
     ```c#
     var v = [];
