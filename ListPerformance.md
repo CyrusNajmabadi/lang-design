@@ -36,7 +36,7 @@ Specific optimizations:
     for (int x = 1; x <= 3; x++);
     ```
 
-2. Using a `Span<T>` when the list elements are provided up front and the list size is not mutated.  For example:
+2. Using purely stack allocated data when the list elements are provided up front and the list size is not mutated.  For example:
 
     ```c#
     // can be stack alloc'ed
@@ -59,7 +59,7 @@ Specific optimizations:
     await task;
     ```
 
-3. Using a `T[]` when the list elements are provided up front and the list size is not mutated, but using the stack is not safe.  For example:
+3. Using a heap allocated array `T[]` when the list elements are provided up front and the list size is not mutated, but using the stack is not safe.  For example:
 
     ```c#
     // Needs to be in heap to survive across await call.
