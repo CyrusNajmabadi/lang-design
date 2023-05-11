@@ -262,6 +262,7 @@ public ref struct FixedSizeRefList<T>
     public ref struct Enumerator { ... }
 }
 
+// Can be disposed.  Returns rented array if present.
 public ref struct RefList<T>
 {
     // Where the actual data is stored, may be on stack, or may point at _rentedArray
@@ -284,4 +285,9 @@ public ref struct RefList<T>
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
+}
+
+public struct FixedSizeValueList<T>
+{
+    private readonly 
 }
