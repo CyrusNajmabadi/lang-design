@@ -331,6 +331,7 @@ public struct ValueList<T>
     public Enumerator GetEnumerator();
     public struct Enumerator { ... }
 }
+```
 
 ## Pros/Cons
 
