@@ -241,19 +241,16 @@ public ref struct FixedSizeRefList<T>
     public T this[int index] { get; set; } // setter is fine, it doesn't change size
 
     public ReadOnlyCollection<T> AsReadOnly();
-    // And the other BinarySearch overloads.
-    public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
+    int BinarySearch(int index, int count, T item, IComparer<T>? comparer); // And the other BinarySearch overloads.
     public bool Contains(T item);
     public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
-    // And the other CopyTo overloads.
-    public void CopyTo(T[] array);
+    public void CopyTo(T[] array); // And the other CopyTo overloads.
     public bool Exists(Predicate<T> match);
-    // And the FindAll/FindIndex/FindLast/FindLastIndex overloads
-    public T? Find(Predicate<T> match);
+    public T? Find(Predicate<T> match); // And the FindAll/FindIndex/FindLast/FindLastIndex overloads
     public void ForEach(Action<T> action);
-    // And the other IndexOf/LastIndexOf overloads.
-    public int IndexOf(T item);
-    public void Reverse();
+    public int IndexOf(T item); // And the other IndexOf/LastIndexOf overloads.
+    public void Reverse(); // And the other Reverse overloads.
+    public void Sort()
 
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
