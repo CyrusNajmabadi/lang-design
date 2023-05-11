@@ -198,3 +198,12 @@ var v = new List<int> { a, b, c };
 var x = v.Select(w => w.ToString());
 foreach (var x in v)
 ```
+
+## New BCL types.
+
+In order to support these optimizations, the BCL will be expanded to include the following types:
+
+1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
+1. `System.Runtime.CompilerServices.FixedSizeValueList<T>`
+1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
+1. `System.Runtime.CompilerServices.FixedSizeRefList<T>`
