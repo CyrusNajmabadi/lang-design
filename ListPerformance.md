@@ -6,7 +6,7 @@ Continuing the requirement from [collection literals](https://github.com/dotnet/
 
 1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
 
-1. `List<T>` is presumed to only have the semantics guaranteed [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1).
+1. If present, certain types (see [New BCL types](#new-bcl-types)) are trusted to be drop-in replacements for `List<T>` for the specific usage in a method body.
 
 ### Allowable performance optimizations
 
