@@ -248,12 +248,15 @@ public ref struct FixedSizeRefList<T>
     public bool Exists(Predicate<T> match);
     public T? Find(Predicate<T> match); // And the FindAll/FindIndex/FindLast/FindLastIndex overloads
     public void ForEach(Action<T> action);
+    public bool TrueForAll(Predicate<T> match);
     public int IndexOf(T item); // And the other IndexOf/LastIndexOf overloads.
     public void Reverse(); // And the other Reverse overloads.
-    public void Sort();
+    public void Sort(); // And the other Sort overloads.
 
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
+
+    public T[] ToArray();
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
@@ -277,6 +280,7 @@ public ref struct RefList<T>
     public void Insert(int index, T item);
     public void InsertRange(int index, IEnumerable<T> collection);
     public bool Remove(T item); // And the RemoveAll/RemoveAt/RemoveRange overloads.
+    public void TrimExcess();
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
