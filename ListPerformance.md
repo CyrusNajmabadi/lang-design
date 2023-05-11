@@ -235,6 +235,7 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 2. If the data for the list can live entirely on the stack (i.e. it doesn't cross an `await` call), then the `FixedSizeRefList<T>` or `RefList<T>` types can be used.  Otherwise the `FixedSizeValueList<T>` or `ValueList<T>` types are used.
 3. Depending on which of these are used, the compiler will allocate space on the stack (as a `Span<T>`) or on the heap (as a `T[]`) which is passed into the type.
 4. If the variables do not escape, and involve rented arrays, those arrays are returned to the pool when the variable goes out of scope.
+5. The compiler is free to eschew using these types as well if such work is considered desirable/reasonable.  For example, emitting a `Span<T>` directly and operating on it itself.  This should only be done though if there are tangible benefits, and the cost of having the compiler understand and implement a subset of `List<T>` operations on `Span<T>` is acceptable.
 
 Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.
 
