@@ -236,5 +236,10 @@ public ref struct FixedSizeRefList<T>
 
     public FixedSizeRefList<T>(Span<T> data);
 
-    public int Capacity { get; }
+    public int Capacity { get; } // no setter
+    public int Count { get; }
+    public T this[int index] { get; set; } // setter is fine, it doesn't change size
+
 }
+
+public ref struct RefList<T>
