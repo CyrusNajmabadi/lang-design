@@ -240,6 +240,22 @@ public ref struct FixedSizeRefList<T>
     public int Count { get; }
     public T this[int index] { get; set; } // setter is fine, it doesn't change size
 
+    public ReadOnlyCollection<T> AsReadOnly();
+    // And the other BinarySearch overloads.
+    public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
 }
 
 public ref struct RefList<T>
+{
+    // Where the actual data is stored, may be on stack, or may point at _rentedArray
+    private Span<T> _data;
+    private int _pos;
+    private T[]? _rentedArray;
+
+    // Has all methods from FixedSizeRefList<T> with the following changes/additions:
+
+    public int Capacity { get; set; } // now has setter
+
+    public void Add(T item);
+    public void AddRange(IEnumerable<T> collection);
+}
