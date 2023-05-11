@@ -233,9 +233,13 @@ Briefly, this is what the types would look like. Note: These are more sketches f
 public ref struct FixedSizeRefList<T>
 {
     // Where the actual data is stored.
+    // This ensures the size of the List is no more than the size of the span.
     private readonly Span<T> _data;
 
     public FixedSizeRefList<T>(Span<T> data);
+
+    // All the same members from List<T>.  Nothing is virtual and inline-ability 
+    // should be very good.
 
     public int Capacity { get; } // no setter
     public int Count { get; }
