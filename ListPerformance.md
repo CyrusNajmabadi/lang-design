@@ -280,6 +280,7 @@ public ref struct RefList<T>
     public void InsertRange(int index, IEnumerable<T> collection);
     public bool Remove(T item);
     public int RemoveAll(Predicate<T> match);
+    public void RemoveAt(int index);
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
