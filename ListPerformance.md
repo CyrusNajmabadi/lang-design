@@ -315,6 +315,9 @@ public struct FixedSizeValueList<T>
     private readonly T[] _rentedArray;
 
     // Same api as FixedSizeRefList<T>
+    
+    public Enumerator GetEnumerator();
+    public struct Enumerator { ... }
 }
 
 // Can be disposed if not captured.  Returns rented array if present.
@@ -324,4 +327,7 @@ public struct ValueList<T>
     private T[] _rentedArray;
 
     // Same api as RefList<T>
+    
+    public Enumerator GetEnumerator();
+    public struct Enumerator { ... }
 }
