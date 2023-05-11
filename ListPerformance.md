@@ -276,8 +276,7 @@ public ref struct RefList<T>
     public int EnsureCapacity(int capacity);
     public void Insert(int index, T item);
     public void InsertRange(int index, IEnumerable<T> collection);
-    // And the RemoveAll/RemoveAt/RemoveRange overloads.
-    public bool Remove(T item);
+    public bool Remove(T item); // And the RemoveAll/RemoveAt/RemoveRange overloads.
 
     public Enumerator GetEnumerator();
     public ref struct Enumerator { ... }
