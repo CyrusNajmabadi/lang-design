@@ -219,6 +219,13 @@ The APIs will mirror the API of `List<T>` with the following characteristics:
 1. The `RefList<T>` type can also point at a rented array that holds the data (in the case that its `Span` isn't large enough)
 2. The `XXXValueList<T>` types point at a rented array that holds the data.
 
+Analysis of how a fresh `List<T>` variable is used will determine which of the above types to use.  Specifically:
+
+1. If the usage only involves methods present in the `FixedSizeXXX<T>` types, then those will be used versus the non-fixed size versions.  In other words, if the user doesn't do anything to change the size of the list, then we can use fixed-size storage without any other overhead.  Otherwise, the non-fixed size types are used.
+2. If the data for the list can live entirely on the stack (i.e. it doesn't cross an `await` call), then the `XXXRefList<T>` types can be used.  Otherwise the `XXXValueList<T>` types are used.
+3. Depending on which of these are used, the compiler will allocate space on the stack (as a `Span<T>`) or on the heap (as a `T[]`) which is passed into the type.
+4. If the variables do not escape, and involve rented arrays, those arrays are returned to the pool when the variable goes out of scope.
+
 Briefly, this is what the types would look like:
 
 ```c#
@@ -228,4 +235,6 @@ public ref struct FixedSizeRefList<T>
     private readonly Span<T> _data;
 
     public FixedSizeRefList<T>(Span<T> data);
+
+    public int Capacity { get; }
 }
