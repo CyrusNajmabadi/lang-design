@@ -2,7 +2,7 @@
 
 In the absence of a constructible collection target type, a collection literal can have a natural type.
 
-The natural type of a collection literal is some `List<T>` where the `T` is determined based in the following fashion:
+The natural type of a collection literal is some `List<T>` where the `T` is determined based on the elements in the literal (if present), or the usage of the collection if not.
 
 1. For a non-empty literal `[e_1, ..s_n]` the element type `T` is determined from the best common type of:
 
@@ -41,5 +41,5 @@ The rules for inference for the type argument `T` for the `inferred generic type
     1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
     1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
     1. `v.CopyTo(stringArray)`.  Adds a lower bound of `string`. `T[]` case.
-    
+
 1. Extension method calls count as `target-typing` cases as `v` is passed as an argument to the extension method's `this` parameter. 
