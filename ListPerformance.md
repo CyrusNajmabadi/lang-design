@@ -6,7 +6,7 @@ Continuing the requirement from [collection literals](https://github.com/dotnet/
 
 1. Similar to `System.ValueTuple<>`, `System.Collections.Generic.List<>` is presumed to be well behaved (i.e. no observable side effects outside of its own elements).  
 
-1. `List<T>` is presumed to only have the semantics specified [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1).
+1. `List<T>` is presumed to only have the semantics guaranteed [here](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1).
 
 ### Allowable performance optimizations
 
