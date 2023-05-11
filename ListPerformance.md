@@ -120,13 +120,13 @@ Specific optimizations:
 
 ```c#
 // Compiler should represent this as a stackalloc'ed Span<T> as it is not mutated
-List<int> v = new List<int> { a, b, c };
+var v = new List<int> { a, b, c };
 foreach (var x in v) ...
 ```
 
 ```c#
 // Compiler should represent this as a stackalloc'ed Span<T>.  It doesn't cross the `await` so it can stay on the stack
-var v = [a, b, c];
+var v = new List<int> { a, b, c };
 foreach (var x in v) ...
 
 await T;
@@ -134,7 +134,7 @@ await T;
 
 ```c#
 // Compiler should represent this as an array as it is not mutated, but does cross the `await`.
-var v = [a, b, c];
+var v = new List<int> { a, b, c };
 await T;
 foreach (var x in v) ...
 ```
@@ -142,7 +142,7 @@ foreach (var x in v) ...
 ```c#
 // Compiler should represent this as lightweight list-like Span/Array wrapping helper 
 // (like ValueListBuilder) as it is mutated, but can stay on the stack.
-var v = [a, b, c];
+var v = new List<int> { a, b, c };
 v.Add(d);
 
 foreach (var x in v) ...
@@ -151,7 +151,7 @@ foreach (var x in v) ...
 ```c#
 // Compiler should represent this as lightweight list-like Array wrapping helper 
 // as needs the data on the heap.
-var v = [a, b, c];
+var v = new List<int> { a, b, c };
 v.Add(d);
 await task;
 foreach (var x in v) ...
@@ -159,42 +159,42 @@ foreach (var x in v) ...
 
 ```c#
 // 'v' is a List<int> as its type could be examined.
-var v = [0, 1, 2];
+var v = new List<int> { a, b, c };
 var t = v.GetType();
 foreach (var x in v)
 ```
 
 ```c#
 // 'v' is a List<int> as its type could be examined.
-var v = [0, 1, 2];
+var v = new List<int> { a, b, c };
 TakesObject(v);
 foreach (var x in v)
 ```
 
 ```c#
 // 'v' is a List<int> as its type could be examined.
-var v = [0, 1, 2];
+var v = new List<int> { a, b, c };
 TakesList(v);
 foreach (var x in v)
 ```
 
 ```c#
 // 'v' is a List<int> as its type could be examined.
-var v = [0, 1, 2];
+var v = new List<int> { a, b, c };
 TakesIList(v);
 foreach (var x in v)
 ```
 
 ```c#
 // 'v' is a List<int> as its type could be examined (unless compiler wants to track through other variables as well)
-var v = [1, 2, 3];
+var v = new List<int> { a, b, c };
 var x = v;
 foreach (var x in v)
 ```
 
 ```c#
 // 'v' is a List<int> as its type could be examined in the extension method on IEnumerable
-var v = [1, 2, 3];
+var v = new List<int> { a, b, c };
 var x = v.Select(w => w.ToString());
 foreach (var x in v)
 ```
