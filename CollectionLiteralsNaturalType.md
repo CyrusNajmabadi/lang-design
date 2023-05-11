@@ -37,8 +37,9 @@ The rules for inference for the type argument `T` for the `inferred generic type
 
 1. Method calls (including property accessor methods) on `v` are examined. If those methods have arguments that use `T`, `I<out T>`, `I<in T>`, or `T[]` then those arguments add appropriate bounds to inference.  Note: `I<>` refers to both interfaces and delegate types. Also, these interfaces/delegates can have multiple type parameters.  These rules only apply to the usage of the `T` type parameter in the in that case.   For example:
     1. `v.Add("")` adds a lower bound of `string`.  `T` case.
-    
+
     1. `v.AddRange(ienumerableOfStrings)` adds a lower bound of `string`. `I<out T>` case.
     1. `v.Sort(icomparerOfObject)` adds an upper bound of `object`. `I<in T>` case.
     1. `v.CopyTo(stringArray)`.  Adds a lower bound of `string`. `T[]` case.
+    
 1. Extension method calls count as `target-typing` cases as `v` is passed as an argument to the extension method's `this` parameter. 
