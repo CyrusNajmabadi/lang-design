@@ -226,7 +226,7 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 3. Depending on which of these are used, the compiler will allocate space on the stack (as a `Span<T>`) or on the heap (as a `T[]`) which is passed into the type.
 4. If the variables do not escape, and involve rented arrays, those arrays are returned to the pool when the variable goes out of scope.
 
-Briefly, this is what the types would look like:
+Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.
 
 ```c#
 public ref struct FixedSizeRefList<T>
@@ -243,6 +243,10 @@ public ref struct FixedSizeRefList<T>
     public ReadOnlyCollection<T> AsReadOnly();
     // And the other BinarySearch overloads.
     public int BinarySearch(int index, int count, T item, IComparer<T>? comparer);
+    public bool Contains(T item);
+    public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
+    // And the other CopyTo overloads.
+    public void CopyTo(T[] array);
 }
 
 public ref struct RefList<T>
@@ -258,4 +262,5 @@ public ref struct RefList<T>
 
     public void Add(T item);
     public void AddRange(IEnumerable<T> collection);
+    public void Clear();
 }
