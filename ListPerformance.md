@@ -230,6 +230,11 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.
 
 ```c#
+// Lowest overhead type.  Used whenever:
+// 1. we can't completely elide a collection literal.
+// 2. the number of elements is low enough the compiler is ok stack-allocating them.
+// 3. the list's size is never changed. 
+// 4. the list is not used in a way incompatible with storing on the stack.
 public ref struct FixedSizeRefList<T>
 {
     // Where the actual data is stored.
