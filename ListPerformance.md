@@ -248,7 +248,6 @@ public ref struct FixedSizeRefList<T>
     public ReadOnlyCollection<T> AsReadOnly();
     int BinarySearch(int index, int count, T item, IComparer<T>? comparer); // And the other BinarySearch overloads.
     public bool Contains(T item);
-    public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
     public void CopyTo(T[] array); // And the other CopyTo overloads.
     public bool Exists(Predicate<T> match);
     public T? Find(Predicate<T> match); // And the FindAll/FindIndex/FindLast/FindLastIndex overloads
@@ -258,6 +257,7 @@ public ref struct FixedSizeRefList<T>
     public void Reverse(); // And the other Reverse overloads.
     public void Sort(); // And the other Sort overloads.
 
+    public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
     public List<T> GetRange(int index, int count);
     public List<T> Slice(int start, int length);
 
