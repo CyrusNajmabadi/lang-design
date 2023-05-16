@@ -8,6 +8,8 @@ Continuing the requirement from [collection literals](https://github.com/dotnet/
 
 1. If present, certain types (see [New BCL types](#new-bcl-types)) are trusted to be drop-in replacements for `List<T>` for the specific usage in a method body.
 
+1. Importantly, these surface area of these types shown below are just potential recommendations.  The BCL could include as much, or as little of this surface area that they felt was desirable.  For example, it could just expose types containing what was felt to be a bare-minimum of members (`Count/this[]/Add/Remove/GetEnumerator`).  This could reduce the burden on the BCL, while still probably achieving most of the gain.
+
 ### Allowable performance optimizations
 
 The compiler is free to perform any or all of the optimizations below for fresh `List<T>` instances within a method body.  These optimizations apply regardless if a collection literal is used, or `new List<T>()` is used (without a capacity).  They can be applied when `new List<T>` is used with a collection initializer (e.g. `new List<T> { a, b, c }`)
@@ -239,8 +241,7 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 
 ### Sketches of the new BCL types
 
-Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.  Importantly, these types are just potential recommendations.  The BCL could include as much, or as little of this surface area that they felt was desirable.
-
+Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer. 
 ```c#
 // Lowest overhead type.  Used whenever:
 // 1. we can't completely elide a collection literal.
