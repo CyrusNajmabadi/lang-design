@@ -21,3 +21,16 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 [optional-pieces]: #optional-pieces 
 
 1. New `Construct` path for creating special types.  Needs design with Runtime.  Could potentially be something like: `Span<T> T.Create(int capacity)`, with the method either on the type, or found through some special attribute.  Compiler calls into method to initialize space, then gets the Span it copies the values into.  This would allow types like `ImmutableArray<T>` (or proposed future `ValueList<T>` types) to act like a `collection initializer` when the capacity could be predetermined.
+
+1. Optimizations around fresh `List<T>` instances.  It would be nice if collection literals could be used within a method-body without unnecessary overhead when not desirable. For example:
+
+    ```c#
+    var v = [GetA(), GetB(), GetC()]; // or even:
+    List<Something> v = new List<Something>() { GetA(), GetB(), GetC() };
+
+    foreach (var string in v)
+    ```
+
+    This should ideally be stack-alloced without the multiple heap allocations that `List<T>` incurs.  [`List<T>` Performance](ListPerformance.md) covers a proposal for how this would work, transparently speeding up existing applications, while also making it more palatable for performance conscious users to use collection literals.
+
+1. 
