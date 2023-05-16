@@ -7,13 +7,18 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
 1. Target-typing collection literals for the following sequence-like types:
     1. `Span<T>`
+    
     1. `T[]`
+
     1. Types supporting collection initializers (like `List<T>`, `HashSet<T>` etc.)
+
     1. Types supporting a *new* `Construct` creation path (used for types like `ImmutableArray<T>`). Note: this may be at risk as it will require work with runtime to define pattern/attributes to support this.
     
 1. Natural-typing
     1. non-empty, non-dictionary collection literals to `List<T>` (using best-common-type algorithm on element types).
+
     1. non-empty, dictionary collection literals to `Dictionary<TKey,TValue>`.
+
     1. Empty list/dictionary listerals handled in [Optional Pieces](#p[#optional-pieces]).
 
 
@@ -35,5 +40,5 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
 1. Supporting natural types for empty collection literals.  e.g. `var v = [];`.  This is challenging due to the lack of any information in the initializer of the `var` to provide type information.
     1. This may be something we never support (due to being too complex).  However,
-    
+
     1. [Inferred Generic Type](InferredGenericType.md) proposes a supported way to handle this situation.  Namely through the introduction of 'partially inferred generics' like `List<_>`, where `var v = [];` would be equivalent to `List<_> v = new List<_>();`.  In this system, the outer type is concretely known, while the instantiation is determined based on the usage of the variable later in the method.  For example, calling `v.Add(0);` would 
