@@ -239,7 +239,7 @@ Analysis of how a fresh `List<T>` variable is used will determine which of the a
 
 ### Sketches of the new BCL types
 
-Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.
+Briefly, this is what the types would look like. Note: These are more sketches for brevity to keep the specification clearer.  Importantly, these types are just potential recommendations.  The BCL could include as much, or as little of this surface area that they felt was desirable.
 
 ```c#
 // Lowest overhead type.  Used whenever:
@@ -262,7 +262,6 @@ public ref struct FixedSizeRefList<T>
     public int Count { get; }
     public T this[int index] { get; set; } // setter is fine, it doesn't change size
 
-    public ReadOnlyCollection<T> AsReadOnly();
     int BinarySearch(int index, int count, T item, IComparer<T>? comparer); // And the other BinarySearch overloads.
     public bool Contains(T item);
     public void CopyTo(T[] array); // And the other CopyTo overloads.
