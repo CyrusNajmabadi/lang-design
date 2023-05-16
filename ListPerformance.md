@@ -234,10 +234,9 @@ The APIs will mirror the API of `List<T>`.  When `List<T>` receives any api chan
 Analysis of how a fresh `List<T>` variable is used will determine which of the above types to use.  Specifically:
 
 1. If the usage only involves methods present in the `FixedSizeRefList<T>` or  `FixedSizeValueList<T>`types, then those will be used versus the non-fixed size versions.  In other words, if the user doesn't do anything to change the size of the list, then we can use fixed-size storage without any other overhead.  Otherwise, the non-fixed size types are used.
-2. If the data for the list can live entirely on the stack (i.e. it doesn't cross an `await` call), then the `FixedSizeRefList<T>` or `RefList<T>` types can be used.  Otherwise the `FixedSizeValueList<T>` or `ValueList<T>` types are used.
-3. Depending on which of these are used, the compiler will allocate space on the stack (as a `Span<T>`) or on the heap (as a `T[]`) which is passed into the type.
-4. If the variables do not escape, and involve rented arrays, those arrays are returned to the pool when the variable goes out of scope.
-5. The compiler is free to eschew using these types as well if such work is considered desirable/reasonable.  For example, emitting a `Span<T>` directly and operating on it itself.  This should only be done though if there are tangible benefits, and the cost of having the compiler understand and implement a subset of `List<T>` operations on `Span<T>` is acceptable.
+1. If the data for the list can live entirely on the stack (i.e. it doesn't cross an `await` call), then the `FixedSizeRefList<T>` or `RefList<T>` types can be used.  Otherwise the `FixedSizeValueList<T>` or `ValueList<T>` types are used.
+1. Depending on which of these are used, the compiler will allocate space on the stack (as a `Span<T>`) or on the heap (as a `T[]`) which is passed into the type.
+1. The compiler is free to eschew using these types as well if such work is considered desirable/reasonable.  For example, emitting a `Span<T>` directly and operating on it itself.  This should only be done though if there are tangible benefits, and the cost of having the compiler understand and implement a subset of `List<T>` operations on `Span<T>` is acceptable.
 
 ### Sketches of the new BCL types
 
