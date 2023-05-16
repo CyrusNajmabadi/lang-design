@@ -33,6 +33,8 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
     1. `public ValueListBuilder<T>(Span<T> buffer, int count);`
 
+    1. It would be desirable to prefer these paths over the collection-initializer path.  `List<T>`, for example, would be much faster to initialize in this form, versus repeated `.Add` calls.
+
 1. Optimizations around fresh `List<T>` instances.  It would be nice if collection literals could be used within a method-body without unnecessary overhead when not desirable. For example:
 
     ```c#
