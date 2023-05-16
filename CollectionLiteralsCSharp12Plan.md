@@ -10,6 +10,7 @@ This document summarizes the proposed parts of [Collection Literals](https://git
     1. `T[]`
     1. Types supporting collection initializers (like `List<T>`, `HashSet<T>` etc.)
     1. Types supporting a *new* `Construct` creation path (used for types like `ImmutableArray<T>`). Note: this may be at risk as it will require work with runtime to define pattern/attributes to support this.
+    
 1. Natural-typing
     1. non-empty, non-dictionary collection literals to `List<T>` (using best-common-type algorithm on element types).
     1. non-empty, dictionary collection literals to `Dictionary<TKey,TValue>`.
@@ -19,4 +20,4 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 ## Optional Pieces
 [optional-pieces]: #optional-pieces 
 
-1. New `Construct` path for creating special types.  Needs design with Runtime.  Could potentially be something like: `Span<T> T.Create(int capacity)`, with the method either on the type, or found through some special attribute.  Compiler calls into method to initialize space, then gets the Span it copies the values into.
+1. New `Construct` path for creating special types.  Needs design with Runtime.  Could potentially be something like: `Span<T> T.Create(int capacity)`, with the method either on the type, or found through some special attribute.  Compiler calls into method to initialize space, then gets the Span it copies the values into.  This would allow types like `ImmutableArray<T>` (or proposed future `ValueList<T>` types) to act like a `collection initializer` when the capacity could be predetermined.
