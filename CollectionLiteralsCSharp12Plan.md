@@ -12,6 +12,8 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
     1. Types supporting collection initializers (like `List<T>`, `HashSet<T>` etc.)
 
+    1. Interfaces implemented by `List<T>` (like `IEnumerable<string>`, etc.) 
+
     1. Types supporting a *new* `Construct` creation path (used for types like `ImmutableArray<T>`). Note: this may be at risk as it will require work with runtime to define pattern/attributes to support this.  See [Optional Pieces](#p[#optional-pieces]) for more details on this.
     
 1. Natural-typing
