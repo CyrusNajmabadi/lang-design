@@ -338,3 +338,4 @@ public struct ValueList<T>
 
 1. Several new types the BCL needs to define, implement, test and maintain.
 1. Potential JIT/Runtime costs of the new generic types, and all their instantiations.
+1. Minimizing surface area, and having compiler compile down directly to `Span<T>/T[]` would likely be a good idea.
