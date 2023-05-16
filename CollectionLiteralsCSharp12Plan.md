@@ -33,4 +33,7 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
     This should ideally be stack-alloced without the multiple heap allocations that `List<T>` incurs.  [`List<T>` Performance](ListPerformance.md) covers a proposal for how this would work, transparently speeding up existing applications, while also making it more palatable for performance conscious users to use collection literals.
 
-1. 
+1. Supporting natural types for empty collection literals.  e.g. `var v = [];`.  This is challenging due to the lack of any information in the initializer of the `var` to provide type information.
+    1. This may be something we never support (due to being too complex).  However,
+    
+    1. [Inferred Generic Type](InferredGenericType.md) proposes a supported way to handle this situation.  Namely through the introduction of 'partially inferred generics' like `List<_>`, where `var v = [];` would be equivalent to `List<_> v = new List<_>();`.  In this system, the outer type is concretely known, while the instantiation is determined based on the usage of the variable later in the method.  For example, calling `v.Add(0);` would 
