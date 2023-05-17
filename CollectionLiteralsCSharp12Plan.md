@@ -29,6 +29,10 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
     1. non-empty, dictionary collection literals to `Dictionary<TKey,TValue>`.
 
+    1. Mutable `List<T>/Dictionary<TKey,TValue>` chosen to support the widest set of use cases and users.  This is intended for within a method, and for places where people are using 'var' and already expect to be able to build up and manipulate things.
+
+    1. Performance concerns around cost of `List<T>` handled in [Optional Pieces](#p[#optional-pieces]).
+
     1. Empty list/dictionary listerals handled in [Optional Pieces](#p[#optional-pieces]).
 
 
