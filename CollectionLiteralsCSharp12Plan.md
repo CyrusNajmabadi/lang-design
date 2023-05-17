@@ -5,7 +5,7 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 ## Desired Pieces
 [desired-pieces]: #desired-pieces 
 
-1. Target-typing collection literals for the following sequence-like types:
+1. Target-typing collection expressions for the following sequence-like types:
     1. `Span<T>`
     
     1. `T[]`
@@ -22,6 +22,7 @@ This document summarizes the proposed parts of [Collection Literals](https://git
     1. Interfaces implemented by `Dictionary<TKey, TValue>`
     1. `ImmutableDictionary<K,V>`
 
+1. Supporting spread elemements (`.. expr`) for both sequence and map-like collection expressions.
     
 1. Natural-typing
     1. non-empty, non-dictionary collection literals to `List<T>` (using best-common-type algorithm on element types).
