@@ -12,9 +12,16 @@ This document summarizes the proposed parts of [Collection Literals](https://git
 
     1. Types supporting collection initializers (like `List<T>`, `HashSet<T>` etc.)
 
-    1. Interfaces implemented by `List<T>` (like `IEnumerable<string>`, etc.) and `Dictionary<TKey, TValue>` (like `IDictionary<TKey, TValue>`).
+    1. Interfaces implemented by `List<T>` (like `IEnumerable<string>`, etc.) 
 
     1. Types supporting a *new* `Construct` creation path (used for types like `ImmutableArray<T>`). Note: this may be at risk as it will require work with runtime to define pattern/attributes to support this.  See [Optional Pieces](#p[#optional-pieces]) for more details on this.
+
+1. Target-typing collection literals for map-like types.
+    1. Map-like types supporting ~~collection initializers~~
+        1. `Add` semantics, or `overwrite` semantics?
+    1. Interfaces implemented by `Dictionary<TKey, TValue>`
+    1. `ImmutableDictionary<K,V>`
+
     
 1. Natural-typing
     1. non-empty, non-dictionary collection literals to `List<T>` (using best-common-type algorithm on element types).
