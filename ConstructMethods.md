@@ -1,6 +1,9 @@
 # Construct methods
 
-## Pattern 1: Fixed length collection literals.  Collections with contiguous backing storage:
+## Pattern 1:
+
+1. Fixed length collection literals.
+2. Collections with contiguous backing storage:
 
 ```c#
 static class CollectionsMarshal
@@ -25,3 +28,4 @@ __storage[1] = "b";
 __storage[2] = "c";
 ```
 
+## Pattern 2: Fixed length collection literals.  Collections
