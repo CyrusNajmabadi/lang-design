@@ -22,3 +22,8 @@ Translation:
 
 ```c#
 var __storage = CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values);
+__storage[0] = "a";
+__storage[1] = "b";
+__storage[2] = "c";
+```
+
