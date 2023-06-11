@@ -46,7 +46,7 @@ static class CollectionsMarshal
 Usage:
 
 ```c#
-ImmutableArray<string> values = ["a", "b", "c"];
+string[] values = ["a", "b", "c"];
 ```
 
 Translation:
