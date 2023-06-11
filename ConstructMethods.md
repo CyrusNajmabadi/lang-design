@@ -3,7 +3,8 @@
 ## Pattern 1:
 
 1. Fixed length collection literals.
-2. Collections with contiguous backing storage:
+2. Collections with contiguous backing storage.
+3. Ref-struct possible
 
 ```c#
 static class CollectionsMarshal
@@ -28,4 +29,6 @@ __storage[1] = "b";
 __storage[2] = "c";
 ```
 
-## Pattern 2: Fixed length collection literals.  Collections
+## Pattern 2
+
+Fixed length collection literals.  Collections
