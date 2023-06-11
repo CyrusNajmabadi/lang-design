@@ -1,8 +1,6 @@
 # Construct methods
 
-Pattern 1:
-
-Fixed length collection literals.  Collections with contiguous backing storage:
+## Pattern 1: Fixed length collection literals.  Collections with contiguous backing storage:
 
 ```c#
 static class CollectionsMarshal
