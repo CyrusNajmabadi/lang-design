@@ -53,7 +53,7 @@ Translation:
 
 ```c#
 CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values, out T[] __storage);
-__storage[0] = "a";
-__storage[1] = "b";
-__storage[2] = "c";
+__storage[0] = await GetA();
+__storage[1] = await GetB();
+__storage[2] = await GetC();
 ```
