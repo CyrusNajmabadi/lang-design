@@ -59,3 +59,9 @@ __storage[2] = await GetC();
 ```
 
 Alternative: Caller allocates and populates array, then passes to method to take ownership.
+
+## Pattern 3:
+
+1. Fixed length collection literals.
+2. Collections with non-contiguous backing storage.
+3. Ref-struct possible
