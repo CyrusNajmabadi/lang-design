@@ -35,3 +35,25 @@ __storage[2] = "c";
 2. Collections with contiguous backing storage.
 3. Ref-struct not possible
 
+```c#
+static class CollectionsMarshal
+{
+    public static void Create<T>(int capacity, out List<T> list, out T[] storage); 
+    public static void Create<T>(int capacity, out ImmutableArray<T> list, out T[] storage);
+}
+```
+
+Usage:
+
+```c#
+ImmutableArray<string> values = ["a", "b", "c"];
+```
+
+Translation:
+
+```c#
+CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values, out Span<T> __storage);
+__storage[0] = "a";
+__storage[1] = "b";
+__storage[2] = "c";
+```
