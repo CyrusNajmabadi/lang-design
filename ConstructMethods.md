@@ -11,3 +11,14 @@ static class CollectionsMarshal
     public static Span<T> Create<T>(int capacity, out ImmutableArray<T> list);
 }
 ```
+
+Usage:
+
+```c#
+ImmutableArray<string> values = ["a", "b", "c"];
+```
+
+Translation:
+
+```c#
+var __storage = CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values);
