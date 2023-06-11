@@ -57,3 +57,5 @@ __storage[0] = await GetA();
 __storage[1] = await GetB();
 __storage[2] = await GetC();
 ```
+
+Alternative: Caller allocates and populates array, then passes to method to take ownership.
