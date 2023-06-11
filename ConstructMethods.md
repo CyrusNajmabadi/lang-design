@@ -60,6 +60,8 @@ __storage[2] = await GetC();
 
 Alternative: Caller allocates and populates array, then passes to method to take ownership.
 
+Do we need pattern 1 if we have pattern 2?  Pattern 1 would work for the rare case where the collection itself is a ref-struct not backed by array.  Does that case exist?
+
 ## Pattern 3:
 
 1. Fixed length collection literals.
@@ -119,3 +121,5 @@ builder.AddRange(b);
 builder.Add("c");
 builder.Complete();
 ```
+
+Alternative: Compiler creates and manages an growable-array it fills, then passes to construction method.  Downside is managing/pooling that array, then the walk of the array to create final form.
