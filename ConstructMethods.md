@@ -30,5 +30,6 @@ __storage[2] = "c";
 ```
 
 ## Pattern 2
-
-Fixed length collection literals.  Collections
+1. Fixed length collection literals.
+2. Collections with contiguous backing storage.
+3. Ref-struct possible
