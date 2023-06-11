@@ -65,3 +65,57 @@ Alternative: Caller allocates and populates array, then passes to method to take
 1. Fixed length collection literals.
 2. Collections with non-contiguous backing storage.
 3. Ref-struct possible
+
+```c#
+static class CollectionsMarshal
+{
+    public static void Create<T>(ReadOnlySpan<T> storage, out ImmutableHashSet<T> set); 
+}
+```
+
+Usage:
+
+```c#
+ImmutableHashSet<string> values = ["a", "b", "c"];
+```
+
+Translation:
+
+```c#
+ReadOnlySpan<string> storage = ["a", "b", "c"];
+CollectionsMarshal.Create<string>(storage out  ImmutableHashSet<string> values);
+```
+
+## Pattern 4:
+
+1. Non-fixed length collections.
+
+```c#
+static class CollectionsMarshal
+{
+    public static SBuilder Create<T>(int minCapacity, out ImmutableHashSet<T> set);
+
+    public struct SBuilder
+    {
+        public void Add(T value);
+        public void AddRange(TCollection type);
+        public void Complete();
+    }
+}
+```
+
+Usage:
+
+```c#
+ImmutableHashSet<string> values = ["a", ..b, "c"];
+```
+
+Translation:
+
+```c#
+SBuilder builder = CollectionsMarshal.Create<string>(minCapacity: 2, out ImmutableHashSet<string> values);
+builder.Add("a");
+builder.AddRange(b);
+builder.Add("c");
+builder.Complete();
+```
