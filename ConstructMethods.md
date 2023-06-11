@@ -23,7 +23,7 @@ ImmutableArray<string> values = ["a", "b", "c"];
 Translation:
 
 ```c#
-var __storage = CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values);
+CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values, out Span<T> __storage);
 __storage[0] = "a";
 __storage[1] = "b";
 __storage[2] = "c";
