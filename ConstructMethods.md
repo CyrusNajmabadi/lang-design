@@ -51,6 +51,9 @@ static class CollectionsMarshal
 
 // We could be ok with less efficiency here, esp since you're already async/await.
 
+// if we don't have the array, we could have hte compiler new-up an array, put the values in it,
+// then call the `out span` version right at the end, and then copy into it.
+
 Usage:
 
 ```c#
