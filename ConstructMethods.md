@@ -54,12 +54,6 @@ static class CollectionsMarshal
 // if we don't have the array, we could have hte compiler new-up an array, put the values in it,
 // then call the `out span` version right at the end, and then copy into it.
 
-// What about:
-
-```c#
-public static void Create<T>(int capacity, out ImmutableArray<T> list, out Memory<T> storage);
-```
-
 
 
 Usage:
@@ -75,6 +69,22 @@ CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values
 __storage[0] = await GetA();
 __storage[1] = await GetB();
 __storage[2] = await GetC();
+```
+
+
+// What about:
+
+```c#
+public static void Create<T>(int capacity, out ImmutableArray<T> list, out Memory<T> storage);
+```
+
+Translation:
+
+```c#
+CollectionsMarshal.Create<string>(capacity: 3, out ImmutableArray<string> values, out Memory<T> __storageMemory);
+__storageMemory.Span[0] = await GetA();
+__storageMemory.Span[1] = await GetB();
+__storageMemory.Span[2] = await GetC();
 ```
 
 
