@@ -102,8 +102,23 @@ Do we need pattern 1 if we have pattern 2?  Pattern 1 would work for the rare ca
 static class CollectionsMarshal
 {
     public static void Create<T>(ReadOnlySpan<T> storage, out ImmutableHashSet<T> set); 
+    public static ImmutableHashSet<T> Create<T>(ReadOnlySpan<T> storage);
 }
 ```
+
+// Could live on the type itself:
+
+```c#
+// Do we need [CollectionBuilder] here?
+public class ImmutableHashSet<T>
+{
+    public static ImmutableHashSet<T> CreateRange<T>(IEnumerable<T> storage);
+    public static ImmutableHashSet<T> CreateRange<T>(ReadOnlySpan<T> storage);
+}
+```
+
+// Have to ensure that lang supports this, and if you have an array, it picks the latter.
+// today it is considered ambiguous :'()
 
 Usage:
 
