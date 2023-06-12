@@ -1,5 +1,7 @@
 # Construct methods
 
+In all cases, types are presumed to have a `[CollectionBuilder(typeof(SomeType), Name = "Create")]` like attribute on them to direct the compiler on where to look to find the helper methods.
+
 ## Pattern 1:
 
 1. Fixed length collection literals.
