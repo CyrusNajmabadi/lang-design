@@ -109,8 +109,7 @@ static class CollectionsMarshal
 // Could live on the type itself:
 
 ```c#
-[CollectionBuilder(typeof(ImmutableHashSet), Name = "CreateRange")] // in the future remove this, and add the lower
-[CollectionBuilder(typeof(ImmutableHashSetHelpers), Name = "CreateBuilder")]
+[CollectionBuilder(typeof(ImmutableHashSet), Name = "Create")]
 public class ImmutableHashSet<T>
 {
     // ...
@@ -118,12 +117,8 @@ public class ImmutableHashSet<T>
 
 public static class ImmutableHashSet
 {
-    // this method already exists.
-    public static ImmutableHashSet<T> CreateRange<T>(IEnumerable<T> storage);
-    public static ImmutableHashSet<T> CreateRange<T>(ReadOnlySpan<T> storage);
+    public static ImmutableHashSet<T> Create<T>(ReadOnlySpan<T> storage);
 }
-
-
 ```
 
 // Have to ensure that lang supports this, and if you have an array, it picks the latter.
@@ -167,6 +162,12 @@ Copy(from: __compilerStorage, to: __storage);
 // ImmutableArray added .Create(ROS<T>) and .Create(Span<T>).  So for consistency, likely makes
 // sense to add ImmutableXXX.Create that is similar.  This sidesteps the problem with IEnumerable and Span.
 
+```c#
+[AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct))
+public class CollectionBuilderAttribute(Type Type, string Name) : System.Attribute
+{
+}
+```
 
 ## Pattern 4:
 
