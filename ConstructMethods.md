@@ -109,8 +109,13 @@ static class CollectionsMarshal
 // Could live on the type itself:
 
 ```c#
-// Do we need [CollectionBuilder] here?
+[CollectionBuilder(typeof(ImmutableHashSet), Name = "CreateRange")]
 public class ImmutableHashSet<T>
+{
+    // ...
+}
+
+public static class ImmutableHashSet
 {
     public static ImmutableHashSet<T> CreateRange<T>(IEnumerable<T> storage);
     public static ImmutableHashSet<T> CreateRange<T>(ReadOnlySpan<T> storage);
