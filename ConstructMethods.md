@@ -45,6 +45,10 @@ static class CollectionsMarshal
 }
 ```
 
+// We're a little hesitant here because of exposing array, and allowing abuse.
+// Though it feels like we may have already crossed that because we're in CollectionsMarshal
+// and we already allow things like making an IA that wraps an array that others point at.
+
 Usage:
 
 ```c#
@@ -59,6 +63,9 @@ __storage[0] = await GetA();
 __storage[1] = await GetB();
 __storage[2] = await GetC();
 ```
+
+// We could be ok with less efficiency here, esp since you're already async/await.
+
 
 Alternative: Caller allocates and populates array, then passes to method to take ownership.
 
