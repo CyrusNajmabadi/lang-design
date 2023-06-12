@@ -54,6 +54,14 @@ static class CollectionsMarshal
 // if we don't have the array, we could have hte compiler new-up an array, put the values in it,
 // then call the `out span` version right at the end, and then copy into it.
 
+// What about:
+
+```c#
+public static void Create<T>(int capacity, out ImmutableArray<T> list, out Memory<T> storage);
+```
+
+
+
 Usage:
 
 ```c#
