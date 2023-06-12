@@ -117,6 +117,7 @@ public class ImmutableHashSet<T>
 
 public static class ImmutableHashSet
 {
+    // this method already exists.
     public static ImmutableHashSet<T> CreateRange<T>(IEnumerable<T> storage);
     public static ImmutableHashSet<T> CreateRange<T>(ReadOnlySpan<T> storage);
 }
