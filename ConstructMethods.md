@@ -109,7 +109,8 @@ static class CollectionsMarshal
 // Could live on the type itself:
 
 ```c#
-[CollectionBuilder(typeof(ImmutableHashSet), Name = "CreateRange")]
+[CollectionBuilder(typeof(ImmutableHashSet), Name = "CreateRange")] // in the future remove this, and add the lower
+[CollectionBuilder(typeof(ImmutableHashSetHelpers), Name = "CreateBuilder")]
 public class ImmutableHashSet<T>
 {
     // ...
@@ -121,6 +122,8 @@ public static class ImmutableHashSet
     public static ImmutableHashSet<T> CreateRange<T>(IEnumerable<T> storage);
     public static ImmutableHashSet<T> CreateRange<T>(ReadOnlySpan<T> storage);
 }
+
+
 ```
 
 // Have to ensure that lang supports this, and if you have an array, it picks the latter.
@@ -132,11 +135,20 @@ Usage:
 ImmutableHashSet<string> values = ["a", "b", "c"];
 ```
 
+
 Translation:
 
 ```c#
 ReadOnlySpan<string> storage = ["a", "b", "c"];
 CollectionsMarshal.Create<string>(storage out  ImmutableHashSet<string> values);
+```
+
+
+```c#
+ImmutableArray<int> values = [1, 2, 3];
+// compiler could grab a span to a data segment with 1,2,3 in it.
+// Still best to call approach that gives us the Span<int> to write into,
+// and compiler copies from data segment into that Span.
 ```
 
 ## Pattern 4:
