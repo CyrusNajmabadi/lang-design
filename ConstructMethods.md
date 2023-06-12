@@ -151,6 +151,23 @@ ImmutableArray<int> values = [1, 2, 3];
 // and compiler copies from data segment into that Span.
 ```
 
+```c#
+// variable length 
+ImmutableArray<int> values = [1, ..b, 3];
+```
+
+translation:
+
+```c#
+// build the above on the stack/heap using whatever algorithm we come up with (NO RENTING :)).
+CollectionMarshal.Create<int>(capacity: N, out ImmutableArray<int> values, out Span<int> __storage);
+Copy(from: __compilerStorage, to: __storage);
+```
+
+// ImmutableArray added .Create(ROS<T>) and .Create(Span<T>).  So for consistency, likely makes
+// sense to add ImmutableXXX.Create that is similar.  This sidesteps the problem with IEnumerable and Span.
+
+
 ## Pattern 4:
 
 1. Non-fixed length collections.
