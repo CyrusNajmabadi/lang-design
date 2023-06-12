@@ -118,7 +118,7 @@ public class ImmutableHashSet<T>
 ```
 
 // Have to ensure that lang supports this, and if you have an array, it picks the latter.
-// today it is considered ambiguous :'()
+// today it is considered ambiguous :'(
 
 Usage:
 
