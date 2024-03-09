@@ -94,7 +94,7 @@ Dictionary<string, Option> optionMap = [Defaults.CoreOptions, feature1Name: feat
 Which approach should we go with with our dictionary expressions.  Options include:
 1. Purely restrictive.  All elements use `.Add` to be added to the list.  Note: types like `ConcurrentDictionary` would then not work, not without adding support with something like the `CollectionBuilderAttribute`.
 2. Purely permissive.  All elements are added using the indexer.  Perhaps with compiler warnings if the exact same key is given the same constant value twice.
-3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements. 
+3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  Deep potential for confusion here. 
 
 
 ### Conversions
