@@ -51,3 +51,43 @@ Alternative syntaxes are available for consideration, but should be considered l
 
 Choices here would have implications regarding potential syntactic ambiguities, collisions with potential future language features, and concerns around corresponding pattern forms.  However, all of those should not generally affect the semantics of the feature and can be considered at a later point dedicated to determining the most desirable syntax.
 
+Intuitively, dictionary-expressions work similarly to collection-expressions, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  As such, the following would be legal:
+
+```c#
+Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // as would
+Dictionary<string, int> nameToAge = ["mads": 21, .. existingDict]; // as would
+Dictionary<string, int> nameToAge = ["mads": 21, .. existingListOfKVPS];
+```
+
+The support for spreads only being concerned with the element types matches the equivalent cases in the collection-expr case, such as:
+
+```c#
+List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
+```
+
+Open question 1: How far do we want to accept this KeyValuePair representation of things.  For example, should the following be allowed:
+
+```c#
+List<KeyValuePair<string, int>> = ["mads": 21];
+```
+
+Or should the presence of `k:v` element mandate some dictionary type as the receiver.  Note: the above sort of API is not uncommon.  Roslyn itself contains many apis that permissively *receive* an `IEnumerable<KeyValuePair<string, int>>`.
+
+
+
+
+### Conversions
+
+A *collection expression conversion* allows a collection expression to be converted to a type.
+
+An *implicit collection expression conversion* exists from a collection expression to the following types:
+
+```diff
+// Existing rules ...
+
++ A type with a `CreateRange` with an iteration type of some `KeyValuePair<TKey, TValue>` and an argument type of some `CollectionType<KeyValuePai<TKey, TValue>`.  For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
+
+A struct or class type that implements System.Collections.IEnumerable where:
+The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
++ The type has an applicable indexer that can be invoked  
+If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
