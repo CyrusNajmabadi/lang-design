@@ -79,6 +79,22 @@ Importantly, we do not believe it wise to *require* the presence of a `k:v` elem
 Dictionary<string, int> everyone = [.. students, .. teachers];
 ```
 
+Open Question 2: Dictionaries provide a dual-way of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, and a permissive indexer-oriented form which does not.  The restrictive form is useful for catching mistakes ("oops, i didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
+
+```c#
+Dictionary<string, Option> optionMap = [opt1Name: opt1Default, opt2Name: opt2Default, .. userProvidedOptions];
+```
+
+Or, conversely:
+
+```c#
+Dictionary<string, Option> optionMap = [Defaults.CoreOptions, feature1Name: feature1Override];
+```
+
+Which approach should we go with with our dictionary expressions.  Options include:
+1. Purely restrictive.  All elements use `.Add` to be added to the list.  Note: types like `ConcurrentDictionary` would then not work, not without adding support with something like the `CollectionBuilderAttribute`.
+2. Purely permissive.  All elements are added using the indexer.  Perhaps with compiler warnings if the exact same key is given the same constant value twice.
+3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements. 
 
 
 ### Conversions
