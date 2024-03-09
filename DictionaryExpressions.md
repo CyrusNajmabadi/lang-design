@@ -217,4 +217,32 @@ static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TVal
 
 No changes here.  Like with collection expressions, dictionary expressions do not have a natural type, so the existing conversions from type are not applicable. As a result, a dictionary expression cannot be used directly as the first parameter for an extension method invocation. 
 
+### Overload resolution
+
+No changes currently.  But open question if any `better conversion from expression` rules are needed.
+
+Tentatively we think the answer is no.  The types that would appear in signatures would likely be:
+
+```c#
+void X(IDictionary<A, B> dict);
+void X(Dictionary<A, B> dict);
+```
+
+In this case, standard betterness would pick the latter method.
+
+Similarly for:
+
+```c#
+void X(IEnumerable<KeyValuePair<A, B>> dict);
+void X(Dictionary<A, B> dict);
+```
+
+Similar to collection-expressions, there is no betterness between disparate concrete dictionary types.  For example:
+
+```c#
+void X(Dictionary<A, B> dict);
+void X(ImmutableDictionary<A, B> dict);
+
+X([a, b]); // ambiguous
+```
 
