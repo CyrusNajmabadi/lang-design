@@ -108,13 +108,24 @@ An *implicit collection expression conversion* exists from a collection expressi
 ```diff
 // Existing rules ...
 
+A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method
+
 + A type with a `CreateRange` with an iteration type of some `KeyValuePair<TKey, TValue>` and an argument type of some `CollectionType<KeyValuePai<TKey, TValue>`.  For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
 
 A struct or class type that implements System.Collections.IEnumerable where:
 
-1. The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
-2. If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
-+ 3. If the collection expression has any elements and the type has an iteration type of some `KeyValuePair<TKey, TValue>` and the type has applicable indexer that can be invoked with a single argument of the `TKey` type, and a value of the `TValue` type, and the indexer is accessible at the location of the collection expression. 
+    1. The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
+    2. If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
++   3. If the collection expression has any elements and the type has an iteration type of some `KeyValuePair<TKey, TValue>` and the type has applicable indexer that can be invoked with a single argument of the `TKey` type, and a value of the `TValue` type, and the indexer is accessible at the location of the collection expression. 
 
+An interface type:
+    System.Collections.Generic.IEnumerable<T>
+    System.Collections.Generic.IReadOnlyCollection<T>
+    System.Collections.Generic.IReadOnlyList<T>
+    System.Collections.Generic.ICollection<T>
+    System.Collections.Generic.IList<T>
++   System.Collections.Generic.IDictionary<TKey, TValue>
++   System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+```
 
 
