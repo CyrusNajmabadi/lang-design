@@ -26,3 +26,28 @@ Looking at the surrounding ecosystem, we also find examples everywhere of dictio
 
 Unlike collection-expressions, C# does not have an existing dictionary-pattern the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
 
+An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel natural in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
+
+## Detailed Design
+
+The following grammar productions are added:
+
+```diff
+collection_element
+  : expression_element
+  | spread_element
++ | dictionary_element  
+  ;
+
++dictionary_element
+  : expression ':' expression
+```
+
+Alternative syntaxes are available for consideration, but should be considered later due to the bike-shedding cost involved.  Picking the above syntax allows for the compiler team to move quickly at implementing the semantic side of the feature, allowing earlier previews to be made available.  These syntaxes include, but are not limited to:
+
+1. Using braces instead of brackets.  `{ k1: v1, k2: v2 }`.
+2. Using brackets for keys: `[k1] = v1, [k2] = v2`
+3. Using arrows for elements: `k1 => v1, k2 => v2`.
+
+Choices here would have implications regarding potential syntactic ambiguities, collisions with potential future language features, and concerns around corresponding pattern forms.  However, all of those should not generally affect the semantics of the feature and can be considered at a later point dedicated to determining the most desirable syntax.
+
