@@ -73,6 +73,11 @@ List<KeyValuePair<string, int>> = ["mads": 21];
 
 Or should the presence of `k:v` element mandate some dictionary type as the receiver.  Note: the above sort of API is not uncommon.  Roslyn itself contains many apis that permissively *receive* an `IEnumerable<KeyValuePair<string, int>>`.
 
+Importantly, we do not believe it wise to *require* the presence of a `k:v` element to produce a dictionary instance.  For example, we believe it very reasonable and desirable that someone be able to write:
+
+```c#
+Dictionary<string, int> everyone = [.. students, .. teachers];
+```
 
 
 
