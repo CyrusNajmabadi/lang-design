@@ -195,3 +195,10 @@ Open questions:
 ```
 
 ### Type inference
+
+```c#
+var a = AsDictionary(["mads": 21, "dustin": 22]); // AsDictionary<string, int>(Dictionary<string, int> d)
+
+static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
+```
+
