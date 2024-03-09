@@ -213,5 +213,8 @@ var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, l
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
 ```
 
+### Extension methods
+
+No changes here.  Like with collection expressions, dictionary expressions do not have a natural type, so the existing conversions from type are not applicable. As a result, a dictionary expression cannot be used directly as the first parameter for an extension method invocation. 
 
 
