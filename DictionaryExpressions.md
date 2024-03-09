@@ -208,6 +208,6 @@ For example:
 
 ```c#
 KeyValuePair<object, long> kvp = ...;
-var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, int>(Dictionary<object, int> d)
+var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, long>(Dictionary<object, long> d)
 
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
