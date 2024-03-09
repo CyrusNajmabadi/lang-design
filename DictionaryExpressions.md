@@ -265,3 +265,5 @@ Given a target type of `IReadOnlyDictionary<TKey, TValue>`, the value generated 
 The value must return true when queried for `ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly`. This ensures consumers can appropriately tell that the collection is non-mutable, despite implementing the mutable views.
 The value must throw on any call to a mutation method. This ensures safety, preventing a non-mutable collection from being accidentally mutated.
 It is recommended that any type that is synthesized implement all these interfaces. This ensures that maximal compatibility with existing libraries, including those that introspect the interfaces implemented by a value in order to light up performance optimizations.
+
+
