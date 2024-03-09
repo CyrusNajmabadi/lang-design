@@ -17,3 +17,9 @@ While dictionary-values are similar to standard sequential collection-values in 
 
 In an analysis of the BCL and the nuget package ecosystem, sequential-collection types and values make up the lion's share of collections used.  However, dictionary types were still used a significant amount, with appearances in APIs occurring at between 5 and 10% the amount of sequential collections, and with values appearing universally.  Currently, all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
 
+1. Collection-initializer, which require syntax like `new Dictionary<X, Y>` (lacking inference of possibly verbose TKey and TValue) prior to their values, and which can cause multiple reallocations of memory because they use `N` `.Add` invocations without supplying an initial capacity.
+1. Immutable collections, which require syntax like `ImmutableDictionary.CreateRange(...)`, but which is also unpleasant due to the need to provide values as an `IEnumerable<KeyValuePair>`s.  Builders are even more unwieldy.
+1. Read-only dictionaries, which require both making a normal dictionary first, then wrapping them.
+1. Concurrent-dictionaries, which lack an `.Add` method, and thus cannot be used with normal collection initializers.
+
+Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. TypeScript, Dart, Ruby, Python, and more opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
