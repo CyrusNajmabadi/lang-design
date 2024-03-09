@@ -51,7 +51,9 @@ Alternative syntaxes are available for consideration, but should be considered l
 
 Choices here would have implications regarding potential syntactic ambiguities, collisions with potential future language features, and concerns around corresponding pattern forms.  However, all of those should not generally affect the semantics of the feature and can be considered at a later point dedicated to determining the most desirable syntax.
 
-Intuitively, dictionary-expressions work similarly to collection-expressions, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  As such, the following would be legal:
+### Design Intuition
+
+Intuitively, dictionary-expressions work similarly to collection-expressions, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Similarly, many rules for dictionaries will correspond to existing rules for collections, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // as would
@@ -94,7 +96,7 @@ Dictionary<string, Option> optionMap = [Defaults.CoreOptions, feature1Name: feat
 Which approach should we go with with our dictionary expressions.  Options include:
 1. Purely restrictive.  All elements use `.Add` to be added to the list.  Note: types like `ConcurrentDictionary` would then not work, not without adding support with something like the `CollectionBuilderAttribute`.
 2. Purely permissive.  All elements are added using the indexer.  Perhaps with compiler warnings if the exact same key is given the same constant value twice.
-3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  Deep potential for confusion here. 
+3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  Deep potential for confusion here.
 
 
 ### Conversions
