@@ -163,3 +163,11 @@ Open questions:
     - Provide a special syntactic form *solely* for the purpose of supplying that value.  For example: `[comparer: myComp, "mads": 21, .. ldmMembers]`.  Here `comparer` would be a contextual keyword.  Users wanting to use that as an actual key would say `@comparer: 1`
     - Provide a special syntactic form for the purpose of supplying data to constructors and create methods.  For example: `[new: (comparer: myComp, capacity: 50), "mads": 21, .. ldmMembers]`
 
+### Construction
+
+> The elements of a collection expression are evaluated in order, left to right. Each element is evaluated exactly once, and any further references to the elements refer to the results of this initial evaluation.
+
+```diff
++ If an element is a dictionary_element, the interior expressions are evaluated in order, left to right.  In other words, the key is evaluated before the value. 
+```
+
