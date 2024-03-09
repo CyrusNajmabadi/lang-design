@@ -105,27 +105,61 @@ A *collection expression conversion* allows a collection expression to be conver
 
 An *implicit collection expression conversion* exists from a collection expression to the following types:
 
-```diff
 // Existing rules ...
 
 A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method
 
+```diff
 + A type with a `CreateRange` with an iteration type of some `KeyValuePair<TKey, TValue>` and an argument type of some `CollectionType<KeyValuePai<TKey, TValue>`.  For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
+```
 
 A struct or class type that implements System.Collections.IEnumerable where:
 
-    1. The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
-    2. If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
-+   3. If the collection expression has any elements and the type has an iteration type of some `KeyValuePair<TKey, TValue>` and the type has applicable indexer that can be invoked with a single argument of the `TKey` type, and a value of the `TValue` type, and the indexer is accessible at the location of the collection expression. 
+    The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
 
-An interface type:
+    If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
+
+```diff
++ If the collection expression has any elements and the type has an iteration type of some `KeyValuePair<TKey, TValue>` and the type has applicable indexer that can be invoked with a single argument of the `TKey` type, and a value of the `TValue` type, and the indexer is accessible at the location of the collection expression. 
+```
+
+> An interface type:
+
     System.Collections.Generic.IEnumerable<T>
     System.Collections.Generic.IReadOnlyCollection<T>
     System.Collections.Generic.IReadOnlyList<T>
     System.Collections.Generic.ICollection<T>
     System.Collections.Generic.IList<T>
-+   System.Collections.Generic.IDictionary<TKey, TValue>
-+   System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+
+```diff
++ System.Collections.Generic.IDictionary<TKey, TValue>
++ System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
 ```
 
+### Create methods
+
+> A create method is indicated with a [CollectionBuilder(...)] attribute on the collection type. The attribute specifies the builder type and method name of a method to be invoked to construct an instance of the collection type.
+
+```diff
++ A create method will commonly use the name `CreateRange` in the dictionary domain.
+```
+
+> For the create method:
+
+```diff
+The method must have a single parameter of type System.ReadOnlySpan<E>, passed by value, and there is an identity conversion from E to the iteration type of the collection type.
+
++ Or, the method have a single parameter of `IEnumerable<KeyValuePair<TKey, TValue>>` and iteration type of the collection type is the same `KeyValuePair<,>` type. 
+```
+
+This would allow `ImmutableDictionary<TKey, TValue>` to be annotated with `[CollectionBuilder(typeof(ImmutableDictionary), "CreateRange")]` to light up support for creation.
+
+Open questions:
+1. We could consider not adding this rule, and instead still require the create method to take a `ReadOnlySpan<E>`.  However, that would require the BCL to then add such a method to `ImmutableDictionary` as the existing `CreateRange` methods take an `IEnumerable`.
+
+1. It is common for dictionaries to take in a `comparer` value, to determine how keys are compared when adding, removing, and looking them up.  Use in the ecosystem is prevalent, and much discussion and feedback from the community is that being able to supply a comparer is important to them.  How could we accomplish this with the new dictionary-expression?  Options include:
+
+    - Provide no support (or no support in C# 13), leaving such dictionaries as ones you could not use dictionary-expressions for.
+    - Provide a special syntactic form *solely* for the purpose of supplying that value.  For example: `[comparer: myComp, "mads": 21, .. ldmMembers]`.  Here `comparer` would be a contextual keyword.  Users wanting to use that as an actual key would say `@comparer: 1`
+    - Provide a special syntactic form for the purpose of supplying data to constructors and create methods.  For example: `[new: (comparer: myComp, capacity: 50), "mads": 21, .. ldmMembers]`
 
