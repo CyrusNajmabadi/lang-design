@@ -202,3 +202,12 @@ var a = AsDictionary(["mads": 21, "dustin": 22]); // AsDictionary<string, int>(D
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
 ```
 
+Rules TBD.  Intuition though is to be inferring both a `TKey` and `TValue` type. `k: v` elements contribute input and output inferences respectively to those types.  Normal expression elements and spread elements must have associated `KeyValuePair<K_n, V_n>` types, where the `K_n` and `V_n` then contribute as well.
+
+For example:
+
+```c#
+KeyValuePair<object, int> kvp = ...;
+var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, int>(Dictionary<object, int> d)
+
+static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
