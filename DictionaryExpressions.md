@@ -207,7 +207,7 @@ Rules TBD.  Intuition though is to be inferring both a `TKey` and `TValue` type.
 For example:
 
 ```c#
-KeyValuePair<object, int> kvp = ...;
+KeyValuePair<object, long> kvp = ...;
 var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, int>(Dictionary<object, int> d)
 
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
