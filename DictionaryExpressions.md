@@ -194,3 +194,4 @@ Open questions:
 + If the element is a dictionary element, The applicable indexer is invoked with the the first expression of the element as the key, and the second expression as the value.
 ```
 
+### Type inference
