@@ -24,7 +24,7 @@ In an analysis of the BCL and the nuget package ecosystem, sequential-collection
 
 Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
 
-Unlike collection-expressions, C# does not have an existing dictionary-pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
+Unlike *collection expressions*, C# does not have an existing dictionary-pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
 
 An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel pleasant in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
 
@@ -53,7 +53,7 @@ Choices here would have implications regarding potential syntactic ambiguities, 
 
 ### Design Intuition
 
-Intuitively, dictionary-expressions work similarly to collection-expressions, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Similarly, many rules for dictionaries will correspond to existing rules for collections, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
+Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Similarly, many rules for dictionaries will correspond to existing rules for collections, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // as would
@@ -159,7 +159,7 @@ Open questions:
 
 1. It is common for dictionaries to take in a `comparer` value, to determine how keys are compared when adding, removing, and looking them up.  Use in the ecosystem is prevalent, and much discussion and feedback from the community is that being able to supply a comparer is important to them.  How could we accomplish this with the new dictionary-expression?  Options include:
 
-    - Provide no support (or no support in C# 13), leaving such dictionaries as ones you could not use dictionary-expressions for.
+    - Provide no support (or no support in C# 13), leaving such dictionaries as ones you could not use *dictionary expressions* for.
     - Provide a special syntactic form *solely* for the purpose of supplying that value.  For example: `[comparer: myComp, "mads": 21, .. ldmMembers]`.  Here `comparer` would be a contextual keyword.  Users wanting to use that as an actual key would say `@comparer: 1`
     - Provide a special syntactic form for the purpose of supplying data to constructors and create methods.  For example: `[new: (comparer: myComp, capacity: 50), "mads": 21, .. ldmMembers]`
 
@@ -237,7 +237,7 @@ void X(IEnumerable<KeyValuePair<A, B>> dict);
 void X(Dictionary<A, B> dict);
 ```
 
-Similar to collection-expressions, there is no betterness between disparate concrete dictionary types.  For example:
+Similar to *collection expressions*, there is no betterness between disparate concrete dictionary types.  For example:
 
 ```c#
 void X(Dictionary<A, B> dict);
