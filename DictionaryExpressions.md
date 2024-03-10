@@ -311,7 +311,7 @@ The value generated is allowed to implement more interfaces than required.  For 
 
 1. The value must support all mutation methods (like IDictionary.Add).
 
-#### Open question 1
+### Open question 1
 
 There is a subtle concern around the following interface destinations:
 
