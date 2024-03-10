@@ -180,7 +180,7 @@ Which approach should we go with with our dictionary expressions? Options includ
 >     + System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
 >     ```
 
-### Create methods
+## Create methods
 
 > A create method is indicated with a [CollectionBuilder(...)] attribute on the collection type. The attribute specifies the builder type and method name of a method to be invoked to construct an instance of the collection type.
 > ```diff
@@ -196,11 +196,11 @@ Which approach should we go with with our dictionary expressions? Options includ
 
 This would allow `ImmutableDictionary<TKey, TValue>` to be annotated with `[CollectionBuilder(typeof(ImmutableDictionary), "CreateRange")]` to light up support for creation.
 
-#### Open question 1
+### Open question 1
 
 We could consider not adding this rule, and instead still require the create method to take a `ReadOnlySpan<E>`.  However, that would require the BCL to then add such a method to `ImmutableDictionary` as the existing `CreateRange` methods take an `IEnumerable`.
 
-#### Open question 2
+### Open question 2
 
 It is common for dictionaries to take in a `comparer` value, to determine how keys are compared when adding, removing, and looking them up.  Use in the ecosystem is prevalent, and much discussion and feedback from the community is that being able to supply a comparer is important to them.  How could we accomplish this with the new dictionary-expression?  Options include:
 
@@ -210,7 +210,7 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 
 1. Provide a special syntactic form for the purpose of supplying data to constructors and create methods.  For example: `[new: (comparer: myComp, capacity: 50), "mads": 21, .. ldmMembers]`
 
-### Construction
+## Construction
 
 > The elements of a collection expression are evaluated in order, left to right. Each element is evaluated exactly once, and any further references to the elements refer to the results of this initial evaluation.
 > 
@@ -233,7 +233,7 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 >      + If the target is a dictionary-type, the enumerator's element type must be some `KeyValuePair<,>`, and for each of those elements the applicable indexer is invoked on the collection instance with the `.Key` and `.Value` members of that pair.
 >      ```
 
-### Type inference
+## Type inference
 
 ```c#
 var a = AsDictionary(["mads": 21, "dustin": 22]); // AsDictionary<string, int>(Dictionary<string, int> arg)
@@ -252,11 +252,11 @@ var a = AsDictionary(["mads": 21, "dustin": 22, kvp]); // AsDictionary<object, l
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
 ```
 
-### Extension methods
+## Extension methods
 
 No changes here.  Like with collection expressions, dictionary expressions do not have a natural type, so the existing conversions from type are not applicable. As a result, a dictionary expression cannot be used directly as the first parameter for an extension method invocation. 
 
-### Overload resolution
+## Overload resolution
 
 No changes currently.  But open question if any `better conversion from expression` rules are needed.
 
@@ -285,9 +285,7 @@ void X(ImmutableDictionary<A, B> dict);
 X([a, b]); // ambiguous
 ```
 
-## Dictionary expression translation
-
-### Interface translation
+## Interface translation
 
 Given a target type `IReadOnlyDictionary<TKey, TValue>` or `IDictionary<TKey, TValue>` a compliant implementation is only required to produce a value that implements that interface. A compliant implementation is free to:
 
