@@ -52,7 +52,7 @@ Alternative syntaxes are available for consideration, but should be considered l
 
 Choices here would have implications regarding potential syntactic ambiguities, collisions with potential future language features, and concerns around corresponding pattern forms.  However, all of those should not generally affect the semantics of the feature and can be considered at a later point dedicated to determining the most desirable syntax.
 
-### Design Intuition
+## Design Intuition
 
 Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating a `k:v` element as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for *dictionary expressions* will correspond to existing rules for *collection expressions*, just requiring aspects such as *element* and *iteration types* to be some `KeyValuePair<,>`.
 
@@ -64,7 +64,7 @@ Dictionary<string, int> nameToAge2 = ["mads": 21, .. existingDict]; // as would
 Dictionary<string, int> nameToAge3 = ["mads": 21, .. existingListOfKVPS];
 ```
 
-#### Open Question 1
+### Open Question 1
 
 Should we allow *expression elements* when producing dictionaries?  Or only *dictionary elements* and *spread elements*?  If we do not allow *expression elements* then the following would not be legal:
 
@@ -74,7 +74,7 @@ Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // A user would h
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp.Key: existingKvp.Value];
 ```
 
-#### Open question 2
+### Open question 2
 
 Having spreads in a *dictionary expression* only be concerned with element types (and not the collection type being spread itself), matches the equivalent case in the collection-expression case:
 
@@ -94,7 +94,7 @@ Note: this seems particularly restrictive given that people may commonly use thi
 Dictionary<string, int> nameToAge = ["mads": 21, .. existingDict.Where(kvp => kvp.Value >= 21)];
 ```
 
-#### Open question 3
+### Open question 3
 
 How far do we want to take this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
 
@@ -110,7 +110,7 @@ Importantly, we do not believe it wise to *require* the presence of a `k:v` elem
 Dictionary<string, int> everyone = [.. students, .. teachers];
 ```
 
-#### Open question 4
+### Open question 4
 
 Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type.  For example:
 
@@ -127,7 +127,7 @@ List<Pair<int, string>> pairs = ...;
 Dictionary<int, string> map2 = [.. pairs]; // ?
 ```
 
-#### Open question 5
+### Open question 5
 
 Dictionaries provide two ways of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, and a permissive indexer-oriented form which does not.  The restrictive form is useful for catching mistakes ("oops, i didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
 
@@ -148,7 +148,7 @@ Which approach should we go with with our dictionary expressions? Options includ
 3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  Deep potential for confusion here.
 
 
-### Conversions
+## Conversions
 
 > A *collection expression conversion* allows a collection expression to be converted to a type.
 >
