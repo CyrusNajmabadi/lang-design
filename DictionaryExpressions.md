@@ -106,8 +106,8 @@ A *collection expression conversion* allows a collection expression to be conver
 
 An *implicit collection expression conversion* exists from a collection expression to the following types:
 
-> - Array rules
-> - Span rules 
+> - Array rules...
+> - Span rules...
 > - A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method.
 
 > ```diff
