@@ -82,11 +82,18 @@ List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in
 But we could restrict spreads in a *dictionary expression* to only allow dictionary types themselves.  If we require dictionary types, then the following would not be legal:
 
 ```c#
-Dictionary<string, int> nameToAge3 = ["mads": 21, .. existingListOfKVPS];
+Dictionary<string, int> nameToAge = ["mads": 21, .. existingListOfKVPS];
 ```
 
+Note: this seems particularly restrictive given that people may commonly use things like linq-expressions to filter and transform dictionaries like so:
 
-Open question 3: How far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
+```c#
+Dictionary<string, int> nameToAge = ["mads": 21, .. existingDict.Where(kvp => kvp.Value >= 21)];
+```
+
+#### Open question 3
+
+ far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
 
 ```c#
 List<KeyValuePair<string, int>> = ["mads": 21];
