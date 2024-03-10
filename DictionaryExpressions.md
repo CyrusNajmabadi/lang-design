@@ -210,11 +210,11 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 ### Construction
 
 > The elements of a collection expression are evaluated in order, left to right. Each element is evaluated exactly once, and any further references to the elements refer to the results of this initial evaluation.
-
-```diff
-+ A dictionary_element evaluates its interior expressions in order, left to right.  In other words, the key is evaluated before the value. 
-```
-
+> 
+> ```diff
+> + A dictionary_element evaluates its interior expressions in order, left to right.  In other words, the key is evaluated before the value. 
+> ```
+>
 > For each element in order:
 
 - If the element is an expression element, the applicable Add instance or extension method is invoked with the element expression as the argument. (Unlike classic collection initializer behavior, element evaluation and Add calls are not necessarily interleaved.).
