@@ -39,7 +39,7 @@ collection_element
 + | dictionary_element  
   ;
 
-+dictionary_element
++ dictionary_element
   : expression ':' expression
 ```
 
