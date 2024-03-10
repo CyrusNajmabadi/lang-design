@@ -96,7 +96,7 @@ Dictionary<string, int> nameToAge = ["mads": 21, .. existingDict.Where(kvp => kv
 
 #### Open question 3
 
- far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
+How far do we want to take this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
 
 ```c#
 List<KeyValuePair<string, int>> = ["mads": 21];
