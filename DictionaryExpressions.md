@@ -307,8 +307,8 @@ X([a, b]); // ambiguous
 
 Given a target type `IReadOnlyDictionary<TKey, TValue>` or `IDictionary<TKey, TValue>` a compliant implementation is only required to produce a value that implements that interface. A compliant implementation is free to:
 
-Use an existing type that implements that interface.
-Synthesize a type that implements the interface.
+1. Use an existing type that implements that interface.
+1. Synthesize a type that implements the interface.
 In either case, the type used is allowed to implement a larger set of interfaces than those strictly required.
 
 Synthesized types are free to employ any strategy they want to implement the required interfaces properly. 
