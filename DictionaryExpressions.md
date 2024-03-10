@@ -227,7 +227,8 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 > The elements of a collection expression are evaluated in order, left to right. Each element is evaluated exactly once, and any further references to the elements refer to the results of this initial evaluation.
 > 
 > ```diff
-> + A dictionary_element evaluates its interior expressions in order, left to right.  In other words, the key is evaluated before the value. 
+> + A dictionary_element evaluates its interior expressions in order,
+> + left to right.  In other words, the key is evaluated before the value. 
 > ```
 >
 > For each element in order:
