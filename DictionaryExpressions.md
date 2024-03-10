@@ -193,8 +193,9 @@ Which approach should we go with with our dictionary expressions? Options includ
 
 This would allow `ImmutableDictionary<TKey, TValue>` to be annotated with `[CollectionBuilder(typeof(ImmutableDictionary), "CreateRange")]` to light up support for creation.
 
-Open questions:
-1. We could consider not adding this rule, and instead still require the create method to take a `ReadOnlySpan<E>`.  However, that would require the BCL to then add such a method to `ImmutableDictionary` as the existing `CreateRange` methods take an `IEnumerable`.
+#### Open question 1
+
+We could consider not adding this rule, and instead still require the create method to take a `ReadOnlySpan<E>`.  However, that would require the BCL to then add such a method to `ImmutableDictionary` as the existing `CreateRange` methods take an `IEnumerable`.
 
 1. It is common for dictionaries to take in a `comparer` value, to determine how keys are compared when adding, removing, and looking them up.  Use in the ecosystem is prevalent, and much discussion and feedback from the community is that being able to supply a comparer is important to them.  How could we accomplish this with the new dictionary-expression?  Options include:
 
