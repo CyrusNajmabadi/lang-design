@@ -75,7 +75,11 @@ Open question 2: Having spreads in a *dictionary expression* only be concerned w
 List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
 ```
 
-But we could restrict spreads in a *dictionary expression* 
+But we could restrict spreads in a *dictionary expression* to only allow dictionary types themselves.  If we require dictionary types, then the following would not be legal:
+
+```c#
+Dictionary<string, int> nameToAge3 = ["mads": 21, .. existingListOfKVPS];
+```
 
 
 Open question 3: How far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
