@@ -116,7 +116,7 @@ An *implicit collection expression conversion* exists from a collection expressi
 > + For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
 > ```
 
-> A struct or class type that implements System.Collections.IEnumerable where:
+> - A struct or class type that implements System.Collections.IEnumerable where:
 
     The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
 
