@@ -61,12 +61,6 @@ Dictionary<string, int> nameToAge2 = ["mads": 21, .. existingDict]; // as would
 Dictionary<string, int> nameToAge3 = ["mads": 21, .. existingListOfKVPS];
 ```
 
-Having spreads in a *dictionary expression* only be concerned with element types (and not the collection type being spread itself), matches the equivalent case in the collection-expression case:
-
-```c#
-List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
-```
-
 Open question 1: Should we allow *expression elements* when producing dictionaries?  Or only *dictionary elements* and *spread elements*?  If we do not allow *expression elements* then the following would not be legal:
 
 ```c#
@@ -75,7 +69,16 @@ Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // A user would h
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp.Key: existingKvp.Value];
 ```
 
-Open question 2: How far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
+Open question 2: Having spreads in a *dictionary expression* only be concerned with element types (and not the collection type being spread itself), matches the equivalent case in the collection-expression case:
+
+```c#
+List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
+```
+
+But we could restrict spreads in a *dictionary expression* 
+
+
+Open question 3: How far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
 
 ```c#
 List<KeyValuePair<string, int>> = ["mads": 21];
