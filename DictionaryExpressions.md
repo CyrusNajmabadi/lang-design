@@ -305,6 +305,12 @@ X([a, b]); // ambiguous
 
 ## Interface translation
 
+### Mutable interface translation
+
+Given the target type `IDictionary<TKey, TValue>`  the type used will be `Dictionary<TKey, TValue>`.
+
+### Non-mutable interface translation
+
 Given a target type `IReadOnlyDictionary<TKey, TValue>` a compliant implementation is only required to produce a value that implements that interface. A compliant implementation is free to:
 
 1. Use an existing type that implements that interface.
@@ -314,15 +320,10 @@ In either case, the type used is allowed to implement a larger set of interfaces
 
 Synthesized types are free to employ any strategy they want to implement the required interfaces properly. 
 
-Given the target type `IDictionary<TKey, TValue>`  the type used will be `Dictionary<TKey, TValue>`.
-
-### Non-mutable interface translation
-
-Given a target type of `IReadOnlyDictionary<TKey, TValue>`, the value generated is allowed to implement more interfaces than required. For example, implementing the mutable interfaces as well (specifically, implementing IDictionary<TKey, TValue>`). However, in that case:
+ the value generated is allowed to implement more interfaces than required. For example, implementing the mutable interfaces as well (specifically, implementing IDictionary<TKey, TValue>`). However, in that case:
 
 1. The value must return true when queried for `ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly`. This ensures consumers can appropriately tell that the collection is non-mutable, despite implementing the mutable views.
 1. The value must throw on any call to a mutation method. This ensures safety, preventing a non-mutable collection from being accidentally mutated.
-
 
 ### Open question 1
 
