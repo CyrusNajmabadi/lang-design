@@ -236,7 +236,9 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 > - If the element is an expression element, the applicable Add instance or extension method is invoked with the element expression as the argument. (Unlike classic collection initializer behavior, element evaluation and Add calls are not necessarily interleaved.).
 > 
 > - ```diff
->   + If the target is a dictionary type, then the element must be a `KeyValuePair<,>`.  The applicable indexer is invoked with the `.Key` and `.Value` members of that pair.
+>   + If the target is a dictionary type, then the element must be a
+>   + `KeyValuePair<,>`.  The applicable indexer is invoked with the
+>   + `.Key` and `.Value` members of that pair.
 >   ```
 >
 > - If the element is a spread element then one of the following is used:
