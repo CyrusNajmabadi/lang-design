@@ -67,7 +67,7 @@ The support for spreads only being concerned with the element types matches the 
 List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
 ```
 
-Open question 1: How far do we want to accept this KeyValuePair representation of things.  For example, should the following be allowed:
+Open question 1: How far do we want to accept this KeyValuePair representation of things? For example, should the following be allowed:
 
 ```c#
 List<KeyValuePair<string, int>> = ["mads": 21];
