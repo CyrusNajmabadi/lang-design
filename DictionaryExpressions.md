@@ -54,7 +54,7 @@ Choices here would have implications regarding potential syntactic ambiguities, 
 
 ### Design Intuition
 
-Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating a `k:v` element as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for *dictionary expressions* will correspond to existing rules for *collection expressions*, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
+Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating a `k:v` element as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for *dictionary expressions* will correspond to existing rules for *collection expressions*, just requiring aspects such as *element* and *iteration types* to be some `KeyValuePair<,>`.  As such, the following would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge1 = ["mads": 21, existingKvp]; // as would
