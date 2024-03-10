@@ -117,7 +117,7 @@ Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, shou
 ```c#
 struct Pair<X, Y>
 {
-  public static implicit operator KeyValuePair<X, Y>() => ...;
+  public static implicit operator KeyValuePair<X, Y>(Pair<X, Y> pair) => ...;
 }
 
 Dictionary<int, string> map1 = [pair1, pair2]; // ?
