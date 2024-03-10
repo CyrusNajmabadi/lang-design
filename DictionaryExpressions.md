@@ -67,6 +67,14 @@ The support for spreads only being concerned with the element types matches the 
 List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
 ```
 
+Open question 1: Should we allow *expression elements* when producing dictionaries?  Or only *dictionary elements* and *spread elements*?  If do not allow *expression elements* then the following would not be legal:
+
+```c#
+Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // A user would have to write:
+
+Dictionary<string, int> nameToAge = ["mads": 21, existingKvp.Key: existingKvp.Value];
+```
+
 Open question 1: How far do we want to accept this KeyValuePair representation of things? For example, should the following be allowed:
 
 ```c#
