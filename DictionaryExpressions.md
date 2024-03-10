@@ -318,7 +318,7 @@ Given a target type `IReadOnlyDictionary<TKey, TValue>` a compliant implementati
 
 In either case, the type used is allowed to implement a larger set of interfaces than those strictly required.
 
-Synthesized types are free to employ any strategy they want to implement the required interfaces properly.  The value generated is allowed to implement more interfaces than required. For example, implementing the mutable interfaces as well (specifically, implementing IDictionary<TKey, TValue>`). However, in that case:
+Synthesized types are free to employ any strategy they want to implement the required interfaces properly.  The value generated is allowed to implement more interfaces than required. For example, implementing the mutable interfaces as well (specifically, implementing `IDictionary<TKey, TValue>` or the non-generic `IDictionary`). However, in that case:
 
 1. The value must return true when queried for `ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly`. This ensures consumers can appropriately tell that the collection is non-mutable, despite implementing the mutable views.
 1. The value must throw on any call to a mutation method. This ensures safety, preventing a non-mutable collection from being accidentally mutated.
