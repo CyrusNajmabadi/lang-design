@@ -172,7 +172,12 @@ Which approach should we go with with our dictionary expressions? Options includ
 >   - The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
 >   - If the collection expression has any elements, the type has an applicable instance or extension method Add that can be invoked with a single argument of the iteration type, and the method is accessible at the location of the collection expression.
 >   - ```diff
->     + If the collection expression has any elements and the type has an iteration type of some `KeyValuePair<TKey, TValue>` and the type has applicable indexer that can be invoked with a single argument of the `TKey` type, and a value of the `TValue` type, and the indexer is accessible at the location of the collection expression. 
+>     + If the collection expression has any elements and the type 
+>     + has an iteration type of some `KeyValuePair<TKey, TValue>`
+>     + and the type has applicable indexer that can be invoked with
+>     + a single argument of the `TKey` type, and a value of the `TValue`
+>     + type, and the indexer is accessible at the location of the
+>     + collection expression. 
 >     ```
 > - An interface type:
 >   - System.Collections.Generic.IEnumerable<T>
