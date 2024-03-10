@@ -2,7 +2,7 @@
 
 ## Summary
 
-Dictionary expressions are a continuation of the C# 12 collection expressions feature.  They extend that system with a new terse syntax, `["mads": 21, "dustin": 22]`, for creating common dictionary values.  Like with collection expressions, merging other dictionaries into these values is possible using the existing spread operator `..` like so: `[.. currentStudents, "mads": 21, "dustin": 22]`
+*Dictionary Expressions* are a continuation of the C# 12 collection expressions feature.  They extend that system with a new terse syntax, `["mads": 21, "dustin": 22]`, for creating common dictionary values.  Like with collection expressions, merging other dictionaries into these values is possible using the existing spread operator `..` like so: `[.. currentStudents, "mads": 21, "dustin": 22]`
 
 Several dictionary-like types can created without external BCL support.  These types are:
 
