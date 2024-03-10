@@ -22,7 +22,7 @@ Currently, all C# programs must use many different and unfortunately verbose app
 1. Read-only dictionaries, which require both making a normal dictionary first, then wrapping them.
 1. Concurrent-dictionaries, which lack an `.Add` method, and thus cannot be used with normal collection initializers.
 
-Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
+Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more, opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
 
 Unlike *collection expressions*, C# does not have an existing pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
 
