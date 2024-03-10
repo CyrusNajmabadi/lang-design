@@ -309,6 +309,7 @@ Given a target type `IReadOnlyDictionary<TKey, TValue>` or `IDictionary<TKey, TV
 
 1. Use an existing type that implements that interface.
 1. Synthesize a type that implements the interface.
+
 In either case, the type used is allowed to implement a larger set of interfaces than those strictly required.
 
 Synthesized types are free to employ any strategy they want to implement the required interfaces properly. 
