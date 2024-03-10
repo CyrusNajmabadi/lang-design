@@ -40,7 +40,8 @@ collection_element
   ;
 
 + dictionary_element
-  : expression ':' expression
++  : expression ':' expression
++  ;
 ```
 
 Alternative syntaxes are available for consideration, but should be considered later due to the bike-shedding cost involved.  Picking the above syntax allows for the compiler team to move quickly at implementing the semantic side of the feature, allowing earlier previews to be made available.  These syntaxes include, but are not limited to:
