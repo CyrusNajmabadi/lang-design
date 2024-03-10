@@ -53,7 +53,7 @@ Choices here would have implications regarding potential syntactic ambiguities, 
 
 ### Design Intuition
 
-Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for dictionaries will correspond to existing rules for collections, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
+Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating `k:v` as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for *dictionary expressions* will correspond to existing rules for *collection expressions*, just requiring things like element and iteration types to be some `KeyValuePair<,>`.  As such, the following would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // as would
@@ -81,7 +81,20 @@ Importantly, we do not believe it wise to *require* the presence of a `k:v` elem
 Dictionary<string, int> everyone = [.. students, .. teachers];
 ```
 
-Open Question 2: Dictionaries provide a dual-way of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, and a permissive indexer-oriented form which does not.  The restrictive form is useful for catching mistakes ("oops, i didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
+Open question 2: Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type.  For example:
+
+```c#
+struct Pair<X, Y>
+{
+  public static implicit operator KeyValuePair<X, Y>() => ...;
+}
+
+List<Pair<int, string>> pairs = ...;
+Dictionary<int, string> map = [.. pairs];
+```
+
+
+Open Question 3: Dictionaries provide a dual-way of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, and a permissive indexer-oriented form which does not.  The restrictive form is useful for catching mistakes ("oops, i didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
 
 ```c#
 Dictionary<string, Option> optionMap = [opt1Name: opt1Default, opt2Name: opt2Default, .. userProvidedOptions];
