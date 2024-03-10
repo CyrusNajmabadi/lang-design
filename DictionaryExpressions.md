@@ -201,7 +201,9 @@ Which approach should we go with with our dictionary expressions? Options includ
 > ```diff
 > The method must have a single parameter of type System.ReadOnlySpan<E>, passed by value, and there is an identity conversion from E to the iteration type of the collection type.
 >
-> + Or, the method have a single parameter of `IEnumerable<KeyValuePair<TKey, TValue>>` and iteration type of the collection type is the same `KeyValuePair<,>` type. 
+> + Or, the method have a single parameter of
+> + `IEnumerable<KeyValuePair<TKey, TValue>>` and iteration type
+> + of the collection type is the same `KeyValuePair<,>` type. 
 > ```
 
 This would allow `ImmutableDictionary<TKey, TValue>` to be annotated with `[CollectionBuilder(typeof(ImmutableDictionary), "CreateRange")]` to light up support for creation.
