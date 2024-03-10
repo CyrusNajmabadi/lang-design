@@ -108,8 +108,8 @@ An *implicit collection expression conversion* exists from a collection expressi
 
 > - Array rules...
 > - Span rules...
-> - A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method.
 
+> - A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method.
 > ```diff
 > + A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method, that is some `KeyValuePair<TKey, TValue>` and an argument type `IEnumerable<KeyValuePair<TKey, TValue>`.
 > 
