@@ -26,7 +26,7 @@ Looking at the surrounding ecosystem, we also find examples everywhere of dictio
 
 Unlike collection-expressions, C# does not have an existing dictionary-pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
 
-An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel natural in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
+An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel pleasant in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
 
 ## Detailed Design
 
