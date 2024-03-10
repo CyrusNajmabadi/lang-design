@@ -56,7 +56,7 @@ Choices here would have implications regarding potential syntactic ambiguities, 
 
 Intuitively, *dictionary expressions* work similarly to *collection expressions*, except treating a `k:v` element as a shorthand for creating a `System.Collections.Generic.KeyValuePair<TKey, TValue>`.  Many rules for *dictionary expressions* will correspond to existing rules for *collection expressions*, just requiring aspects such as *element* and *iteration types* to be some `KeyValuePair<,>`.
 
-*Dictionary types* are types that derive from `IEnumerable<KeyValuePair<TKey, TValue>>` and have an indexer `TValue this[TKey] { ... }`.
+*Dictionary types* are types that derive from `IEnumerable<KeyValuePair<TKey, TValue>>` and have an indexer `TValue this[TKey] { ... }`.  The latter requirement ensures that `List<KeyValuePair<int, string>>` is not considered a dictionary type (as it's indexer is from `int` to `KeyValuePair<int, string>`).
 
 With a broad interpretation of these rules all of the following would be legal:
 
