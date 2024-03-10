@@ -165,7 +165,8 @@ Which approach should we go with with our dictionary expressions? Options includ
 >   + and an argument type `IEnumerable<KeyValuePair<TKey, TValue>`.
 > 
 >   + For example:
->   + `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
+>   + `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`.
+>   + Note: it is an open question what collection types are supported for the argument type.
 >   ```
 > - A struct or class type that implements System.Collections.IEnumerable where:
 >   - The type has an applicable constructor that can be invoked with no arguments, and the constructor is accessible at the location of the collection expression.
