@@ -246,7 +246,9 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 > 
 >    - ```diff
 >      + If the target is a dictionary-type, the enumerator's element
->      + type must be some `KeyValuePair<,>`, and for each of those elements the applicable indexer is invoked on the collection instance with the `.Key` and `.Value` members of that pair.
+>      + type must be some `KeyValuePair<,>`, and for each of those
+>      + elements the applicable indexer is invoked on the collection
+>      + instance with the `.Key` and `.Value` members of that pair.
 >      ```
 
 ## Type inference
