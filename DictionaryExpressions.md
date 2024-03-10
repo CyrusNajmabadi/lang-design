@@ -111,7 +111,7 @@ An *implicit collection expression conversion* exists from a collection expressi
 > - A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method.
 
 > ```diff
-> + A type with a `CreateRange` with an iteration type of some `KeyValuePair<TKey, TValue>` and an argument type of some `CollectionType<KeyValuePai<TKey, TValue>`.  For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
+> + A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method, that is some `KeyValuePair<TKey, TValue>` and an argument type `IEnumerable<KeyValuePair<TKey, TValue>`.  For example `public static ImmutableDictionary CreateRange<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>)`. Note: it is an open question what collection types are supported for the argument type.
 ```
 
 A struct or class type that implements System.Collections.IEnumerable where:
