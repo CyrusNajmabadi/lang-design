@@ -335,6 +335,8 @@ The value generated is allowed to implement more interfaces than required.  For 
 There is a subtle concern around the following interface destinations:
 
 ```c#
+// NOTE: These are not overloads.
+
 void Xxx(IEnumerable<KeyValuePair<string, int>> pairs) ...
 void Yyy(IDictionary<string, int> pairs) ...
 
