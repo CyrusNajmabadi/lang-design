@@ -61,7 +61,7 @@ Dictionary<string, int> nameToAge2 = ["mads": 21, .. existingDict]; // as would
 Dictionary<string, int> nameToAge3 = ["mads": 21, .. existingListOfKVPS];
 ```
 
-The support for spreads in a *dictionary expression* only being concerned with  element types (and not the collection type being spread itself), matches the equivalent cases in the collection-expression case, such as:
+Having spreads in a *dictionary expression* only be concerned with element types (and not the collection type being spread itself), matches the equivalent cases in the collection-expression case, such as:
 
 ```c#
 List<KeyValuePair<string, int>> nameToAge = [.. someDict]; // supported today in C# 12
