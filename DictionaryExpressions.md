@@ -309,3 +309,11 @@ Given a target type or `IDictionary<TKey, TValue>`:
 The value generated is allowed to implement more interfaces than required.  For example, implementing the non-generic `IDictionary` as well.
 
 1. The value must support all mutation methods (like IDictionary.Add).
+
+#### Open question 1
+
+There is a subtle concern around the following interface destinations:
+
+```c#
+void X(IEnumerable<KeyValuePair<string, int>> pairs) ...
+void Y(IDictionary<string, int> pairs) ...
