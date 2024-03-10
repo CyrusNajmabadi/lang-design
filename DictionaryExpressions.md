@@ -97,8 +97,11 @@ struct Pair<X, Y>
   public static implicit operator KeyValuePair<X, Y>() => ...;
 }
 
+Dictionary<int, string> map1 = [pair1, pair2]; // ?
+
+
 List<Pair<int, string>> pairs = ...;
-Dictionary<int, string> map = [.. pairs];
+Dictionary<int, string> map2 = [.. pairs]; // ?
 ```
 
 
