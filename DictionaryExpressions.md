@@ -75,7 +75,7 @@ Dictionary<string, int> nameToAge = ["mads": 21, existingKvp]; // A user would h
 Dictionary<string, int> nameToAge = ["mads": 21, existingKvp.Key: existingKvp.Value];
 ```
 
-Open question 2: How far do we want to accept this KeyValuePair representation of things? For example, should the following be allowed:
+Open question 2: How far do we want to accept this KeyValuePair representation of things? Do we allow *dictionary elements* when producing normal collections? For example, should the following be allowed:
 
 ```c#
 List<KeyValuePair<string, int>> = ["mads": 21];
