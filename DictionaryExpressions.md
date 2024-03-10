@@ -135,18 +135,16 @@ An *implicit collection expression conversion* exists from a collection expressi
 ### Create methods
 
 > A create method is indicated with a [CollectionBuilder(...)] attribute on the collection type. The attribute specifies the builder type and method name of a method to be invoked to construct an instance of the collection type.
-
-```diff
-+ A create method will commonly use the name `CreateRange` in the dictionary domain.
-```
-
+> ```diff
+> + A create method will commonly use the name `CreateRange` in the dictionary domain.
+> ```
 > For the create method:
-
-```diff
-The method must have a single parameter of type System.ReadOnlySpan<E>, passed by value, and there is an identity conversion from E to the iteration type of the collection type.
-
-+ Or, the method have a single parameter of `IEnumerable<KeyValuePair<TKey, TValue>>` and iteration type of the collection type is the same `KeyValuePair<,>` type. 
-```
+>
+> ```diff
+> The method must have a single parameter of type System.ReadOnlySpan<E>, passed by value, and there is an identity conversion from E to the iteration type of the collection type.
+>
+> + Or, the method have a single parameter of `IEnumerable<KeyValuePair<TKey, TValue>>` and iteration type of the collection type is the same `KeyValuePair<,>` type. 
+> ```
 
 This would allow `ImmutableDictionary<TKey, TValue>` to be annotated with `[CollectionBuilder(typeof(ImmutableDictionary), "CreateRange")]` to light up support for creation.
 
