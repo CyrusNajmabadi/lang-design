@@ -180,11 +180,11 @@ Which approach should we go with with our dictionary expressions? Options includ
 >     + collection expression. 
 >     ```
 > - An interface type:
->   - System.Collections.Generic.IEnumerable<T>
->   - System.Collections.Generic.IReadOnlyCollection<T>
->   - System.Collections.Generic.IReadOnlyList<T>
->   - System.Collections.Generic.ICollection<T>
->   - System.Collections.Generic.IList<T>
+>   - `System.Collections.Generic.IEnumerable<T>`
+>   - `System.Collections.Generic.IReadOnlyCollection<T>`
+>   - `System.Collections.Generic.IReadOnlyList<T>`
+>   - `System.Collections.Generic.ICollection<T>`
+>   - `System.Collections.Generic.IList<T>`
 >   - ```diff
 >     + System.Collections.Generic.IDictionary<TKey, TValue>
 >     + System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
