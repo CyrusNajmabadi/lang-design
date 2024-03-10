@@ -230,14 +230,6 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 >      + If the target is a dictionary-type, the enumerator's element type must be some `KeyValuePair<,>`, and for each of those elements the applicable indexer is invoked on the collection instance with the `.Key` and `.Value` members of that pair.
 >      ```
 
-- ...
-    - An applicable AddRange instance or extension method is invoked on the collection instance with the spread element expression as the argument.
-    - An applicable CopyTo instance or extension method is invoked on the spread element expression with the collection instance and int index as arguments.
-
-```diff
-+ If the element is a dictionary element, The applicable indexer is invoked with the the first expression of the element as the key, and the second expression as the value.
-```
-
 ### Type inference
 
 ```c#
