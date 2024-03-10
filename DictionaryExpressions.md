@@ -90,7 +90,7 @@ Dictionary<string, Option> optionMap = [opt1Name: opt1Default, opt2Name: opt2Def
 Or, conversely:
 
 ```c#
-Dictionary<string, Option> optionMap = [Defaults.CoreOptions, feature1Name: feature1Override];
+Dictionary<string, Option> optionMap = [.. Defaults.CoreOptions, feature1Name: feature1Override];
 ```
 
 Which approach should we go with with our dictionary expressions.  Options include:
