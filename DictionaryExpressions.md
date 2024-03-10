@@ -24,7 +24,7 @@ In an analysis of the BCL and the nuget package ecosystem, sequential-collection
 
 Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
 
-Unlike collection-expressions, C# does not have an existing dictionary-pattern the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
+Unlike collection-expressions, C# does not have an existing dictionary-pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
 
 An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel natural in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
 
