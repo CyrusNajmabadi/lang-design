@@ -317,3 +317,11 @@ There is a subtle concern around the following interface destinations:
 ```c#
 void Xxx(IEnumerable<KeyValuePair<string, int>> pairs) ...
 void Yyy(IDictionary<string, int> pairs) ...
+
+Xxx(["mads": 21, .. ldm]);
+Yyy(["mads": 21, .. ldm]);
+```
+
+When the destination is an IEnumerable, we tend to think we're producing a sequence (so "mads" could show up twice).  However, the use of the `k:v` syntax more strongly indicates production of a dictionary-value.
+
+What should we do here when targeting `IEnumerable<...>` *and* using `k:v` elements? Produce an ordered sequence, with possibly duplicated values?  Or produce an unordered dictionary, with unique keys?
