@@ -323,12 +323,7 @@ Given a target type of `IReadOnlyDictionary<TKey, TValue>`, the value generated 
 
 ### Mutable interface translation
 
-Given a target type or `IDictionary<TKey, TValue>`:
-
-1. The value must return false when queried for `ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly`.
-The value generated is allowed to implement more interfaces than required.  For example, implementing the non-generic `IDictionary` as well.
-
-1. The value must support all mutation methods (like IDictionary.Add).
+Given a target type or `IDictionary<TKey, TValue>` the type used will be `Dictionary<TKey, TValue>`.
 
 ### Open question 1
 
