@@ -147,13 +147,13 @@ Which approach should we go with with our dictionary expressions? Options includ
 
 ### Conversions
 
-A *collection expression conversion* allows a collection expression to be converted to a type.
-
-An *implicit collection expression conversion* exists from a collection expression to the following types:
-
+> A *collection expression conversion* allows a collection expression to be converted to a type.
+>
+> An *implicit collection expression conversion* exists from a collection expression to the following types:
+>
 > - Array rules...
 > - Span rules...
-
+>
 > - A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method.
 > - ```diff
 >   + A type with a create method with an iteration type determined from a GetEnumerator instance method or enumerable interface, not from an extension method, that is some `KeyValuePair<TKey, TValue>` and an argument type `IEnumerable<KeyValuePair<TKey, TValue>`.
