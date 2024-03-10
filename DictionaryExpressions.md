@@ -89,7 +89,7 @@ Importantly, we do not believe it wise to *require* the presence of a `k:v` elem
 Dictionary<string, int> everyone = [.. students, .. teachers];
 ```
 
-Open question 2: Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type.  For example:
+Open question 3: Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type.  For example:
 
 ```c#
 struct Pair<X, Y>
