@@ -363,3 +363,4 @@ Parsing ambiguity around: `a ? [b] : c`
 
 What are the rules when types have multiple indexers and multiple impls of `IEnumerable<KVP<,>>`
 
+It would likely make sense to align with whatever comes out if you `foreach`ed the collection.
