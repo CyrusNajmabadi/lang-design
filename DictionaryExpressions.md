@@ -13,20 +13,20 @@ Further support is present for dictionary-like types not covered above through t
 
 ## Motivation
 
-While dictionary-values are similar to standard sequential collection-values in that they can be interpreted as a sequence of key/value pairs, they differ in that they are often used for their more fundamental capability of efficient looking up of values based on a provided key.  In an analysis of the BCL and the nuget package ecosystem, sequential-collection types and values make up the lion's share of collections used.  However, dictionary types were still used a significant amount, with appearances in APIs occurring at between 5 and 10% the amount of sequential collections, and with values appearing universally.
+While dictionaries are similar to standard sequential collections in that they can be interpreted as a sequence of key/value pairs, they differ in that they are often used for their more fundamental capability of efficient looking up of values based on a provided key.  In an analysis of the BCL and the NuGet package ecosystem, sequential collection types and values make up the lion's share of collections used.  However, dictionary types were still used a significant amount, with appearances in APIs occurring at between 5 and 10% the amount of sequential collections, and with dictionary values appearing universally in all programs.
 
 Currently, all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
 
 1. Collection-initializer types, which require syntax like `new Dictionary<X, Y> { ... }` (lacking inference of possibly verbose TKey and TValue) prior to their values, and which can cause multiple reallocations of memory because they use `N` `.Add` invocations without supplying an initial capacity.
-1. Immutable collections, which require syntax like `ImmutableDictionary.CreateRange(...)`, but which are also unpleasant due to the need to provide values as an `IEnumerable<KeyValuePair>`s.  Builders are even more unwieldy.
-1. Read-only dictionaries, which require both making a normal dictionary first, then wrapping them.
-1. Concurrent-dictionaries, which lack an `.Add` method, and thus cannot be used with normal collection initializers.
+1. Immutable collections, which require syntax like `ImmutableDictionary.CreateRange(...)`, but which are also unpleasant due to the need to provide values as an `IEnumerable<KeyValuePair>`.  Builders are even more unwieldy.
+1. Read-only dictionaries, which require first making a normal dictionary, then wrapping it.
+1. Concurrent dictionaries, which lack an `.Add` method, and thus cannot be used with normal collection initializers.
 
-Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more, opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
+Looking at the surrounding ecosystem, we also find examples everywhere of dictionary creation being more convenient and pleasant to use. Swift, TypeScript, Dart, Ruby, Python, and more, opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these built-in syntax forms.
 
-Unlike *collection expressions*, C# does not have an existing pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complimentary with deconstruction work. 
+Unlike with *collection expressions*, C# does not have an existing pattern serving as the corresponding deconstruction form.  Designs here should be made with a consideration for being complementary with deconstruction work. 
 
-An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel pleasant in the language,  complement the work done with collection expressions, and naturally extend to pattern matching in the future.
+An inclusive solution is needed for C#. It should meet the vast majority of case for customers in terms of the dictionary-like types and values they already have. It should also feel pleasant in the language, complement the work done with collection expressions, and naturally extend to pattern matching in the future.
 
 ## Detailed Design
 
@@ -58,7 +58,7 @@ Intuitively, *dictionary expressions* work similarly to *collection expressions*
 
 *Dictionary types* are types that derive from `IEnumerable<KeyValuePair<TKey, TValue>>` and have an indexer `TValue this[TKey] { ... }`.  The latter requirement ensures that `List<KeyValuePair<int, string>>` is not considered a dictionary type (as its indexer is from `int` to `KeyValuePair<int, string>`).
 
-With a broad interpretation of these rules all of the following would be legal:
+With a broad interpretation of these rules, all of the following would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge1 = ["mads": 21, existingKvp]; // as would
@@ -114,7 +114,7 @@ Dictionary<string, int> everyone = [.. students, .. teachers];
 
 ### Open question 4
 
-Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type.  For example:
+Should we take a very restrictive view of `KeyValuePair<,>`?  Specifically, should we allow only that exact type?  Or should we allow any types with an implicit conversion to that type?  For example:
 
 ```c#
 struct Pair<X, Y>
@@ -131,7 +131,7 @@ Dictionary<int, string> map2 = [.. pairs]; // ?
 
 ### Open question 5
 
-Dictionaries provide two ways of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, and a permissive indexer-oriented form which does not.  The restrictive form is useful for catching mistakes ("oops, i didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
+Dictionaries provide two ways of initializing their contents.  A restrictive `.Add`-oriented form that throws when a key is already present in the dictionary, used by collection initializers, and a permissive indexer-oriented form which does not, used by dictionary initializers.  The restrictive form is useful for catching mistakes ("oops, I didn't intend to add the same thing twice!"), but is limiting *especially* in the spread case.  For example:
 
 ```c#
 Dictionary<string, Option> optionMap = [opt1Name: opt1Default, opt2Name: opt2Default, .. userProvidedOptions];
@@ -147,7 +147,7 @@ Which approach should we go with with our dictionary expressions? Options includ
 
 1. Purely restrictive.  All elements use `.Add` to be added to the list.  Note: types like `ConcurrentDictionary` would then not work, not without adding support with something like the `CollectionBuilderAttribute`.
 2. Purely permissive.  All elements are added using the indexer.  Perhaps with compiler warnings if the exact same key is given the same constant value twice.
-3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  Deep potential for confusion here.
+3. Perhaps a hybrid model.  `.Add` if only using `k:v` and switching to indexers if using spread elements.  There is deep potential for confusion here.
 
 
 ## Conversions
@@ -179,7 +179,7 @@ Which approach should we go with with our dictionary expressions? Options includ
 >     + and the type has applicable indexer that can be invoked with
 >     + a single argument of the `TKey` type, and a value of the `TValue`
 >     + type, and the indexer is accessible at the location of the
->     + collection expression. 
+>     + collection expression.
 >     ```
 > - An interface type:
 >   - `System.Collections.Generic.IEnumerable<T>`
@@ -233,7 +233,7 @@ It is common for dictionaries to take in a `comparer` value, to determine how ke
 >
 > For each element in order:
 >
-> - If the element is an expression element, the applicable Add instance or extension method is invoked with the element expression as the argument. (Unlike classic collection initializer behavior, element evaluation and Add calls are not necessarily interleaved.).
+> - If the element is an expression element, the applicable Add instance or extension method is invoked with the element expression as the argument. (Unlike classic collection initializer behavior, element evaluation and Add calls are not necessarily interleaved.)
 > 
 > - ```diff
 >   + If the target is a dictionary type, then the element must be a
@@ -259,7 +259,7 @@ var a = AsDictionary(["mads": 21, "dustin": 22]); // AsDictionary<string, int>(D
 static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(Dictionary<TKey, TValue> arg) => arg;
 ```
 
-Rules TBD.  Intuition though is to be inferring both a `TKey` and `TValue` type. `k: v` elements contribute input and output inferences respectively to those types.  Normal expression elements and spread elements must have associated `KeyValuePair<K_n, V_n>` types, where the `K_n` and `V_n` then contribute as well.
+Rules TBD.  Intuition though is to be inferring both a `TKey` and `TValue` type. `k:v` elements contribute input and output inferences respectively to those types.  Normal expression elements and spread elements must have associated `KeyValuePair<K_n, V_n>` types, where the `K_n` and `V_n` then contribute as well.
 
 For example:
 
@@ -307,11 +307,11 @@ X([a, b]); // ambiguous
 
 ### Mutable interface translation
 
-Given the target type `IDictionary<TKey, TValue>`  the type used will be `Dictionary<TKey, TValue>`.
+Given the target type `IDictionary<TKey, TValue>`,  the type used will be `Dictionary<TKey, TValue>`.
 
 ### Non-mutable interface translation
 
-Given a target type `IReadOnlyDictionary<TKey, TValue>` a compliant implementation is only required to produce a value that implements that interface. A compliant implementation is free to:
+Given a target type `IReadOnlyDictionary<TKey, TValue>`, a compliant implementation is only required to produce a value that implements that interface. A compliant implementation is free to:
 
 1. Use an existing type that implements that interface.
 1. Synthesize a type that implements the interface.
@@ -320,7 +320,7 @@ In either case, the type used is allowed to implement a larger set of interfaces
 
 Synthesized types are free to employ any strategy they want to implement the required interfaces properly.  The value generated is allowed to implement more interfaces than required. For example, implementing the mutable interfaces as well (specifically, implementing `IDictionary<TKey, TValue>` or the non-generic `IDictionary`). However, in that case:
 
-1. The value must return true when queried for `ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly`. This ensures consumers can appropriately tell that the collection is non-mutable, despite implementing the mutable views.
+1. The value must return true when queried for `.IsReadOnly`. This ensures consumers can appropriately tell that the collection is non-mutable, despite implementing the mutable views.
 1. The value must throw on any call to a mutation method. This ensures safety, preventing a non-mutable collection from being accidentally mutated.
 
 ### Open question 1
