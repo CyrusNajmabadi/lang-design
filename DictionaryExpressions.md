@@ -354,3 +354,7 @@ HybridType h = [kvp1, kvp2];
 ```
 
 In C# 12 this might have been calling `.Add(kvp)`.  Is it ok to call the indexer now?  If there is an applicable `.Add`, should we defer to this, and only fallback to the indexer? 
+
+### Question 2
+
+Parsing ambiguity around: `a ? [b] : c`
