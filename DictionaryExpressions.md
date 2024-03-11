@@ -341,7 +341,7 @@ When the destination is an IEnumerable, we tend to think we're producing a seque
 
 What should we do here when targeting `IEnumerable<...>` *and* using `k:v` elements? Produce an ordered sequence, with possibly duplicated values?  Or produce an unordered dictionary, with unique keys?
 
-## Breaking changes
+## Random open questions
 
 ### Question 1
 
