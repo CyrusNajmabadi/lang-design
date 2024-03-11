@@ -340,3 +340,15 @@ Yyy(["mads": 21, .. ldm]);
 When the destination is an IEnumerable, we tend to think we're producing a sequence (so "mads" could show up twice).  However, the use of the `k:v` syntax more strongly indicates production of a dictionary-value.
 
 What should we do here when targeting `IEnumerable<...>` *and* using `k:v` elements? Produce an ordered sequence, with possibly duplicated values?  Or produce an unordered dictionary, with unique keys?
+
+## Breaking changes
+
+If a user had a type that could be both initialized with a collection initializer *and* a dictionary initializer, what should happen?
+
+For example:
+
+```c#
+HybridType h = [kvp1, kvp2];
+```
+
+In C# 12 this might have been calling `.Add(kvp)`.  Is it ok to call the indexer now?  If there is an applicable `.Add`, should we defer to this, and only fallback to the indexer? 
