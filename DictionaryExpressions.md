@@ -360,3 +360,6 @@ In C# 12 this might have been calling `.Add(kvp)`.  Is it ok to call the indexer
 Parsing ambiguity around: `a ? [b] : c`
 
 ### Question 3
+
+What are the rules when types have multiple indexers and multiple impls of `IEnumerable<KVP<,>>`
+
