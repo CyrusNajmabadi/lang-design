@@ -343,6 +343,8 @@ What should we do here when targeting `IEnumerable<...>` *and* using `k:v` eleme
 
 ## Breaking changes
 
+### Question 1
+
 If a user had a type that could be both initialized with a collection initializer *and* a dictionary initializer, what should happen?
 
 For example:
