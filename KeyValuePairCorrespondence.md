@@ -45,5 +45,21 @@ For example:
     Dictionary<string, int> nameToAge = [.. defaultValues, otherMap.Single(predicate)];
     ```
 
-    Here, being able to 'spread' in another collection (which would normally be some `IEnumerable<KeyValuePair<>>`) is desirable.  
+    Here, being able to 'spread' in another collection (which would normally be some `IEnumerable<KeyValuePair<>>`) is desirable.  Similarly, being able to add invidual pairs found through some means, without having to decompose into `k: v` syntax is equally preferable.
+
+# KeyValuePair transparency
+
+We expect the exact type of the KeyValuePair<> values to be generally transparent.  Rather than being strictly that type, the language will generally see *through* it to be a pair of some TKey and TValue types.  This transparency is in line with how tuples behave and serves as a strong intuition for how we want users to intuit KeyValuePairs in the context of collection expressions.
+
+How does this transparency manifest?  Consider the following scenario:
+
+```c#
+Dictionary<object, int?> map = ["mads": 21];
+```
+
+The above expression would certainly be expected to work.  While `"mads"` is a string, and `21` an `int`, the target-typed nature of collection expressions would push the `object` and `int?` types through the constituent key and value expressions to type them properly.  This would also be expected to work in the following:
+
+```c#
+Dictionary<object?, int?> map = [null: null];
+```
 
