@@ -187,4 +187,27 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on ho
 
 These four options form a spectrum.  Where the starting point is doing nothing special, then only handling dictionaries, then handling any collection, all the way to the final support which effectively puts KeyValuePair handling at the same level as tuples for the language.
 
+Open question 1: How far would we like to take this transparency?  All the way to full analogy with tuples?  No transparency at all?  Somewhere in the middle?
 
+# Deconstruction
+
+All of the above so far has been about KeyValuePair, how the language would enable working more conveniently with it.  And, there are good arguments to be made that KeyValuePair needs both to allow these important scenarios to light up, and due to how integral it is to the dictionary-type space to begin with.  However, fundemantally, all of the above could be reformulated, enabling the same scenarios without specializing KeyValuePair at all.  Specifically, all of the above works by stating that KeyValuePair can be seen transparently as a pair of two typed values (the `TKey Key` and the `TValue Value`).  Fundamentally, as that's all that is truly required, a relaxation could be performed that restates all of the above as:
+
+    Any type that is *constructible* and *deconstructible* into two elements would be transparently supported in the context of collection expressions and the `k: v` element.
+
+That relaxation would consume all the KeyValuePair support.  But would also then enable tuples to be used in all those cases *as well as* any appropriate type supporting two-element construction/deconstruction.  As such, all of the below would be legal:
+
+```c#
+Dictionary<string, int> nameToAge1 = [("mads", 21)];
+
+List<(string, int)> pairs = ...;
+Dictionary<string, int> nameToAge1 = [.. pairs];
+
+record struct Point(double X, double Y);
+Dictionary<int, int> function = [point1, point2];
+
+List<Point> points = [1.0: 1.0, 2.0: 4.0, 3.0: 8.0]
+// etc.
+```
+
+Open question 2: How far would we like to take this?  Only support KeyValuePair?  Support KeyValuePair and 2-element tuples?  Support any 2-element deconstructible/constructible types?
