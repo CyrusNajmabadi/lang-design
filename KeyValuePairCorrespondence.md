@@ -54,12 +54,77 @@ We expect the exact type of the KeyValuePair<> values to be generally transparen
 How does this transparency manifest?  Consider the following scenario:
 
 ```c#
-Dictionary<object, int?> map = ["mads": 21];
+Dictionary<object, int?> map1 = ["mads": 21];
 ```
 
 The above expression would certainly be expected to work.  While `"mads"` is a string, and `21` an `int`, the target-typed nature of collection expressions would push the `object` and `int?` types through the constituent key and value expressions to type them properly.  This would also be expected to work in the following:
 
 ```c#
-Dictionary<object?, int?> map = [null: null];
+Dictionary<object?, int?> map2 = [null: null];
 ```
 
+KeyValuePair transparency means though that just as we expect the code for map1 to be legal, we should consider the following legal as well:
+
+```c#
+KeyValuePair<string, int> kvp = new("mads", 21);
+Dictionary<object, int?> map1 = [kvp];
+```
+
+After all, why would that be illegal, while the following then became legal:
+
+```c#
+KeyValuePair<string, int> kvp = new("mads", 21);
+Dictionary<object, int?> map1 = [kvp.Key: kvp.Value];
+```
+
+Requiring explicit deconstruction of the constituent key and value portions of a KVP just to satisfy the compiler so it could then target type them just adds extra, painful steps.  It would become doubly worse once all collection element expressions are considered, like so:
+
+```c#
+Dictionary<object, int?> map = [.. nameToAge.Select(kvp => new KeyValuePair<object, int?>(kvp.Key, kvp.Value)];
+```
+
+# Tuple analogy 
+
+While this transparency seems like it might be a large stretch beyond how C# generally works.  It turns out that this sort of behavior is *exactly* what already exists in the language today for tuples.  Consider the following:
+
+```c#
+List<(object? key, int? value)> map = [("mads", 21)];
+```
+
+This already works today.  The language transparently sees through into the tuple expression to ensure that the above it legal.  This is also not a conversion applied to some `(string, int)` tuple type.  That can be seen here which is also legal:
+
+```c#
+List<(object? key, int? value)> map = [(null, null)];
+```
+
+Here, the types of the destination flow all the way through (including recursively through nested tuple types) into the tuple expression in the initializer.  This transparency is not limited to *tuple expressions* either.  All of hte following are legal as well, despite non-matching ValueTuple<> types:
+
+```c#
+(string x, int y) kvp = ("mads", 21);
+List<(object? key, int? value)> map = [kvp];
+```
+
+And
+
+```c#
+(string? x, int? y) kvp = (null, null);
+List<(object? key, int? value)> map = [kvp];
+```
+
+The language permissively always views tuples as a loose aggregation of constituent elements, each with their own type.  Conversions and compatibility are all performed on those constituent element types, not on the top level `ValueTuple<>` type (which would normally not be compatible based on .Net type system rules).
+
+# KeyValuePair Inference
+
+The above tuple-analogy then serves as an analogous sytem we can look to to see how we would like KeyValuePair<> to behave in collection expressions.  For example:
+
+```c#
+void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValue value)> list);
+
+// Note: neither kvp1 nor kvp2 are assignable/implcitly-convertible to each other.
+(string x, int? y) kvp1 = ("mads", 21);
+(object x, int y) kvp2 = ("cyrus", 22);
+
+M([kvp1], [kvp2]);
+```
+
+This works today and correctly infers `M<object, int?>`.  
