@@ -127,4 +127,64 @@ void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValu
 M([kvp1], [kvp2]);
 ```
 
-This works today and correctly infers `M<object, int?>`.  
+This works today and correctly infers `M<object, int?>`.  Given the above, we would then expect the following to work:
+
+
+```c#
+void M<TKey, TValue>(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> s2);
+
+// Note: neither kvp1 nor kvp2 are assignable/implcitly-convertible to each other.
+(string x, int? y) kvp1 = ("mads", 21);
+(object x, int y) kvp2 = ("cyrus", 22);
+
+M([kvp1], [kvp2]); // Should infer `M<object, int?>` as well.
+```
+
+# Tuple analogy (cont.)
+
+The analogous tuple behavior serves as a good *bedrock* for our intuitions on how we want KeyValuePairs.  However, how far we want to take this analogy is up to us, and we can consider several levels of increasing transparency support.  Those levels are:
+
+1. No transparency support.  Do not treat KVPs like tuples.  Force users to explicitly convert between KVP types to satisfy type safety at the KVP level itself.  For example:
+
+    ```c#
+    KeyValuePair<string, int> kvp = new("mads", 21);
+    Dictionary<object, int?> map1 = [kvp]; // illegal.  user must write:
+
+    Dictionary<object, int?> map1 = [kvp.Key: kvp.Value];
+    ```
+
+1. Transparent only when targeting some 'dictionary type', but not non-dictionary types:
+
+    ```c#
+    KeyValuePair<string, int> kvp = new("mads", 21);
+    Dictionary<object, int?> map1 = [kvp]; // legal.
+
+    List<(object, int?)> map1 = [kvp]; // not legal.  User must write:
+    List<(object, int?)> map1 = [kvp.Key: kvp.Value]; // or
+    List<(object, int?)> map1 = [new KeyValuePair<object, int?>(kvp.Key, kvp.Value)];
+    ```
+
+1. Transparent in any collection expression, but no further:
+
+    ```c#
+    KeyValuePair<string, int> kvp = new("mads", 21);
+    Dictionary<object, int?> map1 = [kvp]; // legal.
+    List<(object, int?)> map1 = [kvp]; // legal.
+    
+    KeyValuePair<object, int?> kvp2 = kvp1; // not legal.  User must write:
+    KeyValuePair<object, int?> kvp2 = new KeyValuePair<object, int?>(kvp1.Key, kvp.Value);
+    ```
+
+1. Transparent everywhere:
+
+
+    ```c#
+    KeyValuePair<string, int> kvp = new("mads", 21);
+    Dictionary<object, int?> map1 = [kvp]; // legal.
+    List<(object, int?)> map1 = [kvp]; // legal.
+    KeyValuePair<object, int?> kvp2 = kvp1; // legal.
+    ```
+
+These four options form a spectrum.  Where the starting point is doing nothing special, then only handling dictionaries, then handling any collection, all the way to the final support which effectively puts KeyValuePair handling at the same level as tuples for the language.
+
+
