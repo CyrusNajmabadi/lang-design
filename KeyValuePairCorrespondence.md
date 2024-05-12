@@ -49,7 +49,30 @@ For example:
 
 ## KeyValuePair transparency
 
-We expect the exact type of the KeyValuePair values to be generally transparent.  Rather than being strictly that type, the language will generally see *through* it to be a pair of some TKey and TValue types.  This transparency is in line with how tuples behave and serves as a strong intuition for how we want users to intuit KeyValuePairs in the context of collection expressions.
+Collection expressions have a guiding principle that elements and spreads are lowered to `Add` calls. This enables things to be included or spread that have a more specific type than the collection's `Add` method takes:
+
+```c#
+List<int?> ages = [18, .. Enumerable.Range(21, 10)];
+```
+
+This allowance is implied by the lowered representation:
+
+```c#
+var ages = new List<int?>();
+ages.Add(18);
+foreach (var value in Enumerable.Range(21, 10))
+    ages.Add(value);
+```
+
+Dictionary expressions have a corollary. Both the key and the value can be more specific types than the key and value types of the dictionary being built, when lowered in the same manner:
+
+```c#
+var map1 = new Dictionary<object, int?>();
+map1["mads"] = 21;
+// Etc
+```
+
+To achieve this principle in dictionary expressions, we expect the exact type of the KeyValuePair values to be generally transparent.  Rather than being strictly that type, the language will generally see *through* it to be a pair of some TKey and TValue types.  This transparency is in line with how tuples behave and serves as a strong intuition for how we want users to intuit KeyValuePairs in the context of collection expressions.
 
 How does this transparency manifest?  Consider the following scenario:
 
