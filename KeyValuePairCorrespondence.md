@@ -49,13 +49,13 @@ For example:
 
 ## KeyValuePair transparency
 
-Collection expressions have a guiding principle that elements and spreads are lowered to `Add` calls. This enables things to be included or spread that have a more specific type than the collection's `Add` method takes:
+Collection expressions have a guiding principle that elements and spreads can be thought of as being lowered to `Add` calls. This enables things to be included or spread that have a more specific type than the collection's element types:
 
 ```c#
 List<int?> ages = [18, .. Enumerable.Range(21, 10)];
 ```
 
-This allowance is implied by the lowered representation:
+This allowance is implied by the lowered representation, where implicit conversions enable a straightforward scenario to appear straightforward in code without onerous explicit casts:
 
 ```c#
 var ages = new List<int?>();
