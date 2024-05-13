@@ -163,9 +163,9 @@ This works today and correctly infers `M<object, int?>`.  Given the above, we wo
 ```c#
 void M<TKey, TValue>(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2);
 
-// Note: neither kvp1 nor kvp2 are assignable/implicitly convertible to each other.
-(string x, int? y) kvp1 = ("mads", 21);
-(object x, int y) kvp2 = ("cyrus", 22);
+// Note: neither kvp1 nor kvp2 would ever be assignable/implicitly convertible to each other.
+KeyValuePair<string, int?> kvp1 = new("mads", 21);
+KeyValuePair<object, int> kvp2 =("cyrus", 22);
 
 M([kvp1], [kvp2]); // Should infer `M<object, int?>` as well.
 ```
@@ -179,8 +179,10 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on wh
     ```c#
     KeyValuePair<string, int> kvp = new("mads", 21);
     Dictionary<object, int?> map1 = [kvp]; // illegal.  user must write:
-
     Dictionary<object, int?> map1 = [kvp.Key: kvp.Value];
+
+    Dictionary<object, int?> map1 = [.. nameToAge]; // illegal.  user must write:
+    Dictionary<object, int?> map1 = [.. nameToAge.Select(kvp => new KeyValuePair<object, int?>(kvp.Key, kvp.Value))];
     ```
 
 1. Transparent only when targeting some dictionary type, but not non-dictionary types:
