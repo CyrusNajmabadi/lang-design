@@ -1,6 +1,6 @@
 # KeyValuePair correspondence
 
-In .NET, dictionary types and the `System.Collection.KeyValuePair<TKey, TValue>` (aka KVP) types are intertwined.  A dictionary is commonly defined as a collection of elements of that KVP type, not just a mapping from some TKey to some TValue.  Indeed, this duality allows one to treat the two spaces mostly uniformly.  For example:
+In .NET, dictionary types and the `KeyValuePair<TKey, TValue>` (aka `KVP`, `KeyValuePair<,>`, or `KeyValuePair`) types are intertwined.  A dictionary is commonly defined as a collection of elements of that KVP type, not just a mapping from some TKey to some TValue.  Indeed, this duality allows one to treat the two spaces mostly uniformly.  For example:
 
 ```c#
 var dictionary = new Dictionary<string, int>();
