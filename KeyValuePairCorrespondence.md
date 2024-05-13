@@ -51,7 +51,7 @@ Specifically:
 
 ## `KeyValuePair` transparency
 
-Collection expressions have a guiding principle that elements and spreads can be thought of as being lowered to `Add` calls. This enables things to be included or spread that have a more specific type than the collection's element types:
+The existing "Collection Expression" feature has a guiding principle that elements and spreads can be thought of as being lowered to `Add` calls. This enables things to be included or spread into the final collection that have a more specific type than the collection's element type itself.  For example:
 
 ```c#
 List<int?> ages = [18, .. Enumerable.Range(21, 10)];
