@@ -237,6 +237,7 @@ Open question 2: How far would we like to take this?
 
     ```c#
     Dictionary<string, int> nameToAge = [kvp]; // legal
+
     Dictionary<string, int> nameToAge = [("mads", 21)]; // not legal
 
     record NameAndAge(string Name, int Age);
@@ -244,4 +245,28 @@ Open question 2: How far would we like to take this?
     Dictionary<string, int> nameToAge = [nameAndAge] // not legal
     ```
 
- Only support KeyValuePair?  Support KeyValuePair and 2-element tuples?  Support any 2-element deconstructible/constructible types?
+1. Support KeyValuePair and 2-element tuples, but not other 2-element deconstructible types.
+
+    ```c#
+    Dictionary<string, int> nameToAge = [kvp]; // legal
+
+    Dictionary<string, int> nameToAge = [("mads", 21)]; // now legal!
+
+
+    record NameAndAge(string Name, int Age);
+    NameAndAge nameAndAge = new("mads", 21);
+    Dictionary<string, int> nameToAge = [nameAndAge] // not legal
+    ```
+
+1. Support any 2-element deconstructible types?
+
+    ```c#
+    Dictionary<string, int> nameToAge = [kvp]; // legal
+
+    Dictionary<string, int> nameToAge = [("mads", 21)]; // legal
+
+
+    record NameAndAge(string Name, int Age);
+    NameAndAge nameAndAge = new("mads", 21);
+    Dictionary<string, int> nameToAge = [nameAndAge] // now legal!
+    ```
