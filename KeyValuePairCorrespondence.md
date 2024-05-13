@@ -231,4 +231,17 @@ List<Point> points = [1.0: 1.0, 2.0: 4.0, 3.0: 8.0]
 // etc.
 ```
 
-Open question 2: How far would we like to take this?  Only support KeyValuePair?  Support KeyValuePair and 2-element tuples?  Support any 2-element deconstructible/constructible types?
+Open question 2: How far would we like to take this? 
+
+1. Only support KeyValuePair.  2-element tuples and other 2-element deconstructible types have no special meaning in a collection expression.
+
+    ```c#
+    Dictionary<string, int> nameToAge = [kvp]; // legal
+    Dictionary<string, int> nameToAge = [("mads", 21)]; // not legal
+
+    record NameAndAge(string Name, int Age);
+    NameAndAge nameAndAge = new("mads", 21);
+    Dictionary<string, int> nameToAge = [nameAndAge] // not legal
+    ```
+
+ Only support KeyValuePair?  Support KeyValuePair and 2-element tuples?  Support any 2-element deconstructible/constructible types?
