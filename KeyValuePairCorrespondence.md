@@ -72,7 +72,7 @@ map1["mads"] = 21;
 // Etc
 ```
 
-To achieve this principle in dictionary expressions, we expect the exact type of the KeyValuePair values to be generally transparent.  Rather than being strictly that type, the language will generally see *through* it to be a pair of some TKey and TValue types.  This transparency is in line with how tuples behave and serves as a strong intuition for how we want users to intuit KeyValuePairs in the context of collection expressions.
+To achieve this principle in dictionary expressions, we expect the exact type of the `KeyValuePair` values to be generally transparent.  Rather than being strictly that type, the language will generally see *through* it to be a pair of some `TKey` and `TValue` types.  This transparency is in line with how tuples behave and serves as a strong intuition for how we want users to intuit KeyValuePairs in the context of collection expressions.
 
 How does this transparency manifest?  Consider the following scenario:
 
