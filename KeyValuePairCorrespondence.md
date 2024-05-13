@@ -26,7 +26,7 @@ Specifically:
     Dictionary<string, int> nameToAge = ["mads": 21];
     ```
 
-1. Interestingly, this syntax is not unique to dictionary types.  It can be used for standard existing collection types:
+1. And also with existing collection types:
 
     ```c#
     List<KeyValuePair<string, int>> pairs = ["mads": 21];
