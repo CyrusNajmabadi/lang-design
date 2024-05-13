@@ -14,7 +14,7 @@ Because of this correspondence, we believe that dictionary expressions should no
 
 Specifically:
 
-1. There is a new special syntax for declaring a KeyValuePair within a collection expression:
+1. There is a new special syntax for declaring a `KeyValuePair` within a collection expression:
 
     ```c#
     X x = [k: v];
