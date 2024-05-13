@@ -42,6 +42,8 @@ Specifically:
 1. The above allows for *uniformity* of processing `KeyValuePair` values, which we consider desirable so that users can expect them to work for all collection expressions elements:
 
     ```c#
+    // Both 'spread' elements and 'expression' elements that evaluate 
+    // to KeyValuePair values work with dictionary types
     Dictionary<string, int> nameToAge = [.. defaultValues, otherMap.Single(predicate)];
     ```
 
