@@ -86,7 +86,7 @@ Dictionary<object, int?> map1 = ["mads": 21];
 
 The above expression would certainly be expected to work.  While `"mads"` is a string, and `21` an `int`, the target-typed nature of collection expressions would push the `object` and `int?` types through the constituent key and value expressions to type them properly.  We would *not* disallow this, despite `KeyValuePair<string, int>` and `KeyValuePair<object, int?>` being incompatible.
 
-This would also be expected to work in the following:
+This would also be expected to work in the following case:
 
 ```c#
 Dictionary<object?, int?> map2 = [null: null];
