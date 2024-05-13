@@ -242,12 +242,12 @@ That relaxation would consume all the `KeyValuePair` support.  But would also th
 Dictionary<string, int> nameToAge1 = [("mads", 21)];
 
 List<(string, int)> pairs = ...;
-Dictionary<string, int> nameToAge1 = [.. pairs];
+Dictionary<string, int> nameToAge2 = [.. pairs];
 
-record struct Point(double X, double Y);
-Dictionary<int, int> function = [point1, point2];
+record struct NameAndAge(string Name, int Age);
+Dictionary<string, int> nameToAge3 = [nameToAge1, nameToAge2];
 
-List<Point> points = [1.0: 1.0, 2.0: 4.0, 3.0: 8.0]
+List<NameToAge> pairs = ["mads": 21, "cyrus": 22, "joseph": 23]
 // etc.
 ```
 
