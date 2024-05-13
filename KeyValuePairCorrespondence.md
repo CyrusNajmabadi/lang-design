@@ -158,7 +158,7 @@ void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValu
 M([tuple1], [tuple2]);
 ```
 
-This works today and correctly infers `M<object, int?>`.  Given the above, we would then expect the following to work:
+This works today and correctly infers `M<object, int?>`.  Given the above, we would then desire the following to work:
 
 ```c#
 void M<TKey, TValue>(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2);
