@@ -100,10 +100,15 @@ KeyValuePair<string, int> kvp = new("mads", 21);
 Dictionary<object, int?> map1 = [kvp.Key: kvp.Value];
 ```
 
-Requiring explicit deconstruction of the constituent key and value portions of a KVP, just to satisfy the compiler so it could target-type them, adds extra, painful steps.  It would become doubly worse once all collection element expressions are considered:
+Requiring explicit deconstruction of the constituent key and value portions of a KVP, just to satisfy the compiler so it could target-type them, adds extra, painful steps.  It would become doubly worse once all collection element expressions are considered. We would like users to be able to write:
 
 ```c#
-Dictionary<object, int?> map = [.. nameToAge.Select(kvp => new KeyValuePair<object, int?>(kvp.Key, kvp.Value)];
+ Dictionary<object, int?> map = [.. nameToAge, otherMap.Single(predicate)];
+
+// Not:
+
+var singleElement = otherMap.Single(predicate);
+Dictionary<object, int?> map = [.. nameToAge.Select(kvp => new KeyValuePair<object, int?>(kvp.Key, kvp.Value), singleElement.Key: singleElement.Value];
 ```
 
 ## Tuple analogy
