@@ -265,7 +265,6 @@ Open question 2: How far would we like to take this?
 
     Dictionary<string, int> nameToAge = [("mads", 21)]; // legal
 
-
     record NameAndAge(string Name, int Age);
     NameAndAge nameAndAge = new("mads", 21);
     Dictionary<string, int> nameToAge = [nameAndAge] // now legal!
