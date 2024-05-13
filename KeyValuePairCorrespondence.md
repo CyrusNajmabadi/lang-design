@@ -163,6 +163,7 @@ void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValu
 (string x, int? y) tuple1 = ("mads", 21);
 (object x, int y) tuple2 = ("cyrus", 22);
 
+// Infers `M<object, int?>`
 M([tuple1], [tuple2]);
 ```
 
@@ -175,7 +176,8 @@ void M<TKey, TValue>(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2);
 KeyValuePair<string, int?> kvp1 = new("mads", 21);
 KeyValuePair<object, int> kvp2 =("cyrus", 22);
 
-M([kvp1], [kvp2]); // Should infer `M<object, int?>` as well.
+// Would like this to infer `M<object,int?>` as well.
+M([kvp1], [kvp2]);
 ```
 
 ## Tuple analogy (cont.)
