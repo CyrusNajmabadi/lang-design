@@ -157,7 +157,7 @@ The tuple analogy above serves as an analogous system we can look to in order to
 ```c#
 void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValue value)> list2);
 
-// Note: neither kvp1 nor kvp2 are assignable/implicitly convertible to
+// Note: neither tuple1 nor tuple2 are assignable/implicitly convertible to
 // each other. Each has an element that has a wider type than the 
 // corresponding element in the other.
 (string x, int? y) tuple1 = ("mads", 21);
