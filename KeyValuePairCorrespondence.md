@@ -1,4 +1,4 @@
-# KeyValuePair correspondence
+# `KeyValuePair` correspondence
 
 In .NET, dictionary types and the `KeyValuePair<TKey, TValue>` (aka `KVP`, `KeyValuePair<,>`, or `KeyValuePair`) types are intertwined.  A dictionary is commonly defined as a collection of elements of that `KVP` type, not just a mapping from some `TKey` to some `TValue`.  Indeed, this duality allows one to treat the two spaces mostly uniformly.  For example:
 
@@ -32,14 +32,14 @@ Specifically:
     List<KeyValuePair<string, int>> pairs = ["mads": 21];
     ```
 
-1. And, while the syntax allows for easy specification of the particular key and value, it is optional and the feature works with normal KeyValuePair instances:
+1. And, while the syntax allows for easy specification of the particular key and value, it is optional and the feature works with normal `KeyValuePair` instances:
 
     ```c#
     KeyValuePair<string, int> kvp = new("mads", 21);
     Dictionary<string, int> nameToAge = [kvp];
     ```
 
-1. The above allows for *uniformity* of processing KeyValuePair values, which we consider desirable so that users can expect them to work for all collection expressions elements:
+1. The above allows for *uniformity* of processing `KeyValuePair` values, which we consider desirable so that users can expect them to work for all collection expressions elements:
 
     ```c#
     Dictionary<string, int> nameToAge = [.. defaultValues, otherMap.Single(predicate)];
@@ -47,7 +47,7 @@ Specifically:
 
     Here, being able to 'spread' in another collection (which would normally be some `IEnumerable<KeyValuePair<,>>`) is desirable.  Similarly, being able to add individual pairs found through some means, without having to decompose into `k: v` syntax, is equally preferable.
 
-## KeyValuePair transparency
+## `KeyValuePair` transparency
 
 Collection expressions have a guiding principle that elements and spreads can be thought of as being lowered to `Add` calls. This enables things to be included or spread that have a more specific type than the collection's element types:
 
@@ -144,9 +144,9 @@ List<(object? key, int? value)> map = [kvp];
 
 The language always permissively views tuples as a loose aggregation of constituent elements, each with their own type.  Conversions and compatibility are all performed on those constituent element types, not on the top level `ValueTuple<>` type which would normally not be compatible based on .NET type system rules.
 
-## KeyValuePair inference
+## `KeyValuePair` inference
 
-The tuple analogy above serves as an analogous system we can look to in order to see how we would like KeyValuePair to behave in collection expressions.  For example:
+The tuple analogy above serves as an analogous system we can look to in order to see how we would like `KeyValuePair` to behave in collection expressions.  For example:
 
 ```c#
 void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValue value)> list2);
@@ -216,17 +216,17 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on wh
     KeyValuePair<object, int?> kvp2 = kvp1; // legal.
     ```
 
-These four options form a spectrum, starting with doing nothing special, then only handling dictionaries, then handling any collection, all the way to the maximum support which effectively puts KeyValuePair handling at the same level as tuples for the language.
+These four options form a spectrum, starting with doing nothing special, then only handling dictionaries, then handling any collection, all the way to the maximum support which effectively puts `KeyValuePair` handling at the same level as tuples for the language.
 
 Open question 1: How far would we like to take this transparency?  All the way to full analogy with tuples?  No transparency at all?  Somewhere in the middle?
 
 ## Deconstruction
 
-All of the above so far has been about how the language would enable working more conveniently with the KeyValuePair type.  And, there are good arguments to be made that KeyValuePair needs to allow these important scenarios to light up, due to how integral it is to the dictionary-type space to begin with.  However, fundamentally, all of the above could be reformulated, enabling the same scenarios without specializing KeyValuePair at all.  Specifically, all of the above works by stating that KeyValuePair can be seen transparently as a pair of two typed values (the `TKey Key` and the `TValue Value`).  Fundamentally, as that's all that is truly required, a relaxation could be performed that restates all of the above as:
+All of the above so far has been about how the language would enable working more conveniently with the `KeyValuePair` type.  And, there are good arguments to be made that `KeyValuePair` needs to allow these important scenarios to light up, due to how integral it is to the dictionary-type space to begin with.  However, fundamentally, all of the above could be reformulated, enabling the same scenarios without specializing `KeyValuePair` at all.  Specifically, all of the above works by stating that `KeyValuePair` can be seen transparently as a pair of two typed values (the `TKey Key` and the `TValue Value`).  Fundamentally, as that's all that is truly required, a relaxation could be performed that restates all of the above as:
 
 > Any type that is *constructible* and *deconstructible* into two elements would be transparently supported in the context of collection expressions and the `k: v` element.
 
-That relaxation would consume all the KeyValuePair support.  But would also then enable tuples to be used in all those cases *as well as* any appropriate type supporting two-element construction/deconstruction.  As such, all of the below would be legal:
+That relaxation would consume all the `KeyValuePair` support.  But would also then enable tuples to be used in all those cases *as well as* any appropriate type supporting two-element construction/deconstruction.  As such, all of the below would be legal:
 
 ```c#
 Dictionary<string, int> nameToAge1 = [("mads", 21)];
@@ -255,7 +255,7 @@ Open question 2: How far would we like to take this?
     Dictionary<string, int> nameToAge = [nameAndAge] // not legal
     ```
 
-1. Support KeyValuePair and 2-element tuples, but not other 2-element deconstructible types.
+1. Support `KeyValuePair` and 2-element tuples, but not other 2-element deconstructible types.
 
     ```c#
     Dictionary<string, int> nameToAge = [kvp]; // legal
