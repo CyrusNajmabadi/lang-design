@@ -54,6 +54,8 @@ Specifically:
 The existing "Collection Expression" feature has a guiding principle that elements and spreads can be thought of as being lowered to `Add` calls. This enables things to be included or spread into the final collection that have a more specific type than the collection's element type itself.  For example:
 
 ```c#
+// The collection expression can be comprised of `int` values
+// despite the element type being `int?`.
 List<int?> ages = [18, .. Enumerable.Range(21, 10)];
 ```
 
@@ -82,7 +84,9 @@ How does this transparency manifest?  Consider the following scenario:
 Dictionary<object, int?> map1 = ["mads": 21];
 ```
 
-The above expression would certainly be expected to work.  While `"mads"` is a string, and `21` an `int`, the target-typed nature of collection expressions would push the `object` and `int?` types through the constituent key and value expressions to type them properly.  This would also be expected to work in the following:
+The above expression would certainly be expected to work.  While `"mads"` is a string, and `21` an `int`, the target-typed nature of collection expressions would push the `object` and `int?` types through the constituent key and value expressions to type them properly.  We would *not* disallow this, despite `KeyValuePair<string, int>` and `KeyValuePair<object, int?>` being incompatible.
+
+This would also be expected to work in the following:
 
 ```c#
 Dictionary<object?, int?> map2 = [null: null];
