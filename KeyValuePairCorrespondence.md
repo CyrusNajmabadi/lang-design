@@ -152,10 +152,10 @@ The tuple analogy above serves as an analogous system we can look to in order to
 void M<TKey, TValue>(List<(TKey key, TValue value)> list1, List<(TKey key, TValue value)> list2);
 
 // Note: neither kvp1 nor kvp2 are assignable/implicitly convertible to each other.
-(string x, int? y) kvp1 = ("mads", 21);
-(object x, int y) kvp2 = ("cyrus", 22);
+(string x, int? y) tuple1 = ("mads", 21);
+(object x, int y) tuple2 = ("cyrus", 22);
 
-M([kvp1], [kvp2]);
+M([tuple1], [tuple2]);
 ```
 
 This works today and correctly infers `M<object, int?>`.  Given the above, we would then expect the following to work:
