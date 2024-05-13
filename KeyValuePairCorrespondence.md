@@ -129,6 +129,9 @@ Here, the types of the destination flow all the way through (including recursive
 
 ```c#
 (string x, int y) kvp = ("mads", 21);
+
+// (string, int) and (object?, int?) are not compatible at the runtime
+// level.  The language enables this at the C# level.
 List<(object? key, int? value)> map = [kvp];
 ```
 
