@@ -32,7 +32,7 @@ Specifically:
     List<KeyValuePair<string, int>> pairs = ["mads": 21];
     ```
 
-1. And, while the syntax allows for easy specification of the particular key and value, it is optional and the feature works with normal `KeyValuePair` instances:
+1. And, while the syntax allows for easy specification of the particular key and value, usage of that syntax is optional.  Semantically, the feature works equally with normal `KeyValuePair` instances:
 
     ```c#
     KeyValuePair<string, int> kvp = new("mads", 21);
