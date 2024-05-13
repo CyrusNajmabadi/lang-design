@@ -247,7 +247,7 @@ Dictionary<string, int> nameToAge2 = [.. pairs];
 record struct NameAndAge(string Name, int Age);
 Dictionary<string, int> nameToAge3 = [nameToAge1, nameToAge2];
 
-List<NameToAge> pairs = ["mads": 21, "cyrus": 22, "joseph": 23]
+List<NameToAge> pairs = ["mads": 21, "cyrus": 22, "joseph": 23];
 // etc.
 ```
 
