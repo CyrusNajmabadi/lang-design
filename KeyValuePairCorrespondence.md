@@ -253,7 +253,7 @@ List<NameToAge> pairs = ["mads": 21, "cyrus": 22, "joseph": 23];
 
 Open question 2: How far would we like to take this? 
 
-1. Only support KeyValuePair.  2-element tuples and other 2-element deconstructible types have no special meaning in a collection expression.
+1. Only support `KeyValuePair`.  2-element tuples and other 2-element deconstructible types have no special meaning in a collection expression.
 
     ```c#
     Dictionary<string, int> nameToAge = [kvp]; // legal
