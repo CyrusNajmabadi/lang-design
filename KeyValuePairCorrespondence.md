@@ -45,7 +45,7 @@ For example:
     Dictionary<string, int> nameToAge = [.. defaultValues, otherMap.Single(predicate)];
     ```
 
-    Here, being able to 'spread' in another collection (which would normally be some `IEnumerable<KeyValuePair<>>`) is desirable.  Similarly, being able to add individual pairs found through some means, without having to decompose into `k: v` syntax, is equally preferable.
+    Here, being able to 'spread' in another collection (which would normally be some `IEnumerable<KeyValuePair<,>>`) is desirable.  Similarly, being able to add individual pairs found through some means, without having to decompose into `k: v` syntax, is equally preferable.
 
 ## KeyValuePair transparency
 
