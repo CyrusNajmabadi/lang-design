@@ -59,7 +59,7 @@ The existing "Collection Expression" feature has a guiding principle that elemen
 List<int?> ages = [18, .. Enumerable.Range(21, 10)];
 ```
 
-This allowance is implied by the lowered representation, where implicit conversions enable a straightforward scenario to appear straightforward in code without onerous explicit casts:
+This allowance is implied by the lowered representation, where implicit conversions enable a straightforward scenario to appear equally straightforward in code without onerous explicit casts:
 
 ```c#
 var ages = new List<int?>();
