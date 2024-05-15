@@ -174,7 +174,7 @@ void M<TKey, TValue>(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2);
 
 // Note: neither kvp1 nor kvp2 would ever be assignable/implicitly convertible to each other.
 KeyValuePair<string, int?> kvp1 = new("mads", 21);
-KeyValuePair<object, int> kvp2 =("cyrus", 22);
+KeyValuePair<object, int> kvp2 = new("cyrus", 22);
 
 // Would like this to infer `M<object,int?>` as well.
 M([kvp1], [kvp2]);
