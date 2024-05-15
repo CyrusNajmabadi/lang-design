@@ -192,6 +192,8 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on wh
     Dictionary<object, int?> map1 = [kvp.Key: kvp.Value];
 
     Dictionary<object, int?> map1 = [.. nameToAge, otherMap.Single(predicate)]; // illegal.  user must write:
+
+    var temp = otherMap.Single(predicate);
     Dictionary<object, int?> map1 = [.. nameToAge.Select(kvp => new KeyValuePair<object, int?>(kvp.Key, kvp.Value))];
     ```
 
