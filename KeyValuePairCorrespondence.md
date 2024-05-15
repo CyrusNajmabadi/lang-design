@@ -8,7 +8,7 @@ var collection = (ICollection<KeyValuePair<string, int>>)dictionary;
 collection.Add(new KeyValuePair<string, int>("mads", 21));
 ```
 
-What is special about dictionaries, over standard element-based collection expressions, is that the dictionary types have a general view that any particular key will only be contained once, and can be used to then more efficiently map to its associated value over doing a linear scan.
+What is special about dictionaries, over standard element-based collection expressions, is that the dictionary types have a general view that any particular key will only be contained once, and can be used to then more efficiently map to its associated value over doing a linear scan.  Put more intuitively: A "dictionary type" is a "collection type" whose "element type" is some `KeyValuePair<K, V>` and which has an available `V this[K key] { get; }` indexer.
 
 Because of this correspondence, we believe that dictionary expressions should not be considered very special and distinct from existing collection expressions.  Rather, the "dictionary expression" language feature is actually a feature that allows KeyValuePairs to be naturally expressed within collection expressions, along with a sensible and uniform set of rules to allow KeyValuePairs to naturally initialize collection types.  This "natural expression" happens both syntactically and semantically.
 
