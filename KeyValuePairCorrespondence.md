@@ -224,7 +224,7 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on wh
     ```c#
     KeyValuePair<string, int> kvp = new("mads", 21);
     Dictionary<object, int?> map1 = [kvp]; // legal.
-    List<(object, int?)> map1 = [kvp]; // legal.
+    List<KeyValuePair<object, int?>> map1 = [kvp]; // legal.
     KeyValuePair<object, int?> kvp2 = kvp1; // legal.
     ```
 
