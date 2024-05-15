@@ -131,7 +131,7 @@ This already works today.  The language transparently sees through into the tupl
 List<(object? key, int? value)> map = [(null, null)];
 ```
 
-Here, the types of the destination flow all the way through (including recursively through nested tuple types) into the tuple expression in the initializer.  This transparency is not limited to *tuple expressions* either.  All of the following are legal as well, despite non-matching ValueTuple types:
+Here, the types of the destination flow all the way through (including recursively through nested tuple types) into the tuple expression in the initializer.  This transparency is not limited to *tuple expressions* either.  All of the following are legal as well, despite non-matching *ValueTuple types*:
 
 ```c#
 (string x, int y) kvp = ("mads", 21);
