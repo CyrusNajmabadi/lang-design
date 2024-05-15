@@ -203,9 +203,9 @@ The analogous tuple behavior serves as a good *bedrock* for our intuitions on wh
     KeyValuePair<string, int> kvp = new("mads", 21);
     Dictionary<object, int?> map1 = [kvp]; // legal.
 
-    List<(object, int?)> map1 = [kvp]; // not legal.  User must write:
-    List<(object, int?)> map1 = [kvp.Key: kvp.Value]; // or
-    List<(object, int?)> map1 = [new KeyValuePair<object, int?>(kvp.Key, kvp.Value)];
+    List<KeyValuePair<object, int?>> map1 = [kvp]; // not legal.  User must write:
+    List<KeyValuePair<object, int?>> map1 = [kvp.Key: kvp.Value]; // or
+    List<KeyValuePair<object, int?>> map1 = [new KeyValuePair<object, int?>(kvp.Key, kvp.Value)];
     ```
 
 1. Transparent in any collection expression, but no further:
