@@ -176,6 +176,22 @@ extension E for SomeType
 
 TODO: Do an ecosystem check on what percentage of existing extensions could use this simpler form.
 
+TODO: It's possible someone might have an extension where almost all extensions extend a single type, and a small handful do something slightly different (perhaps extending by `this ref`).  Would it be beneficial here to *still* allow the extension members to provide a `for-clause` to override that default for that specific member.  For example:
+
+```c#
+extension StringExtensions for string
+{
+    // Lots of normal extension methods on string ...
+
+    // Override here to extend `string?`
+    public bool MyIsNullOrEmpty() for [NotNullWhen(false)] string? str
+    {
+    }
+}
+```
+
+It seems like this would be nice to support with little drawback.
+
 ## Expansion 2: Optional syntactic components
 
 As above, we want modern extensions to completely subsume classic extension methods.  As such, a modern extension  method must be able to support everything a classic extension method supported.  For example:
