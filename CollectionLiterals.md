@@ -64,13 +64,14 @@ extension E
     static void NonExtensionHelperMethod() { }
     static int Property => ...
 
-    // Existing extensions drop 
     int ExtensionMethod(...) for string x { }
     T GenericExtensionMethod<T, U>(...) for U u { }
 }
 ```
 
-In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for clause` placed within the method header (currently strawmanned as after the parameter list).  This location cleanly supports clauses, being already where the type parameter constraint clauses go.  The extension itself (E) will get emitted exactly as a static class would be that contains extension methods (allowing usage from older compilers and other languages without any updates post this mechanical translation).
+In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for-clause` placed within the method header (currently strawmanned as after the parameter list).  Note: the syntax of a `for-clause` is `for parameter`, allowing things like a parameter name to be specified.  `parameter` is critical in this design to ensure the classic extension method `this` parameter can always cleanly move.
+
+This location cleanly supports clauses, being already where the type parameter constraint clauses go.  The extension itself (E) will get emitted exactly as a static class would be that contains extension methods (allowing usage from older compilers and other languages without any updates post this mechanical translation).
 
 New extension members (beyond instance members) would have to have their metadata form decided on.  Consumption from older compilers and different languages of these new members will be specified at a later point in time.
 
