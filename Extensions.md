@@ -130,6 +130,22 @@ extension Enumerable
 }
 ```
 
+This form supports *non* extension static methods.  For example `Enumerable.Range` would migrate like so:
+
+```c#
+static class Enumerable
+{
+    public static IEnumerable<int> Range(int start, int count) { ... }
+}
+
+
+extension Enumerable
+{
+    // Exact same signature.  No 'for-clause'.
+    public static IEnumerable<int> Range(int start, int count) { ... }
+}
+```
+
 ## Disambiguation
 
 Classic extension methods today can be disambiguated by falling back to static-invocation syntax.  For example, if `x.Count()` is ambiguous, it is possible to switch to some form of `StaticClass.Count(x)` to call the desired method.  A similar facility is needed for modern extension methods.  While the existing method-invocation-translation approach works fine for methods (where the receiver can be remapped to the first argument of the static extension method call), it is ungainly for these other extension forms.
