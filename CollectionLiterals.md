@@ -106,9 +106,10 @@ Classic extension methods today can be disambiguated by falling back to static-i
 As an initial strawman this proposal suggests reusing `cast expression` syntax for disambiguation purposes.  For example:
 
 ```c#
-var v1 = ((Extension)receiver).ExtensionProperty;
-var v2 = ((Extension)receiver)[indexerArg];
-var v3 = (Extension)receiver1 + receiver2;
+var v1 = ((Extension)receiver).ExtensionMethod(); // instead of Extension.ExtensionMethod(receiver)
+var v2 = ((Extension)receiver).ExtensionProperty;
+var v3 = ((Extension)receiver)[indexerArg];
+var v4 = (Extension)receiver1 + receiver2;
 ```
 
 Constructors and static methods would not need any special syntax as the extension can cleanly be referenced as a type where needed.
@@ -129,8 +130,93 @@ var v1 = (Extension)receiver;   // Not legal.  Can't can't have a value of exten
 
 This is exactly the same as the restrictions on static-types *except* with the carve out that you can use the extension in a cast-syntax or new-expression *only* for lookup purposes and nothing else.
 
-## Future expansion
+# Future expansion
 
+The above initial strawman solves several major goals for we want for the extensions space:
+
+1. Supporting a much broader set of extension member types.
+2. Having a clean syntax for extension members that matches the regular syntax form (in other words, an extension proeprty still looks like a property).
+3. Ensuring teams can move safely to modern extensions *especially* in environments where source binary compatibility is non-negotiable.
+
+However, there are parts of its core design that are not ideal which we would like to ensure we can expand on.  These expansions could be released with extensions if time and other resources permit.  Or they could came later and cleanly sit on top of the feature to improve the experience.
+
+These areas are:
+
+## Expansion 1: Syntactic clumsiness and repetition
+
+The initial extension form values source and binary compatibility as core requirements that must be present to ensure easy migration, allowing codebases to avoid both:
+1. bifurcation; where some codebases adopt modern extensions and some do not.
+2. internal inconsistency; where some codebases must keep around old extensions and new extensions, with confusion about the semantics of how each interacts with the other.
+
+Because classic extension methods have very few restrictions, modern extension methods need to be flexible enough to support all the scenarios supported there.
+
+However, many codebases do not need all the flexibility that classic extension methods afforded.  For example, classic extension methods allow disparate extension methods in a single static class to target multiple different types.  For use cases where that isn't required, we forsee a natural extension (pun intended) where one can modern translate extensions like so:
+
+```c#
+extension E
+{
+    // All extension members extend the same thing:
+
+    public void M() for SomeType { ... }
+    public int P for SomeType { get { ... } }
+    public static operator+(...) for SomeType { ... }
+    // etc
+}
+
+// Can be translated to:
+
+extension E for SomeType
+{
+    public void M() { ... }
+    public int P { get { ... } }
+    public static operator+(...) { ... }
+}
+```
+
+TODO: Do an ecosystem check on what percentage of existing extensions could use this simpler form.
+
+## Expansion 2: Optional syntactic components
+
+As above, we want modern extensions to completely subsume classic extension methods.  As such, a modern extension  method must be able to support everything a classic extension method supported.  For example:
+
+```c#
+static class Extensions
+{
+    // Yes, this is legal
+    public static void MakeNonNull([Attr] this ref int? value)
+    {
+        if (value is null)
+            value = 0;
+    }
+}
+```
+
+For this reason, the strawman syntax for this `for clause` is `for parameter`, where `parameter` is the familiar:
+
+```g4
+parameter
+    | attributes? modifiers? type identifier
+    ;
+```
+
+(fortunately, extension methods today don't support a default value for the `this` parameter, so wel don't have to support that).
+
+However, for many extensions no name is really required.  All extension members (except for extension-constructors and extension-static-methods) are conceptually a way to extend `this` with new functionality.  This is so much so the case that we even designed classic extension methods to use the `this` keyword as their designator.  As such, we forsee potentially making the name optional, allowing one to write an extension like so:
+
+```c#
+extension Enumerable
+{
+    public TResult Sum<TSource, TResult, TAccumulator>(Func<TSource, TResult> selector)
+        for IEnumerable<TSource> // no name
+        where TResult : struct, INumber<TResult>
+        where TAccumulator : struct, INumber<TAccumulator>
+    {
+        // Use 'this' in here to represent the value being extended
+    }
+}
+```
+
+This would have to come with some default name chosen by the language for the parameter in metadata.  But that never be needed by anyone calling it from a modern compiler.
 
 
 ## Detailed design
