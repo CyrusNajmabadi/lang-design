@@ -44,6 +44,8 @@ extension E
 
 Modern extensions continue to not allow adding fields or destructors to a type.
 
+## Migration and compatibility
+
 Given an existing static class with extensions, a straightforward *semantically identical* translation to modern extensions is done in the following fashion.
 
 ```c#
