@@ -40,7 +40,7 @@ extension E
 }
 ```
 
-Extensions do not allow adding fields or destructors to a type.
+Modern extensions continue to not allow adding fields or destructors to a type.
 
 Given an existing static class with extensions, a straightforward translation to modern extensions is done in the following fashion.
 
