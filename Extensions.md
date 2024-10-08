@@ -36,8 +36,8 @@ extension E
     // Constructor form:
     public static SomeType<X>() for SomeType<X>
 
-    // *Static* extension method (not possible today).  Called as `T.Assert("", "")`
-    public static bool Assert(string s1, string s2) for T { }
+    // *Static* extension method (not possible today).  Called as `SomeType.Assert("", "")`
+    public static bool Assert(string s1, string s2) for SomeType { }
 
 }
 ```
