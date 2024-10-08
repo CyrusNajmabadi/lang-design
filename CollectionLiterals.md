@@ -1,4 +1,4 @@
-# Collection literals
+# Modern Extensions
 
 * [x] Proposed
 * [ ] Prototype: Not Started
@@ -10,14 +10,67 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 ## Summary
 [summary]: #summary
 
-Collection literals introduce a new terse syntax, `[e1, e2, e3, etc]`, to create common collection values.  Inlining other collections into these values is possible using a spread operator `..` like so: `[e1, ..c2, e2, ..c2]`.  A `[k1: v1, ..d1]` form is also supported for creating dictionaries.
+Modern Extensions introduce a new syntax to produce extension members, greatly expanding on the set of supported members in a clean and cohesive fashion. This new form subsumes C# 3's extension methods, allowing migration to the new form in semantically identical fashion (both at a source and abi level).
 
-Several collection-like types can be created without requiring external BCL support.  These types are:
-* [Array types](https://github.com/dotnet/csharplang/blob/main/spec/types.md#array-types), such as `int[]`.
-* [`Span<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.span-1) and [`ReadOnlySpan<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1).
-* Types that support [collection initializers](https://github.com/dotnet/csharplang/blob/main/spec/expressions.md#collection-initializers), such as [`List<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1) and [`Dictionary<TKey, TValue>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2).
+A rough strawman of the syntax is as follows.  In all cases, the extended type is shown to be generic, to indicate handling that complex case:
 
-Further support is present for collection-like types not covered under the above, such as [`ImmutableArray<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablearray-1), through a new API pattern that can be adopted directly on the type itself or through extension methods.
+Note: the syntax is intentionally a strawman to aid in discussion.  It is not intended to be final form.
+
+```c#
+extension E
+{
+    // Method form, replaces `public static T1 M<X>(this T2 p, ...) { } 
+    public int M<X>(...) for SomeType<X> { }
+
+    // Property form:
+    public int Count<X> for SomeType<X> { get { ... } }
+
+    // Indexer form:
+    public int this<T>[int index] for SomeType<X> { get { ... } }
+
+    // Operator form:
+    public static SomeTypeX<X> operator+ <X>(SomeType<X> s1, SomeType<X> s2) for SomeType<X> { ... }
+
+    // Constructor form:
+    public static SomeType<X> new<X>() for SomeType<X> { ... }
+
+    // *Static* extension method (not possible today).  Called as `T.Assert("", "")`
+    public static bool Assert(string s1, string s2) for T { }
+
+}
+```
+
+Extensions do not allow adding fields or destructors to a type.
+
+Given an existing static class with extensions, a straightforward translation to modern extensions is done in the following fashion.
+
+```c#
+// Existing style
+static class E
+{
+    static TField field;
+    static void NonExtensionHelperMethod() { }
+    static int Property => ...
+
+    static int ExtensionMethod(this string x, ...) { }
+    static T GenericExtensionMethod<T, U>(this U u, ...) { }
+}
+
+// New style
+extension E
+{
+    // Non extensions stay exactly the same:
+    static TField field;
+    static void NonExtensionHelperMethod() { }
+    static int Property => ...
+
+    // Existing extensions drop 
+    int ExtensionMethod(...) for string x { }
+    T GenericExtensionMethod<T, U>(this U u, ...) { }
+
+}
+```
+
 
 ## Motivation
 [motivation]: #motivation
