@@ -103,7 +103,7 @@ In other words, all existing extension methods drop `static` from their signatur
 
 This location cleanly supports clauses, being already where the type parameter constraint clauses go.  The extension itself (E) will get emitted exactly as a static class would be that contains extension methods (allowing usage from older compilers and other languages without any updates post this mechanical translation).
 
-New extension members (beyond instance members) would have to have their metadata form decided on.  Consumption from older compilers and different languages of these new members will be specified at a later point in time.
+New extension members (beyond instance members) will need to have their metadata form decided on.  Consumption from older compilers and different languages of these new members will be specified at a later point in time.
 
 A full example of this translation with a real world complex signature would be:
 
