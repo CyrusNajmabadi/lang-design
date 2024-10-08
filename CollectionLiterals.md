@@ -10,7 +10,7 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 ## Summary
 [summary]: #summary
 
-Modern Extensions introduce a new syntax to produce extension members, greatly expanding on the set of supported members in a clean and cohesive fashion. This new form subsumes C# 3's extension methods, allowing migration to the new form in semantically identical fashion (both at a source and abi level).
+Modern Extensions introduce a new syntax to produce extension members, greatly expanding on the set of supported members (including properties and static methods) in a clean and cohesive fashion. This new form subsumes C# 3's extension methods, allowing migration to the new form in semantically identical fashion (both at a source and abi level).
 
 A rough strawman of the syntax is as follows.  In all cases, the extended type is shown to be generic, to indicate handling that complex case:
 
