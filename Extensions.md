@@ -57,9 +57,11 @@ extension
     | attributes? modifiers? 'extension' identifier { member_declaration* }
     ;
 
-// For method/property/indexer/operator/constructor
+// For method/property/indexer/operator/constructor declarations
 // we are augmenting its syntax to allow type-parameters
-// (if not already allowed) and a for-clause.
+// (if not already allowed) and a for-clause. For example:
+property-declaration
+    | attributes? modifiers identifier type-parameters for-clause accessors;
 ```
 
 Modern extensions continue to not allow adding fields or destructors to a type.
