@@ -49,8 +49,8 @@ Given an existing static class with extensions, a straightforward *semantically 
 static class E
 {
     static TField field;
-    static void NonExtensionHelperMethod() { }
     static int Property => ...
+    static void NonExtensionHelperMethod() { }
 
     static int ExtensionMethod(this string x, ...) { }
     static T GenericExtensionMethod<T, U>(this U u, ...) { }
@@ -59,10 +59,12 @@ static class E
 // New style
 extension E
 {
-    // Non extensions stay exactly the same:
+    // Non extensions stay exactly the same.
     static TField field;
-    static void NonExtensionHelperMethod() { }
     static int Property => ...
+    // Note the lack of a 'for-clause'.  This is a normal static method.
+    // An *extension* static method will have a 'for-clause' on it
+    static void NonExtensionHelperMethod() { }
 
     int ExtensionMethod(...) for string x { }
     T GenericExtensionMethod<T, U>(...) for U u { }
