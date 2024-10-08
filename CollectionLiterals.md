@@ -79,6 +79,7 @@ static class Enumerable
         where TResult : struct, INumber<TResult>
         where TAccumulator : struct, INumber<TAccumulator>
     {
+        // Original body
     }
 }
 
@@ -89,34 +90,10 @@ extension Enumerable
         where TResult : struct, INumber<TResult>
         where TAccumulator : struct, INumber<TAccumulator>
     {
+        // Exactly the same code as original body.
     }
 }
 ```
-
-## Motivation
-[motivation]: #motivation
-
-* Collection-like values are hugely present in programming, algorithms, and especially in the C#/.NET ecosystem.  Nearly all programs will utilize these values to store data and send or receive data from other components. Currently, almost all C# programs must use many different and unfortunately verbose approaches to create instances of such values. Some approaches also have performance drawbacks. Here are some common examples:
-
-    - Arrays, which require either `new Type[]` or `new[]` before the `{ ... }` values.
-
-    - Spans, which may use `stackalloc` and other cumbersome constructs.
-
-    - Collection initializers, which require syntax like `new List<T>` (lacking inference of a possibly verbose `T`) prior to their values, and which can cause multiple reallocations of memory because they use N `.Add` invocations without supplying an initial capacity.
-
-    - Immutable collections, which require syntax like `ImmutableArray.Create(...)` to initialize the values, and which can cause intermediary allocations and data copying. More efficient construction forms (like `ImmutableArray.CreateBuilder`) are unweildy and still produce unavoidable garbage.
-
-* Looking at the surrounding ecosystem, we also find examples everywhere of list creation being more convenient and pleasant to use.  TypeScript, Dart, Swift, Elm, Python, and more opt for a succinct syntax for this purpose, with widespread usage, and to great effect. Cursory investigations have revealed no substantive problems arising in those ecosystems with having these literals built in.
-
-* C# has also added [list patterns](https://github.com/dotnet/csharplang/blob/main/proposals/list-patterns.md) in C# 10.  This pattern allows matching and deconstruction of list-like values using a clean and intuitive syntax.  However, unlike almost all other pattern constructs, this matching/deconstruction syntax lacks the corresponding construction syntax.
-
-* Getting the best performance for constructing each collection type can be tricky. Simple solutions often waste both CPU and memory.  Having a literal form allows for maximum flexibility from the compiler implementation to optimize the literal to produce at least as good a result as a user could provide, but with simple code.  Very often the compiler will be able to do better, and the specification aims to allow the implementation large amounts of leeway in terms of implementation strategy to ensure this.
-
-An inclusive solution is needed for C#. It should meet the vast majority of casse for customers in terms of the collection-like types and values they already have. It should also feel natural in the language and mirror the work done in pattern matching.
-
-This leads to a natural conclusion that the syntax should be like `[e1, e2, e3, e-etc]` or `[e1, ..c2, e2]`, which correspond to the pattern equivalents of `[p1, p2, p3, p-etc]` and `[p1, ..p2, p3]`.
-
-A form for dictionary-like collections is also supported where the elements of the literal are written as `k: v` like `[k1: v1, ..d1]`.  A future pattern form that has a corresponding syntax (like `x is [k1: var v1]`) would be desirable.
 
 ## Detailed design
 [design]: #detailed-design
