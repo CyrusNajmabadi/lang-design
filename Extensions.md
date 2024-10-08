@@ -34,7 +34,7 @@ extension E
     public static SomeTypeX<X> operator+ <X>(SomeType<X> s1, SomeType<X> s2) for SomeType<X> { ... }
 
     // Constructor form:
-    public static SomeType<X>() for SomeType<X>
+    public SomeType<X>() for SomeType<X>
 
     // *Static* extension method (not possible today).  Called as `Assert.Boo("", "")`
     public static bool Boo(string s1, string s2) for Assert { }
