@@ -218,6 +218,32 @@ extension Enumerable
 
 This would have to come with some default name chosen by the language for the parameter in metadata.  But that never be needed by anyone calling it from a modern compiler.
 
+## Expansion 3: Generic extensions.
+
+The initial design allows for extending generic types through the use of generic extension members.  For example:
+
+```c#
+extension ListExtensions<T>
+{
+    public void ForEach<T>(Action<T> act) for List<T> list
+    {
+        foreach (var value in list)
+            act(list);
+    }
+
+    public long LongCount<T> for List<T> list
+    {
+        get
+        {
+            long count = 0;
+            foreach (var value in list)
+                count++;
+
+            return count;
+        }
+    }
+}
+```
 
 ## Detailed design
 [design]: #detailed-design
