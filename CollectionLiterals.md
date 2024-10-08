@@ -66,11 +66,17 @@ extension E
 
     // Existing extensions drop 
     int ExtensionMethod(...) for string x { }
-    T GenericExtensionMethod<T, U>(this U u, ...) { }
-
+    T GenericExtensionMethod<T, U>(...) for U u { }
 }
 ```
 
+In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for clause` placed within the method header (currently strawmanned as after the parameter list).  This location cleanly supports clauses, being already where the type parameter constraint clauses go.  A full example of this with a complex signature would be:
+
+```c#
+extension Enumerable
+{
+}
+```
 
 ## Motivation
 [motivation]: #motivation
