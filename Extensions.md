@@ -44,7 +44,7 @@ extension E
 
 Without specifying the full grammar changes, the intuition is that we are making the following changes:
 
-```g4
+```grammar
 for-clause
     | 'for' parameter
     ;
