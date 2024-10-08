@@ -93,7 +93,7 @@ extension E
     // An *modern static extension method* will have a 'for-clause' on it
     static void NonExtensionHelperMethod() { }
 
-    // Migrated extension members
+    // Migrated instance extension members
     int ExtensionMethod(...) for string x { }
     T GenericExtensionMethod<T, U>(...) for U u { }
 }
