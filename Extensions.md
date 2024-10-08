@@ -34,12 +34,32 @@ extension E
     public static SomeTypeX<X> operator+ <X>(SomeType<X> s1, SomeType<X> s2) for SomeType<X> { ... }
 
     // Constructor form:
-    public static SomeType<X> new<X>() for SomeType<X> { ... }
+    public static SomeType<X>() for SomeType<X>
 
     // *Static* extension method (not possible today).  Called as `T.Assert("", "")`
     public static bool Assert(string s1, string s2) for T { }
 
 }
+```
+
+Without specifying the full grammar changes, the intuition is that we are making the following changes:
+
+```g4
+for-clause
+    | for parameter
+    ;
+
+parameter (no change)
+    | attributes? modifiers? type identifier ...
+    ;
+
+extension
+    | attributes? modifiers? 'extension' identifier { member_declaration* }
+    ;
+
+// For method/property/indexer/operator/constructor
+// we are augmenting its syntax to allow type-parameters
+// (if not already allowed) and a for-clause.
 ```
 
 Modern extensions continue to not allow adding fields or destructors to a type.
