@@ -73,8 +73,23 @@ extension E
 In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for clause` placed within the method header (currently strawmanned as after the parameter list).  This location cleanly supports clauses, being already where the type parameter constraint clauses go.  A full example of this with a complex signature would be:
 
 ```c#
+static class Enumerable
+{
+    public static TResult Sum<TSource, TResult, TAccumulator>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        where TResult : struct, INumber<TResult>
+        where TAccumulator : struct, INumber<TAccumulator>
+    {
+    }
+}
+
 extension Enumerable
 {
+    public TResult Sum<TSource, TResult, TAccumulator>(Func<TSource, TResult> selector)
+        for IEnumerable<TSource> source
+        where TResult : struct, INumber<TResult>
+        where TAccumulator : struct, INumber<TAccumulator>
+    {
+    }
 }
 ```
 
