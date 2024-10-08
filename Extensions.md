@@ -90,7 +90,7 @@ extension E
     static int Property => ...
 
     // Note the lack of a 'for-clause'.  This is a normal static method.
-    // An *extension* static method will have a 'for-clause' on it
+    // An *modern static extension method* will have a 'for-clause' on it
     static void NonExtensionHelperMethod() { }
 
     // Migrated extension members
