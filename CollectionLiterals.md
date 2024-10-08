@@ -62,10 +62,12 @@ extension E
     // Non extensions stay exactly the same.
     static TField field;
     static int Property => ...
+
     // Note the lack of a 'for-clause'.  This is a normal static method.
     // An *extension* static method will have a 'for-clause' on it
     static void NonExtensionHelperMethod() { }
 
+    // Migrated extension members
     int ExtensionMethod(...) for string x { }
     T GenericExtensionMethod<T, U>(...) for U u { }
 }
