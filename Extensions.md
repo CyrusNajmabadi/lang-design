@@ -10,35 +10,42 @@ Many thanks to those who helped with this proposal.  Esp. @jnm2!
 ## Summary
 [summary]: #summary
 
-Modern Extensions introduce a new syntax to produce "extension members", greatly expanding on the set of supported members including properties, static methods and constructors, in a clean and cohesive fashion.
+Modern Extensions introduce a new syntax to produce "extension members", greatly expanding on the set of supported members including properties, static methods, operators and constructors (and more), in a clean and cohesive fashion.
 
-This new form subsumes C# 3's "classic extension methods", allowing migration to the new modern form in semantically *identical* fashion (both at a source and ABI level).
+This new form subsumes C# 3's "classic extension methods", allowing migration to the new modern form in a semantically *identical* fashion (both at a source and ABI level).
+
+Note: this proposal is broken into two parts.  A core kernel needed to initially ship with perfect forward and backwards compatibility with classic extension methods, and then potential enhancements on top of this kernel to make certain common designs more succinct and pleasant.  This does not preclude the feature shipping with any or all of these enhancements at launch.  It simply allows the design to be broken into separable concerns, with a clearer ordering of dependencies.
 
 A rough strawman of the syntax is as follows.  In all cases, the extended type is shown to be generic, to indicate handling that complex case:
 
-Note: the syntax is intentionally a strawman to aid in discussion.  It is not intended to be final form.  That said, it is useful to see any proposed form with all members to ensure that it's generally comprehensible.  A form that is only good for properties, but not for other members, it likely not appropriate.
+Note: the strawman is not intended to be final form.  That said, it is useful to see any proposed form with all members to ensure that it's generally comprehensible.  For example, a form that is only good for properties, but not for other members, it likely not appropriate.
 
 ```c#
 extension E
 {
-    // Method form, replaces `public static int M<X>(SomeType<X> t, ...) { } 
-    public int M<X>(...) for SomeType<X> t { }
+    // Instance method form, replaces `public static int M<X>(this SomeType<X> val, ...) { } 
+    public int M<X>(...) for SomeType<X> val { }
 
     // Property form:
-    public int Count<X> for SomeType<X> { get { ... } }
+    // Auto-properties, or usage of 'field' not allowed as extensions do not have instance state.
+    public int Count<X> for SomeType<X> val { get { ... } }
+
+    // Event form:
+    // Note: would have to be the add/remove form.
+    // field-backed events would not be possible as extensions do not have instance state.
+    public event Action E<X> for SomeType<X> val { add { } remove { } }
 
     // Indexer form:
-    public int this<T>[int index] for SomeType<X> { get { ... } }
+    public int this<T>[int index] for SomeType<X> val { get { ... } }
 
     // Operator form:
     public static SomeTypeX<X> operator+ <X>(SomeType<X> s1, SomeType<X> s2) for SomeType<X> { ... }
 
     // Constructor form:
-    public SomeType<X>() for SomeType<X>
+    public SomeType<X>() for SomeType<X> { }
 
     // *Static* extension method (not possible today).  Called as `Assert.Boo("", "")`
     public static bool Boo(string s1, string s2) for Assert { }
-
 }
 ```
 
@@ -57,18 +64,30 @@ extension
     | attributes? modifiers? 'extension' identifier { member_declaration* }
     ;
 
-// For method/property/indexer/operator/constructor declarations
+// For method/property/indexer/operator/constructor/event declarations
 // we are augmenting its syntax to allow type-parameters
 // (if not already allowed) and a for-clause. For example:
 property-declaration
     | attributes? modifiers identifier type-parameters for-clause property-body;
 ```
 
+The use of `parameter` means all of the following are legal, with the same semantic extension methods have today:
+
+```c#
+for ref Span<T>
+for ref readonly Span<T>
+for in Span<T>
+for scoped ref Span<T>
+for scoped Span<T>
+```
+
 Modern extensions continue to not allow adding fields or destructors to a type.
+
+Open question: Support nested types? This seems reasonable and the same as adding any other static extension member.
 
 ## Migration and compatibility
 
-Given an existing static class with extensions, a straightforward *semantically identical* translation to modern extensions is done in the following fashion.
+Given an existing static class with extensions, a straightforward *semantically identical* (both at the source and binary level) translation to modern extensions is done in the following fashion.
 
 ```c#
 // Existing style
@@ -99,9 +118,11 @@ extension E
 }
 ```
 
-In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for-clause` placed within the method header (currently strawmanned as after the parameter list).  Note: the syntax of a `for-clause` is `for parameter`, allowing things like a parameter name to be specified.  `parameter` is critical in this design to ensure the classic extension method `this` parameter can always cleanly move.
+In other words, all existing extension methods drop `static` from their signature, and move their first parameter to a `for-clause` placed within the method header (currently strawmanned as after the parameter list).  Note: the syntax of a `for-clause` is `'for' parameter`, allowing things like a parameter name to be specified.  `parameter` is critical in this design to ensure the classic extension method `this` parameter can always cleanly move.
 
-This location cleanly supports clauses, being already where the type parameter constraint clauses go.  The extension itself (E) will get emitted exactly as a static class would be that contains extension methods (allowing usage from older compilers and other languages without any updates post this mechanical translation).
+The strawman chooses this location as it already cleanly supports clauses, being where the type parameter constraint clauses already go. 
+
+The extension itself (E) will get emitted exactly as a static class would be that contains extension methods (allowing usage from older compilers and other languages without any updates post this mechanical translation).
 
 New extension members (beyond instance members) will need to have their metadata form decided on.  Consumption from older compilers and different languages of these new members will be specified at a later point in time.
 
@@ -175,7 +196,7 @@ List<Extension> e3;             // Not legal.  Extension is not a type.
 var v1 = (Extension)receiver;   // Not legal.  Can't can't have a value of extension type.
 ```
 
-This is exactly the same as the restrictions on static-types *except* with the carve out that you can use the extension in a cast-syntax or new-expression *only* for lookup purposes and nothing else.
+This is exactly the same as the restrictions on static-types *except* with the carve out that you can use the extension in a cast-syntax or new-expression *only* for lookup purposes, or where a static-class could be used, and nothing else.  Usage in places like `nameof(Extension)` or `typeof(Extension)` would still be fine, as those are places where a static type is allowed.
 
 Note 2. If cast syntax is not desirable here (especially if confuses the idea if extensions are types), we can come up with a new syntactic form.  We are not beholden to the above syntax.
 
@@ -185,21 +206,21 @@ The above initial strawman solves several major goals for we want for the extens
 
 1. Supporting a much broader set of extension member types.
 2. Having a clean syntax for extension members that matches the regular syntax form (in other words, an extension proeprty still looks like a property).
-3. Ensuring teams can move safely to modern extensions *especially* in environments where source binary compatibility is non-negotiable.
+3. Ensuring teams can move safely to modern extensions *especially* in environments where source *and* binary compatibility is non-negotiable.
 
-However, there are parts of its core design that are not ideal which we would like to ensure we can expand on.  These expansions could be released with extensions if time and other resources permit.  Or they could came later and cleanly sit on top of the feature to improve the experience.
+However, there are parts of its core design that are not ideal in the long term which we would like to ensure we can expand on.  These expansions could be released with extensions if time and other resources permit.  Or they could come later and cleanly sit on top of the feature to improve the experience.
 
 These areas are:
 
 ## Expansion 1: Syntactic clumsiness and repetition
 
-The initial extension form values source and binary compatibility as core requirements that must be present to ensure easy migration, allowing codebases to avoid both:
+The initial extension form considers source and binary compatibility as core requirements that must be present to ensure easy migration, allowing codebases to avoid both:
 1. bifurcation; where some codebases adopt modern extensions and some do not.
 2. internal inconsistency; where some codebases must keep around old extensions and new extensions, with confusion about the semantics of how each interacts with the other.
 
-Because classic extension methods have very few restrictions, modern extension methods need to be flexible enough to support all the scenarios supported there.
+Because classic extension methods have very few restrictions, modern extension methods need to be flexible enough to support all the scenarios which they support.
 
-However, many codebases do not need all the flexibility that classic extension methods afforded.  For example, classic extension methods allow disparate extension methods in a single static class to target multiple different types.  For use cases where that isn't required, we forsee a natural extension (pun intended) where one can modern translate extensions like so:
+However, many codebases do not need all the flexibility that classic extension methods afforded.  For example, classic extension methods allow disparate extension methods in a single static class to target multiple different types.  For use cases where that isn't required, we forsee a natural extension (pun intended) where one can translate a modern extension like so:
 
 ```c#
 extension E
@@ -227,7 +248,7 @@ TODO: Do an ecosystem check on what percentage of existing extensions could use 
 TODO: It's possible someone might have an extension where almost all extensions extend a single type, and a small handful do something slightly different (perhaps extending by `this ref`).  Would it be beneficial here to *still* allow the extension members to provide a `for-clause` to override that default for that specific member.  For example:
 
 ```c#
-extension StringExtensions for string
+extension StringExtensions for string str
 {
     // Lots of normal extension methods on string ...
 
@@ -256,15 +277,20 @@ static class Extensions
 }
 ```
 
-For this reason, the strawman syntax for this `for clause` is `for parameter`, where `parameter` is the familiar:
+For this reason, the strawman syntax is:
 
 ```g4
-parameter
+for-clause
+    | 'for' parameter`
+    ;
+
+parameter (unchanged)
     | attributes? modifiers? type identifier
+    | attributes? modifiers? type identifier '=' expression
     ;
 ```
 
-(fortunately, extension methods today don't support a default value for the `this` parameter, so wel don't have to support that).
+Fortunately, extension methods today don't support a default value for the `this` parameter, so we don't have to support migrating the second `= value` form forward, and we would consider writing a default value in a `for-clause` to be an error.
 
 However, for many extensions no name is really required.  All extension members (except for extension-constructors and extension-static-methods) are conceptually a way to extend `this` with new functionality.  This is so much so the case that we even designed classic extension methods to use the `this` keyword as their designator.  As such, we forsee potentially making the name optional, allowing one to write an extension like so:
 
