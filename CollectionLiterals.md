@@ -120,7 +120,7 @@ var v3 = new Extension(...); // Makes instance of the actual extended type.
 var v4 = Extension.StaticExtensionMethod(...);
 ```
 
-Note: while the cast syntax traditionally casts or converts a value, that would not be the case for its use here.  It would only be used as a lookup mechanism to indicate which extension gets priority.  Importantly, even with this syntax, extensions themselves are not types.  For example:
+Note 1: while the cast syntax traditionally casts or converts a value, that would not be the case for its use here.  It would only be used as a lookup mechanism to indicate which extension gets priority.  Importantly, even with this syntax, extensions themselves are not types.  For example:
 
 ```c#
 Extension e1;                   // Not legal.  Extension is not a type.
@@ -130,6 +130,8 @@ var v1 = (Extension)receiver;   // Not legal.  Can't can't have a value of exten
 ```
 
 This is exactly the same as the restrictions on static-types *except* with the carve out that you can use the extension in a cast-syntax or new-expression *only* for lookup purposes and nothing else.
+
+Note 2. If cast syntax is not desirable here (especially if confuses the idea if extensions are types), we can come up with a new syntactic form.  We are not beholden to the above syntax.
 
 # Future expansion
 
