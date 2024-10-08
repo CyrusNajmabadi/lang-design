@@ -46,7 +46,7 @@ Without specifying the full grammar changes, the intuition is that we are making
 
 ```g4
 for-clause
-    | for parameter
+    | 'for' parameter
     ;
 
 parameter (no change)
