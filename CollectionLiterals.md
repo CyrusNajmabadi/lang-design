@@ -223,15 +223,15 @@ This would have to come with some default name chosen by the language for the pa
 The initial design allows for extending generic types through the use of generic extension members.  For example:
 
 ```c#
-extension ListExtensions<T>
+extension IListExtensions
 {
-    public void ForEach<T>(Action<T> act) for List<T> list
+    public void ForEach<T>(Action<T> act) for IList<T> list
     {
         foreach (var value in list)
             act(list);
     }
 
-    public long LongCount<T> for List<T> list
+    public long LongCount<T> for IList<T> list
     {
         get
         {
@@ -244,6 +244,33 @@ extension ListExtensions<T>
     }
 }
 ```
+
+Ideally with the optional first expansion we could 'lift' `List<T>` up to `extension IListExtensions`.  However, this doesn't work as we need to define the type parameter it references.  This naturally leads to the following idea:
+
+```c#
+extension IListExtensions<T> for IList<T> list
+{
+    public void ForEach(Action<T> act) { ... }
+    public long LongCount { ... }
+}
+```
+
+This has a few new, but solvable, design challenges.  For example, say one has the code:
+
+```c#
+List<int> ints = ...;
+var v = ints.ForEach(i => Console.WriteLine(i));
+```
+
+This naturally raises the question of how does this extension get picked for this particular receiver, and how does its type parameter get instantiated to the `int` type.
+
+Conceptually (and trying to keep somewhat in line with classic extension methods), we really want to think of the 'receiver' as an 'argument' to some method where normal type inference occurs.  Morally, we could think of there being a `IListExtension<T> Infer<T>(IList<T> list)` function whose shape is determined by the extension and its type-parameters and the extended receiver parameter.
+
+Then, when trying to determine if an extension applies to a receiver, it would be akin to calling that function with the receiver and seeing if inference works.  In the above example that would mean performing type inference on `Infer(ints)` seeing that `T` then bound to `int`, which then gives you back `IListExtensions<int>`.  At that point, lookup would then find and perform overload resolution on `ForEach(Action<int>)` with the lambda parameter.
+
+This approach does fundamentally take expand on the initial extension-members approach as now calling extensions is done in two-phases.  An initial phase to determine and infer extension type parameters based on the receiver, and  a second phase to determine and perform overload resolution on the member.
+
+We believe this is very powerful and beneficial.  But there are deep design questions here which may cause this to be scheduled after the core extension members work happens.
 
 ## Detailed design
 [design]: #detailed-design
