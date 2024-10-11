@@ -19,6 +19,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 {
     // Until we got iterator/yield support we would write the extensions as:
 
+    // Similar to Enumerable.Where.  But gives a stack-based enumerator.
     public WhereEnumerable Where(Func<TElement, bool> test)
         => new(ref this, test);
 
