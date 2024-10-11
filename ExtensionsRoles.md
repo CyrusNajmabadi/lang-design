@@ -153,21 +153,9 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 
 //
 
-    public iterator(WhereEnumerable, TElement) Where(Func<TElement, bool> test)
+    public iterator(WhereEnumerable, TElement) Where(ref RefStructFunc<TElement, bool> test)
     {
         foreach (var value in this)
             if (test(value))
-                yield return value;
-    }
-
-    // and
-
-    public iterator(WhereEnumerable, TElement, TArgs) Where<TArgs>(
-        ref LightweightFunc<TElement, TArgs, bool> test,
-        ref TArgs args)
-        where TArgs : struct
-    {
-        foreach (var value in this)
-            if (test(value, ref args))
                 yield return value;
     }
