@@ -1,13 +1,14 @@
 ```c#
 # No alloc iterators
 
-// Goal: one can write, and have that be non-allocating (for the enumerables/enumerators).
-// Making the delegates non-allocating happens if they do not capture.  An extension to avoid
-// allocs even if they capture is shown at the end.
+// Goal: one can write, and have the following be non-allocating (for the enumerables/enumerators).
 foreach (var string in someSpan.Where(v => v < 21).Select(v => v.ToString())
 {
 
 }
+
+// Stretch goal: make the delegates non-allocating even if they capture.  An extension to make this possible
+// is shown at the end.
 
 // How?
 
