@@ -94,27 +94,37 @@ extension Enumerable
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector);
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<IGrouping<TKey, TSource>> (IEnumerable<TSource> source).GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector);
-    
+
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
+
     public IEnumerable<(int Index, TSource Item)> (IEnumerable<TSource> source).Index<TSource>();
+
     public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second);
     public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer);
+
     public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector);
     public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
+
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
+
     public TSource (IEnumerable<TSource> source).Last<TSource>(Func<TSource, bool> predicate);
     public TSource (IEnumerable<TSource> source).Last<TSource>();
+
     public TSource (IEnumerable<TSource> source).LastOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue);
     public TSource (IEnumerable<TSource> source).LastOrDefault<TSource>(TSource defaultValue);
+
     public TSource? (IEnumerable<TSource> source).LastOrDefault<TSource>();
     public TSource? (IEnumerable<TSource> source).LastOrDefault<TSource>(Func<TSource, bool> predicate);
+
     public long (IEnumerable<TSource> source).LongCount<TSource>();
     public long (IEnumerable<TSource> source).LongCount<TSource>(Func<TSource, bool> predicate);
+
     public decimal (IEnumerable<TSource> source).Max<TSource>(Func<TSource, decimal> selector);
     public double (IEnumerable<TSource> source).Max<TSource>(Func<TSource, double> selector);
     public TResult? (IEnumerable<TSource> source).Max<TSource, TResult>(Func<TSource, TResult> selector);
+
     public int (IEnumerable<TSource> source).Max<TSource>(Func<TSource, int> selector);
     public long (IEnumerable<TSource> source).Max<TSource>(Func<TSource, long> selector);
     public int? (IEnumerable<TSource> source).Max<TSource>(Func<TSource, int?> selector);
@@ -135,8 +145,10 @@ extension Enumerable
     public long (IEnumerable<long> source).Max();
     public decimal (IEnumerable<decimal> source).Max();
     public double (IEnumerable<double> source).Max();
+
     public TSource? (IEnumerable<TSource> source).MaxBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
     public TSource? (IEnumerable<TSource> source).MaxBy<TSource, TKey>(Func<TSource, TKey> keySelector);
+
     public double (IEnumerable<TSource> source).Min<TSource>(Func<TSource, double> selector);
     public int (IEnumerable<TSource> source).Min<TSource>(Func<TSource, int> selector);
     public long (IEnumerable<TSource> source).Min<TSource>(Func<TSource, long> selector);
@@ -160,11 +172,15 @@ extension Enumerable
     public decimal? (IEnumerable<decimal?> source).Min();
     public double (IEnumerable<double> source).Min();
     public int (IEnumerable<int> source).Min();
+
     public TSource? (IEnumerable<TSource> source).MinBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
     public TSource? (IEnumerable<TSource> source).MinBy<TSource, TKey>(Func<TSource, TKey> keySelector);
+
     public IEnumerable<TResult> (IEnumerable source).OfType<TResult>();
+
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>(IComparer<T>? comparer);
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>();
+    
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderBy<TSource, TKey>(Func<TSource, TKey> keySelector);
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderByDescending<TSource, TKey>(Func<TSource, TKey> keySelector);
