@@ -40,29 +40,29 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
             // SelectEnumerator.MoveNext as well.  If that's the case, we wouldn't need specialized types.
             return new(ref this, test, selector);
         }
-    }
 
-    public ref struct WhereEnumerator(ref TEnumerator enumerator, Func<TElement, bool> test) : IEnumerator<TElement>
-    {
-        // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
-        private ref TEnumerator _enumerator = ref enumerator;
-
-        public TElement? Current { get; private set }
-
-        public bool MoveNext()
+        public ref struct WhereEnumerator(ref TEnumerator enumerator, Func<TElement, bool> test) : IEnumerator<TElement>
         {
-            while (_enumerator.MoveNext())
-            {
-                var current = _enumerator.Current;
-                if (test(_enumerator.Current))
-                {
-                    this.Current = current;
-                    return true;
-                }
-            }
+            // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
+            private ref TEnumerator _enumerator = ref enumerator;
 
-            this.Current = default;
-            return false;
+            public TElement? Current { get; private set }
+
+            public bool MoveNext()
+            {
+                while (_enumerator.MoveNext())
+                {
+                    var current = _enumerator.Current;
+                    if (test(_enumerator.Current))
+                    {
+                        this.Current = current;
+                        return true;
+                    }
+                }
+
+                this.Current = default;
+                return false;
+            }
         }
     }
 
@@ -73,25 +73,25 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 
         public SelectEnumerator GetEnumerator()
             => new(ref _enumerable.GetEnumerator(), selector);
-    }
 
-    public ref struct SelectEnumerator<TResult>(ref TEnumerator enumerator, Func<TElement, TResult> selector) : IEnumerator<REsult>
-    {
-        // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
-        private ref TEnumerator _enumerator = ref enumerator;
-
-        public TElement? Current { get; private set }
-
-        public bool MoveNext()
+        public ref struct SelectEnumerator<TResult>(ref TEnumerator enumerator, Func<TElement, TResult> selector) : IEnumerator<REsult>
         {
-            if (_enumerator.MoveNext())
-            {
-                this.Current = selector(_enumerator.Current);
-                return true;
-            }
+            // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
+            private ref TEnumerator _enumerator = ref enumerator;
 
-            this.Current = default;
-            return false;
+            public TElement? Current { get; private set }
+
+            public bool MoveNext()
+            {
+                if (_enumerator.MoveNext())
+                {
+                    this.Current = selector(_enumerator.Current);
+                    return true;
+                }
+
+                this.Current = default;
+                return false;
+            }
         }
     }
 }
