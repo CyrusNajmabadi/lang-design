@@ -68,7 +68,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     }
 
     // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
-    public SelectEnumerable<TResult> Select(Func<TElement, TResult> selector)
+    public SelectEnumerable<TResult> Select<TResult>(Func<TElement, TResult> selector)
         => new(ref this, selector);
 
     public ref struct SelectEnumerable<TResult>(ref TEnumerable enumerable, Func<TElement, TResult> selector) : IEnumerable2<TResult, TSelectEnumerator<TResult>> {
@@ -100,10 +100,38 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // Ideally, one could write the following with iterators/yield:
 
     // Similar to Enumerable.Where.  But gives a stack-based enumerable which gives a stack based enumerator.
-    public ref struct WhereEnumerable Where(Func<TElement, bool> test) where WhereEnumerable : IEnumerable2<TElement>
+    public ref struct WhereEnumerable Where(Func<TElement, bool> test)
     {
         foreach (var value in this)
             if (test(value))
                 yield return this;
+    }
+
+    // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
+    public ref struct SelectEnumerable<TResult> Select<TResult>(Func<TElement, bool> test)
+    {
+        foreach (var value in this)
+            yield return test(value);
+    }
+
+    // However, these might need *major* magic.  In particular, the method body needs to be analyzed to know what the
+    // element type is that is being yielded.  The enumerable type TNewEnumerable then needs to be emitted in a way that it then
+    // implements `IEnumerable2<YieldedType, TNewEnumerable.Enumerator>`.  Would be amazing if we could have this though :)
+    //
+    // Note: the outer type only needs to be specified if we think about the nominal nature of it as part of your ABI
+    // that someone should be able to refer to directly.  We could take a page from rust and do this more like the below:
+    //
+    // In this case we're saying you get *some* IEnumerable2, but you don't really get to know or speak of the name.
+    public trait IEnumerable2<TElement, TEnumerator> Where(Func<TElement, bool> test)
+    {
+        foreach (var value in this)
+            if (test(value))
+                yield return this;
+    }
+
+    public trait IEnumerable2<TResult, TEnumerator> Select<TResult>(Func<TElement, bool> test) 
+    {
+        foreach (var value in this)
+            yield return test(value);
     }
 }
