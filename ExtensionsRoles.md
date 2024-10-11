@@ -153,7 +153,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 
 //
 
-    public iterator(WhereEnumerable, TElement) Where(ref RefStructFunc<TElement, bool> test)
+    public iterator(WhereEnumerable, TElement) Where(ref RefStructFunc test) where RefStructFunc : IFunc<TElement, bool>
     {
         foreach (var value in this)
             if (test(value))
