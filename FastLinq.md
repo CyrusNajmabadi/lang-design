@@ -162,7 +162,9 @@ extension EnumerableExtensions<TEnumerable, TElement, TEnumerator> where TEnumer
 
 // What if we want no alloc at all (even delegates).  Can the runtime do that automatically with lambdas?  It knows the 
 // .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
-// can become stack-based.  Otherwise, we'd need something like:
+// can become stack-based.  This would be the greatest part.
+
+// Otherwise, we'd need something like:
 
 // A new ref-struct-delegate concept.  This would be virtually the same as a normal delegate (a pointer to an object and a method),
 // *except* that due to it being a ref-struct, could be a no-alloc ref struct on the stack pointing back to the method pointer, and
