@@ -157,7 +157,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     }
 }
 
-## No allocs at all?
+# No allocs at all?
 
 // What if we want no alloc at all (even delegates).  Can the runtime do that automatically with lambdas?  It knows the 
 // .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
