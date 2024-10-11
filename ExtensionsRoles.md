@@ -97,10 +97,13 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         }
     }
 
-    // Ideally, one could write the following with iterators/yield:
+    // Ideally, one could write above with iterators/yield.  A major decision would have to be made if you had a guaranteed
+    // nominal type as part of your abi or not.  If a nominal type was required, the following strawman would be possible:
 
     // Similar to Enumerable.Where.  But gives a stack-based enumerable which gives a stack based enumerator.
-    public ref struct WhereEnumerable Where(Func<TElement, bool> test)
+    // A `ref struct WhereEnumerable : IEnumerable<TElement, WhereEnumerable.Enumerator> { ref struct Enumerator { ... } ... }`
+    // would be synthesized
+    public iterator(WhereEnumerable, TElement) Where(Func<TElement, bool> test)
     {
         foreach (var value in this)
             if (test(value))
@@ -108,29 +111,26 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     }
 
     // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
-    public ref struct SelectEnumerable<TResult> Select<TResult>(Func<TElement, bool> test)
+    // A `ref struct SelectEnumerable<TResult> : IEnumerable<TResult, SelectEnumerable<TResult>.Enumerator> { ref struct Enumerator { ... } ... }`
+    // would be synthesized
+    public iterator(SelectEnumerable<TResult>, TResult) Select<TResult>(Func<TElement, bool> test)
     {
         foreach (var value in this)
             yield return test(value);
     }
 
-    // However, these might need *major* magic.  In particular, the two method bodies above would needs to be analyzed to know
-    // what the element type is that is being yielded.  The enumerable type specified in `ref struct TNewEnumerable then needs
-    // to be emitted in a way that it then implements `IEnumerable2<YieldedType, TNewEnumerable.Enumerator>`.  Would be amazing
-    // if we could have this though :)
-    //
-    // Note: the outer type only needs to be specified if we think about the nominal nature of it as part of your ABI
-    // that someone should be able to refer to directly.  We could take a page from rust and do this more like the below:
-    //
-    // In this case we're saying you get *some* IEnumerable2, but you don't really get to know or speak of the name.
-    public trait IEnumerable2<TElement, TEnumerator> Where(Func<TElement, bool> test)
+    // If nominal abi guarantees are not necessary then we could simplify to:
+    // This would give you an unnamed struct you could use in places like var/foreach.  But which you could not name or put in your own abi.
+    // In particular, the name of this could change, which could lead to binary breaks.
+
+    public trait iterator(TElement) Where(Func<TElement, bool> test)
     {
         foreach (var value in this)
             if (test(value))
                 yield return this;
     }
 
-    public trait IEnumerable2<TResult, TEnumerator> Select<TResult>(Func<TElement, bool> test) 
+    public trait iterator(TResult) Select<TResult>(Func<TElement, bool> test) 
     {
         foreach (var value in this)
             yield return test(value);
