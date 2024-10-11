@@ -31,6 +31,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         public WhereEnumerator GetEnumerator()
             => new(ref _enumerable.GetEnumerator(), test);
 
+        // Possible, but hopefully not necessary.
         public WhereSelectEnumerator Select<TResult>(Func<TElement, TResult> selector)
         {
             // Can return dedicated special type without indirection.  Open question if whether that is necessary.
