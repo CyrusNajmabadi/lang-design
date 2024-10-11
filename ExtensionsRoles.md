@@ -74,7 +74,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         public SelectEnumerator GetEnumerator()
             => new(ref _enumerable.GetEnumerator(), selector);
 
-        public ref struct SelectEnumerator(ref TEnumerator enumerator, Func<TElement, TResult> selector) : IEnumerator<REsult>
+        public ref struct SelectEnumerator(ref TEnumerator enumerator, Func<TElement, TResult> selector) : IEnumerator<TResult>
         {
             // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
             private ref TEnumerator _enumerator = ref enumerator;
