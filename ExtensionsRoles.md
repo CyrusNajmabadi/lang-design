@@ -153,10 +153,9 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         foreach (var value in this)
             yield return test(value);
     }
-
-    // Perhaps best is: `iterator<ElementType, OptionalName>`
-    // If abi is important, you must provide the OptionalName.  If not, you can leave it off.
 }
+
+## No alloc at all
 
 // What if we want no alloc at all (even delegates).  Can the runtime do that automatically with lambdas?  It knows the 
 // .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
