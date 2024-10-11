@@ -14,9 +14,9 @@ extension Enumerable
     public bool (IEnumerable<TSource> source).Any<TSource>()
     public bool (IEnumerable<TSource> source).Any<TSource>(Func<TSource, bool> predicate)
 
-    public IEnumerable<TSource> Append<TSource>(TSource element) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Append<TSource>(TSource element)
 
-    public IEnumerable<TSource> AsEnumerable<TSource>() for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).AsEnumerable<TSource>()
 
     public float? (IEnumerable<TSource> source).Average<TSource>(Func<TSource, float?> selector)
     public double? (IEnumerable<TSource> source).Average<TSource>(Func<TSource, long?> selector)
@@ -43,7 +43,7 @@ extension Enumerable
 
     public IEnumerable<TSource[]> Chunk<TSource>(int size) for IEnumerable<TSource> source;
 
-    public IEnumerable<TSource> Concat<TSource>(IEnumerable<TSource> second) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Concat<TSource>(IEnumerable<TSource> second)
 
     public bool (IEnumerable<TSource> source).Contains<TSource>(TSource value)
     public bool (IEnumerable<TSource> source).Contains<TSource>(TSource value, IEqualityComparer<TSource>? comparer)
@@ -54,13 +54,13 @@ extension Enumerable
     public IEnumerable<KeyValuePair<TKey, int>> CountBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? keyComparer = null) for IEnumerable<TSource> source where TKey : notnull;
 
     public IEnumerable<TSource?> DefaultIfEmpty<TSource>() for IEnumerable<TSource> source;
-    public IEnumerable<TSource> DefaultIfEmpty<TSource>(TSource defaultValue) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).DefaultIfEmpty<TSource>(TSource defaultValue)
 
-    public IEnumerable<TSource> Distinct<TSource>() for IEnumerable<TSource> source;
-    public IEnumerable<TSource> Distinct<TSource>(IEqualityComparer<TSource>? comparer) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Distinct<TSource>()
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Distinct<TSource>(IEqualityComparer<TSource>? comparer)
 
-    public IEnumerable<TSource> DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector) for IEnumerable<TSource> source;
-    public IEnumerable<TSource> DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector)
+    public IEnumerable<TSource> (IEnumerable<TSource> source).DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
 
     public TSource (IEnumerable<TSource> source).ElementAt<TSource>(Index index)
     public TSource (IEnumerable<TSource> source).ElementAt<TSource>(int index)
@@ -70,11 +70,11 @@ extension Enumerable
 
     public IEnumerable<TResult> Empty<TResult>();
 
-    public IEnumerable<TSource> Except<TSource>(IEnumerable<TSource> second) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> Except<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Except<TSource>(IEnumerable<TSource> second)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Except<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer)
 
-    public IEnumerable<TSource> ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
 
     public TSource (IEnumerable<TSource> source).First<TSource>(Func<TSource, bool> predicate)
     public TSource (IEnumerable<TSource> source).First<TSource>()
@@ -96,10 +96,10 @@ extension Enumerable
     public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector) for IEnumerable<TOuter> outer;
     public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TOuter> outer;
     public IEnumerable<(int Index, TSource Item)> Index<TSource>() for IEnumerable<TSource> source;
-    public IEnumerable<TSource> Intersect<TSource>(IEnumerable<TSource> second) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> Intersect<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
 
     public IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) for IEnumerable<TOuter> outer;
     public IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TOuter> outer;
@@ -182,13 +182,13 @@ extension Enumerable
     public IOrderedEnumerable<T> OrderDescending<T>(IComparer<T>? comparer) for IEnumerable<T> source;
     public IOrderedEnumerable<T> OrderDescending<T>() for IEnumerable<T> source;
 
-    public IEnumerable<TSource> Prepend<TSource>(TSource element) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Prepend<TSource>(TSource element)
 
     public static IEnumerable<int> Range(int start, int count);
 
     public IEnumerable<TResult> Repeat<TResult>(TResult element, int count);
 
-    public IEnumerable<TSource> Reverse<TSource>() for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Reverse<TSource>()
 
     public IEnumerable<TResult> Select<TSource, TResult>(Func<TSource, int, TResult> selector) for IEnumerable<TSource> source;
     public IEnumerable<TResult> Select<TSource, TResult>(Func<TSource, TResult> selector) for IEnumerable<TSource> source;
@@ -209,12 +209,12 @@ extension Enumerable
     public TSource? (IEnumerable<TSource> source).SingleOrDefault<TSource>(Func<TSource, bool> predicate)
     public TSource (IEnumerable<TSource> source).SingleOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue)
 
-    public IEnumerable<TSource> Skip<TSource>(int count) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Skip<TSource>(int count)
 
-    public IEnumerable<TSource> SkipLast<TSource>(int count) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).SkipLast<TSource>(int count)
 
-    public IEnumerable<TSource> SkipWhile<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
-    public IEnumerable<TSource> SkipWhile<TSource>(Func<TSource, int, bool> predicate) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).SkipWhile<TSource>(Func<TSource, bool> predicate)
+    public IEnumerable<TSource> (IEnumerable<TSource> source).SkipWhile<TSource>(Func<TSource, int, bool> predicate)
 
     public float (IEnumerable<TSource> source).Sum<TSource>(Func<TSource, float> selector)
     public int (IEnumerable<TSource> source).Sum<TSource>(Func<TSource, int> selector)
@@ -237,13 +237,13 @@ extension Enumerable
     public decimal (IEnumerable<decimal> source).Sum()
     public float (IEnumerable<float> source).Sum()
 
-    public IEnumerable<TSource> Take<TSource>(Range range) for IEnumerable<TSource> source;
-    public IEnumerable<TSource> Take<TSource>(int count) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Take<TSource>(Range range)
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Take<TSource>(int count)
 
-    public IEnumerable<TSource> TakeLast<TSource>(int count) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).TakeLast<TSource>(int count)
 
-    public IEnumerable<TSource> TakeWhile<TSource>(Func<TSource, int, bool> predicate) for IEnumerable<TSource> source;
-    public IEnumerable<TSource> TakeWhile<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).TakeWhile<TSource>(Func<TSource, int, bool> predicate)
+    public IEnumerable<TSource> (IEnumerable<TSource> source).TakeWhile<TSource>(Func<TSource, bool> predicate)
 
     public IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector);
     public IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
@@ -275,14 +275,14 @@ extension Enumerable
 
     public bool (IEnumerable<TSource> source).TryGetNonEnumeratedCount<TSource>(out int count)
     
-    public IEnumerable<TSource> Union<TSource>(IEnumerable<TSource> second) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> Union<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Union<TSource>(IEnumerable<TSource> second)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).Union<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer)
 
-    public IEnumerable<TSource> UnionBy<TSource, TKey>(IEnumerable<TSource> second, Func<TSource, TKey> keySelector) for IEnumerable<TSource> first;
-    public IEnumerable<TSource> UnionBy<TSource, TKey>(IEnumerable<TSource> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> first;
+    public IEnumerable<TSource> (IEnumerable<TSource> first).UnionBy<TSource, TKey>(IEnumerable<TSource> second, Func<TSource, TKey> keySelector)
+    public IEnumerable<TSource> (IEnumerable<TSource> first).UnionBy<TSource, TKey>(IEnumerable<TSource> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
 
-    public IEnumerable<TSource> Where<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
-    public IEnumerable<TSource> Where<TSource>(Func<TSource, int, bool> predicate) for IEnumerable<TSource> source;
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Where<TSource>(Func<TSource, bool> predicate)
+    public IEnumerable<TSource> (IEnumerable<TSource> source).Where<TSource>(Func<TSource, int, bool> predicate)
 
     public IEnumerable<(TFirst First, TSecond Second, TThird Third)> Zip<TFirst, TSecond, TThird>(IEnumerable<TSecond> second, IEnumerable<TThird> third) for IEnumerable<TFirst> first;
     public IEnumerable<(TFirst First, TSecond Second)> Zip<TFirst, TSecond>(IEnumerable<TSecond> second) for IEnumerable<TFirst> first;
