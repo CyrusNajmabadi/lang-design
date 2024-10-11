@@ -136,7 +136,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // public iterator<TElement> as WhereEnumerable Where(...)
     // public iterator<TElement> Where(...) named WhereEnumerable
 
-    // If nominal abi guarantees are not necessary then we could simplify to `iterator(element_type)`:
+    // If nominal abi guarantees are not necessary then we could simplify to `iterator(element_type, *optional*_typename)`:
     //
     // This would give you an unnamed struct you could use in places like var/foreach.  But which you could not name or put in your own abi.
     // In particular, the name of this could change, which could lead to binary breaks.
