@@ -38,7 +38,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
             // just going to be fast enough as there will be no virtual calls.  In other words: It could read/write through 
             // .Current on the SelectEnumerator all the way through to this WhereEnumerator, and perhaps it could inline 
             // SelectEnumerator.MoveNext as well.  If that's the case, we wouldn't need specialized types.
-            return new(ref this, test, selector);
+            return new WhereSelectEnumerator(ref this, test, selector);
         }
 
         public ref struct WhereEnumerator(ref TEnumerator enumerator, Func<TElement, bool> test) : IEnumerator<TElement>
