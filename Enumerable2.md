@@ -195,26 +195,35 @@ extension Enumerable
     public static IEnumerable<int> Range(int start, int count);
 
     public IEnumerable<TResult> Repeat<TResult>(TResult element, int count);
-    
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).Reverse<TSource>();
+
     public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, int, TResult> selector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, TResult> selector);
+
     public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TCollection, TResult>(Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TResult>(Func<TSource, int, IEnumerable<TResult>> selector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TResult>(Func<TSource, IEnumerable<TResult>> selector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TCollection, TResult>(Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector);
+
     public bool (IEnumerable<TSource> first).SequenceEqual<TSource>(IEnumerable<TSource> second);
     public bool (IEnumerable<TSource> first).SequenceEqual<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer);
+
     public TSource (IEnumerable<TSource> source).Single<TSource>();
     public TSource (IEnumerable<TSource> source).Single<TSource>(Func<TSource, bool> predicate);
+
     public TSource? (IEnumerable<TSource> source).SingleOrDefault<TSource>();
     public TSource (IEnumerable<TSource> source).SingleOrDefault<TSource>(TSource defaultValue);
     public TSource? (IEnumerable<TSource> source).SingleOrDefault<TSource>(Func<TSource, bool> predicate);
     public TSource (IEnumerable<TSource> source).SingleOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).Skip<TSource>(int count);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).SkipLast<TSource>(int count);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).SkipWhile<TSource>(Func<TSource, bool> predicate);
     public IEnumerable<TSource> (IEnumerable<TSource> source).SkipWhile<TSource>(Func<TSource, int, bool> predicate);
+    
     public float (IEnumerable<TSource> source).Sum<TSource>(Func<TSource, float> selector);
     public int (IEnumerable<TSource> source).Sum<TSource>(Func<TSource, int> selector);
     public long (IEnumerable<TSource> source).Sum<TSource>(Func<TSource, long> selector);
