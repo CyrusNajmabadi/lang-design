@@ -105,7 +105,8 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // Ideally, one could write above with iterators/yield.  A major decision would have to be made if you had a guaranteed
     // nominal type as part of your abi or not.  If a nominal type was required, the following strawman would be possible:
 
-    // Similar to Enumerable.Where.  But gives a stack-based enumerable which gives a stack based enumerator.
+    // `iterator(element_type, synthesized_type_name)`. 
+    //
     // A `ref struct WhereEnumerable : IEnumerable<TElement, WhereEnumerable.Enumerator> { ref struct Enumerator { ... } ... }`
     // would be synthesized
     public iterator(TElement, WhereEnumerable) Where(Func<TElement, bool> test)
@@ -115,17 +116,18 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
                 yield return value;
     }
 
-    // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
     // A `ref struct SelectEnumerable<TResult> : IEnumerable<TResult, SelectEnumerable<TResult>.Enumerator> { ref struct Enumerator { ... } ... }`
     // would be synthesized
-    public iterator(SelectEnumerable<TResult>, TResult) Select<TResult>(Func<TElement, bool> test)
+    public iterator(TResult, SelectEnumerable<TResult>) Select<TResult>(Func<TElement, bool> test)
     {
         foreach (var value in this)
             yield return test(value);
     }
 
-    // Other strawmen might be: `struct iterator(WhereEnumerable, TElement)` or `ref struct iterator(WhereEnumerable, TElement)`
-    // Whatever we create here needs to indicate at least the outer type name (the inner type can always be called .Enumerator),
+    // Other strawmen might be: `struct iterator(element_type, synthesized_type_name)` or `ref struct iterator(element_type, synthesized_type_name)`
+    // (including 'struct' or 'ref struct' to be clear on that).
+    //
+    // Whatever we create here needs to indicate at least the outer type name (the inner type can always be called OuterTypeName.Enumerator),
     // and needs to have enough to reconstruct `ref struct NewEnumerable : IEnumerable2<NewElement, NewEnumerable.Enumerator>`.
     // so it needs bit in the syntax for NewEnumerable/NewElement, and potentially bits for the ref-ness of the struct.  Or we always give
     // you that, and if you don't want that, you use a normal iterator.
@@ -134,8 +136,8 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // public iterator<TElement> as WhereEnumerable Where(...)
     // public iterator<TElement> Where(...) named WhereEnumerable
 
-
-    // If nominal abi guarantees are not necessary then we could simplify to:
+    // If nominal abi guarantees are not necessary then we could simplify to `iterator(element_type)`:
+    //
     // This would give you an unnamed struct you could use in places like var/foreach.  But which you could not name or put in your own abi.
     // In particular, the name of this could change, which could lead to binary breaks.
 
