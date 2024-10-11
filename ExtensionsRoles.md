@@ -168,6 +168,6 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         where TArgs : struct
     {
         foreach (var value in this)
-            if (test(value, args))
+            if (test(value, ref args))
                 yield return value;
     }
