@@ -163,6 +163,10 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 // .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
 // can become stack-based.  Otherwise, we'd need something like:
 
+// A new ref-struct-delegate concept.  This would be virtually the same as a normal delegate (a pointer to an object and a method),
+// *except* that due to it being a ref-struct, could be a no-alloc ref struct on the stack pointing back to the method pointer, and
+// a ref-struct containing the data for the method to operate on (the capture data).  As this would be on the stack, there would be
+// no concern about tearing/etc.
 ref struct delegate TResult RefFunc<T, TResult>(T value);
 
 extension VeryVeryFastEnumerable<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
