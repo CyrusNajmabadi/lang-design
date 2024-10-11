@@ -84,25 +84,25 @@ extension Enumerable
     public TSource? (IEnumerable<TSource> source).FirstOrDefault<TSource>()
     public TSource? (IEnumerable<TSource> source).FirstOrDefault<TSource>(Func<TSource, bool> predicate)
 
-    public IEnumerable<TResult> GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector) for IEnumerable<TSource> source;
+    public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector, IEqualityComparer<TKey>? comparer)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey>? comparer)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
     public IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
     public IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) for IEnumerable<TSource> source;
     public IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
     public IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector) for IEnumerable<TSource> source;
 
-    public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector) for IEnumerable<TOuter> outer;
-    public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TOuter> outer;
+    public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector)
+    public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer)
     public IEnumerable<(int Index, TSource Item)> Index<TSource>() for IEnumerable<TSource> source;
     public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second)
     public IEnumerable<TSource> (IEnumerable<TSource> first).Intersect<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer)
     public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector)
     public IEnumerable<TSource> (IEnumerable<TSource> first).IntersectBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
 
-    public IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) for IEnumerable<TOuter> outer;
-    public IEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TOuter> outer;
+    public IEnumerable<TResult> (IEnumerable<TOuter> outer).Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
+    public IEnumerable<TResult> (IEnumerable<TOuter> outer).Join<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey>? comparer)
     
     public TSource (IEnumerable<TSource> source).Last<TSource>(Func<TSource, bool> predicate)
     public TSource (IEnumerable<TSource> source).Last<TSource>()
@@ -190,13 +190,13 @@ extension Enumerable
 
     public IEnumerable<TSource> (IEnumerable<TSource> source).Reverse<TSource>()
 
-    public IEnumerable<TResult> Select<TSource, TResult>(Func<TSource, int, TResult> selector) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> Select<TSource, TResult>(Func<TSource, TResult> selector) for IEnumerable<TSource> source;
+    public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, int, TResult> selector)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, TResult> selector)
 
-    public IEnumerable<TResult> SelectMany<TSource, TCollection, TResult>(Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> SelectMany<TSource, TResult>(Func<TSource, int, IEnumerable<TResult>> selector) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> SelectMany<TSource, TResult>(Func<TSource, IEnumerable<TResult>> selector) for IEnumerable<TSource> source;
-    public IEnumerable<TResult> SelectMany<TSource, TCollection, TResult>(Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) for IEnumerable<TSource> source;
+    public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TCollection, TResult>(Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TResult>(Func<TSource, int, IEnumerable<TResult>> selector)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TResult>(Func<TSource, IEnumerable<TResult>> selector)
+    public IEnumerable<TResult> (IEnumerable<TSource> source).SelectMany<TSource, TCollection, TResult>(Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
 
     public bool (IEnumerable<TSource> first).SequenceEqual<TSource>(IEnumerable<TSource> second)
     public bool (IEnumerable<TSource> first).SequenceEqual<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer)
@@ -286,6 +286,6 @@ extension Enumerable
 
     public IEnumerable<(TFirst First, TSecond Second, TThird Third)> Zip<TFirst, TSecond, TThird>(IEnumerable<TSecond> second, IEnumerable<TThird> third) for IEnumerable<TFirst> first;
     public IEnumerable<(TFirst First, TSecond Second)> Zip<TFirst, TSecond>(IEnumerable<TSecond> second) for IEnumerable<TFirst> first;
-    public IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector) for IEnumerable<TFirst> first;
+    public IEnumerable<TResult> (IEnumerable<TFirst> first).Zip<TFirst, TSecond, TResult>(IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
 }
 ```
