@@ -1,4 +1,6 @@
 ```c#
+# No alloc iterators
+
 // Goal: one can write, and have that be non-allocating (for the enumerables/enumerators).
 // Making the delegates non-allocating happens if they do not capture.  An extension to avoid
 // allocs even if they capture is shown at the end.
