@@ -5,13 +5,19 @@ extension Enumerable
     public TSource (IEnumerable<TSource> source).Aggregate<TSource>(Func<TSource, TSource, TSource> func);
     public TAccumulate (IEnumerable<TSource> source).Aggregate<TSource, TAccumulate>(TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func);
     public TResult (IEnumerable<TSource> source).Aggregate<TSource, TAccumulate, TResult>(TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector);
+
     public IEnumerable<KeyValuePair<TKey, TAccumulate>> (IEnumerable<TSource> source).AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null) where TKey : notnull;
     public IEnumerable<KeyValuePair<TKey, TAccumulate>> (IEnumerable<TSource> source).AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, Func<TKey, TAccumulate> seedSelector, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null) where TKey : notnull;
+
     public bool (IEnumerable<TSource> source).All<TSource>(Func<TSource, bool> predicate);
+
     public bool (IEnumerable<TSource> source).Any<TSource>();
     public bool (IEnumerable<TSource> source).Any<TSource>(Func<TSource, bool> predicate);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).Append<TSource>(TSource element);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).AsEnumerable<TSource>();
+
     public float? (IEnumerable<TSource> source).Average<TSource>(Func<TSource, float?> selector);
     public double? (IEnumerable<TSource> source).Average<TSource>(Func<TSource, long?> selector);
     public double? (IEnumerable<TSource> source).Average<TSource>(Func<TSource, int?> selector);
@@ -32,14 +38,21 @@ extension Enumerable
     public double (IEnumerable<double> source).Average();
     public decimal (IEnumerable<decimal> source).Average();
     public float (IEnumerable<float> source).Average();
-    public IEnumerable<TResult> Cast<TResult>(this IEnumerable source);
+
+    public IEnumerable<TResult> (IEnumerable source).Cast<TResult>();
+
     public IEnumerable<TSource[]> (IEnumerable<TSource> source).Chunk<TSource>(int size);
+
     public IEnumerable<TSource> (IEnumerable<TSource> first).Concat<TSource>(IEnumerable<TSource> second);
+
     public bool (IEnumerable<TSource> source).Contains<TSource>(TSource value);
     public bool (IEnumerable<TSource> source).Contains<TSource>(TSource value, IEqualityComparer<TSource>? comparer);
+
     public int (IEnumerable<TSource> source).Count<TSource>();
     public int (IEnumerable<TSource> source).Count<TSource>(Func<TSource, bool> predicate);
+
     public IEnumerable<KeyValuePair<TKey, int>> (IEnumerable<TSource> source).CountBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? keyComparer = null) where TKey : notnull;
+    
     public IEnumerable<TSource?> (IEnumerable<TSource> source).DefaultIfEmpty<TSource>();
     public IEnumerable<TSource> (IEnumerable<TSource> source).DefaultIfEmpty<TSource>(TSource defaultValue);
     public IEnumerable<TSource> (IEnumerable<TSource> source).Distinct<TSource>();
@@ -136,7 +149,7 @@ extension Enumerable
     public int (IEnumerable<int> source).Min();
     public TSource? (IEnumerable<TSource> source).MinBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
     public TSource? (IEnumerable<TSource> source).MinBy<TSource, TKey>(Func<TSource, TKey> keySelector);
-    public IEnumerable<TResult> OfType<TResult>(this IEnumerable source);
+    public IEnumerable<TResult> (IEnumerable source).OfType<TResult>();
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>(IComparer<T>? comparer);
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>();
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderBy<TSource, TKey>(Func<TSource, TKey> keySelector);
@@ -192,19 +205,19 @@ extension Enumerable
     public IEnumerable<TSource> (IEnumerable<TSource> source).TakeLast<TSource>(int count);
     public IEnumerable<TSource> (IEnumerable<TSource> source).TakeWhile<TSource>(Func<TSource, int, bool> predicate);
     public IEnumerable<TSource> (IEnumerable<TSource> source).TakeWhile<TSource>(Func<TSource, bool> predicate);
-    public IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector);
-    public IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
-    public IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector);
-    public IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
+    public IOrderedEnumerable<TSource> (IOrderedEnumerable<TSource> source).ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector);
+    public IOrderedEnumerable<TSource> (IOrderedEnumerable<TSource> source).ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
+    public IOrderedEnumerable<TSource> (IOrderedEnumerable<TSource> source).ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector);
+    public IOrderedEnumerable<TSource> (IOrderedEnumerable<TSource> source).ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
     public TSource[] (IEnumerable<TSource> source).ToArray<TSource>();
     public Dictionary<TKey, TElement> (IEnumerable<TSource> source).ToDictionary<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer) where TKey : notnull;
     public Dictionary<TKey, TElement> (IEnumerable<TSource> source).ToDictionary<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) where TKey : notnull;
     public Dictionary<TKey, TSource> (IEnumerable<TSource> source).ToDictionary<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) where TKey : notnull;
     public Dictionary<TKey, TSource> (IEnumerable<TSource> source).ToDictionary<TSource, TKey>(Func<TSource, TKey> keySelector) where TKey : notnull;
-    public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>([TupleElementNames(new[] { "Key", "Value" })] this IEnumerable<(TKey Key, TValue Value)> source) where TKey : notnull;
-    public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> source, IEqualityComparer<TKey>? comparer) where TKey : notnull;
-    public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> source) where TKey : notnull;
-    public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>([TupleElementNames(new[] { "Key", "Value" })] this IEnumerable<(TKey Key, TValue Value)> source, IEqualityComparer<TKey>? comparer) where TKey : notnull;
+    public Dictionary<TKey, TValue> (IEnumerable<(TKey Key, TValue Value)> source).ToDictionary<TKey, TValue>() where TKey : notnull;
+    public Dictionary<TKey, TValue> (IEnumerable<(TKey Key, TValue Value)> source).ToDictionary<TKey, TValue>(IEqualityComparer<TKey>? comparer) where TKey : notnull;
+    public Dictionary<TKey, TValue> (IEnumerable<(TKey Key, TValue Value)> source).ToDictionary<TKey, TValue>() where TKey : notnull;
+    public Dictionary<TKey, TValue> (IEnumerable<(TKey Key, TValue Value)> source).ToDictionary<TKey, TValue>(IEqualityComparer<TKey>? comparer) where TKey : notnull;
     public HashSet<TSource> (IEnumerable<TSource> source).ToHashSet<TSource>();
     public HashSet<TSource> (IEnumerable<TSource> source).ToHashSet<TSource>(IEqualityComparer<TSource>? comparer);
     public List<TSource> (IEnumerable<TSource> source).ToList<TSource>();
