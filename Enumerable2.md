@@ -52,22 +52,30 @@ extension Enumerable
     public int (IEnumerable<TSource> source).Count<TSource>(Func<TSource, bool> predicate);
 
     public IEnumerable<KeyValuePair<TKey, int>> (IEnumerable<TSource> source).CountBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? keyComparer = null) where TKey : notnull;
-    
+
     public IEnumerable<TSource?> (IEnumerable<TSource> source).DefaultIfEmpty<TSource>();
     public IEnumerable<TSource> (IEnumerable<TSource> source).DefaultIfEmpty<TSource>(TSource defaultValue);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).Distinct<TSource>();
     public IEnumerable<TSource> (IEnumerable<TSource> source).Distinct<TSource>(IEqualityComparer<TSource>? comparer);
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector);
     public IEnumerable<TSource> (IEnumerable<TSource> source).DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
+
     public TSource (IEnumerable<TSource> source).ElementAt<TSource>(Index index);
     public TSource (IEnumerable<TSource> source).ElementAt<TSource>(int index);
+
     public TSource? (IEnumerable<TSource> source).ElementAtOrDefault<TSource>(Index index);
     public TSource? (IEnumerable<TSource> source).ElementAtOrDefault<TSource>(int index);
+
     public IEnumerable<TResult> Empty<TResult>();
+
     public IEnumerable<TSource> (IEnumerable<TSource> first).Except<TSource>(IEnumerable<TSource> second);
     public IEnumerable<TSource> (IEnumerable<TSource> first).Except<TSource>(IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer);
+
     public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector);
     public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
+    
     public TSource (IEnumerable<TSource> source).First<TSource>(Func<TSource, bool> predicate);
     public TSource (IEnumerable<TSource> source).First<TSource>();
     public TSource (IEnumerable<TSource> source).FirstOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue);
