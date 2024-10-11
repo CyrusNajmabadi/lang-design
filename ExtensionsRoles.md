@@ -171,7 +171,7 @@ ref struct delegate TResult RefFunc<T, TResult>(T value);
 
 extension VeryVeryFastEnumerable<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
 {
-       public WhereEnumerable Where<TRefFunc>(ref TRefFunc test) where TRefFunc : RefFunc<TElement, bool>
+    public WhereEnumerable Where<TRefFunc>(ref TRefFunc test) where TRefFunc : RefFunc<TElement, bool>
         => new(ref this, ref test);
 
     public ref struct WhereEnumerable<TRefFunc>(
