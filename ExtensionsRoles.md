@@ -146,4 +146,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         foreach (var value in this)
             yield return test(value);
     }
+
+    // Perhaps best is: `iterator<ElementType, OptionalName>`
+    // If abi is important, you must provide the OptionalName.  If not, you can leave it off.
 }
