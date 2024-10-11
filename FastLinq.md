@@ -19,7 +19,7 @@ interface IEnumerable2<TElement, TEnumerator> where TEnumerator : IEnumerator<TE
 {
 }
 
-// 1. Add extensions on IEnumerable2's.  Importantly, when called on a struct (which all of these helper methods return), they need 
+// 2. Add extensions on IEnumerable2's.  Importantly, when called on a struct (which all of these helper methods return), they need 
 // to take 'by reference' (i.e. ref-this) so that mutation methods call-through to the original.  In other words, if 
 // we have a SelectEnumerator wrapping a WhereEnumerator.  Then MoveNext on the SelectEnumerator needs to call through
 // to the WhereEnumerator.MoveNext and have it actually mutate it.
