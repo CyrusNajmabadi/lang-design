@@ -107,7 +107,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     {
         foreach (var value in this)
             if (test(value))
-                yield return this;
+                yield return value;
     }
 
     // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
@@ -138,7 +138,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     {
         foreach (var value in this)
             if (test(value))
-                yield return this;
+                yield return value;
     }
 
     public trait iterator(TResult) Select<TResult>(Func<TElement, bool> test) 
@@ -150,3 +150,24 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // Perhaps best is: `iterator<ElementType, OptionalName>`
     // If abi is important, you must provide the OptionalName.  If not, you can leave it off.
 }
+
+//
+
+    public iterator(WhereEnumerable, TElement) Where(Func<TElement, bool> test)
+    {
+        foreach (var value in this)
+            if (test(value))
+                yield return value;
+    }
+
+    // and
+
+    public iterator(WhereEnumerable, TElement, TArgs) Where<TArgs>(
+        ref LightweightFunc<TElement, TArgs, bool> test,
+        ref TArgs args)
+        where TArgs : struct
+    {
+        foreach (var value in this)
+            if (test(value, args))
+                yield return value;
+    }
