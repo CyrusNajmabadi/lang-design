@@ -75,17 +75,21 @@ extension Enumerable
 
     public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector);
     public IEnumerable<TSource> (IEnumerable<TSource> first).ExceptBy<TSource, TKey>(IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
-    
+
     public TSource (IEnumerable<TSource> source).First<TSource>(Func<TSource, bool> predicate);
     public TSource (IEnumerable<TSource> source).First<TSource>();
+
     public TSource (IEnumerable<TSource> source).FirstOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue);
     public TSource (IEnumerable<TSource> source).FirstOrDefault<TSource>(TSource defaultValue);
+
     public TSource? (IEnumerable<TSource> source).FirstOrDefault<TSource>();
     public TSource? (IEnumerable<TSource> source).FirstOrDefault<TSource>(Func<TSource, bool> predicate);
+
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector);
+    
     public IEnumerable<IGrouping<TKey, TSource>> (IEnumerable<TSource> source).GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector);
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer);
