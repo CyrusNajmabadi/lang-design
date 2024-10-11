@@ -114,8 +114,8 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
             yield return test(value);
     }
 
-    // However, these might need *major* magic.  In particular, the method body needs to be analyzed to know what the
-    // element type is that is being yielded.  The enumerable type TNewEnumerable then needs to be emitted in a way that it then
+    // However, these might need *major* magic.  In particular, the two method bodies above would needs to be analyzed to know
+    // what the element type is that is being yielded.  The enumerable type TNewEnumerable then needs to be emitted in a way that it then
     // implements `IEnumerable2<YieldedType, TNewEnumerable.Enumerator>`.  Would be amazing if we could have this though :)
     //
     // Note: the outer type only needs to be specified if we think about the nominal nature of it as part of your ABI
