@@ -23,7 +23,7 @@ interface IEnumerable2<TElement, TEnumerator> where TEnumerator : IEnumerator<TE
 // to take 'by reference' (i.e. ref-this) so that mutation methods call-through to the original.  In other words, if 
 // we have a SelectEnumerator wrapping a WhereEnumerator.  Then MoveNext on the SelectEnumerator needs to call through
 // to the WhereEnumerator.MoveNext and have it actually mutate it.
-extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
+extension EnumerableExtensions<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
 {
     // Until we got iterator/yield support we would write the extensions as:
 
