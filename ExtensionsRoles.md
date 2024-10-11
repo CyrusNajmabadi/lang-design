@@ -1,5 +1,7 @@
 ```c#
-// can now write:
+// Goal: one can write, and have that be non-allocating (for the enumerables/enumerators).
+// Making the delegates non-allocating happens if they do not capture.  An extension to avoid
+// allocs even if they capture is shown at the end.
 foreach (var string in someSpan.Where(v => v < 21).Select(v => v.ToString())
 {
 
