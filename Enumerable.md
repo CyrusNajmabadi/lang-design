@@ -53,28 +53,38 @@ extension Enumerable
     public int Count<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
 
     public IEnumerable<KeyValuePair<TKey, int>> CountBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? keyComparer = null) for IEnumerable<TSource> source where TKey : notnull;
-    
+
     public IEnumerable<TSource?> DefaultIfEmpty<TSource>() for IEnumerable<TSource> source;
     public IEnumerable<TSource> DefaultIfEmpty<TSource>(TSource defaultValue) for IEnumerable<TSource> source;
+
     public IEnumerable<TSource> Distinct<TSource>() for IEnumerable<TSource> source;
     public IEnumerable<TSource> Distinct<TSource>(IEqualityComparer<TSource>? comparer) for IEnumerable<TSource> source;
+
     public IEnumerable<TSource> DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector) for IEnumerable<TSource> source;
     public IEnumerable<TSource> DistinctBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
+
     public TSource ElementAt<TSource>(Index index) for IEnumerable<TSource> source;
     public TSource ElementAt<TSource>(int index) for IEnumerable<TSource> source;
+
     public TSource? ElementAtOrDefault<TSource>(Index index) for IEnumerable<TSource> source;
     public TSource? ElementAtOrDefault<TSource>(int index) for IEnumerable<TSource> source;
+
     public IEnumerable<TResult> Empty<TResult>();
+
     public IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second);
     public IEnumerable<TSource> Except<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, IEqualityComparer<TSource>? comparer);
+
     public IEnumerable<TSource> ExceptBy<TSource, TKey>(this IEnumerable<TSource> first, IEnumerable<TKey> second, Func<TSource, TKey> keySelector);
     public IEnumerable<TSource> ExceptBy<TSource, TKey>(this IEnumerable<TSource> first, IEnumerable<TKey> second, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
+
     public TSource First<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
     public TSource First<TSource>() for IEnumerable<TSource> source;
+
     public TSource FirstOrDefault<TSource>(Func<TSource, bool> predicate, TSource defaultValue) for IEnumerable<TSource> source;
     public TSource FirstOrDefault<TSource>(TSource defaultValue) for IEnumerable<TSource> source;
     public TSource? FirstOrDefault<TSource>() for IEnumerable<TSource> source;
     public TSource? FirstOrDefault<TSource>(Func<TSource, bool> predicate) for IEnumerable<TSource> source;
+
     public IEnumerable<TResult> GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
     public IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
     public IEnumerable<TResult> GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector) for IEnumerable<TSource> source;
@@ -83,6 +93,7 @@ extension Enumerable
     public IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) for IEnumerable<TSource> source;
     public IEnumerable<IGrouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer) for IEnumerable<TSource> source;
     public IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector) for IEnumerable<TSource> source;
+    
     public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector);
     public IEnumerable<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<(int Index, TSource Item)> Index<TSource>() for IEnumerable<TSource> source;
