@@ -119,6 +119,12 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
             yield return test(value);
     }
 
+    // Other strawmen might be: `struct iterator(WhereEnumerable, TElement)` or `ref struct iterator(WhereEnumerable, TElement)`
+    // Whatever we create here needs to indicate at least the outer type name (the inner type can always be called .Enumerator),
+    // and needs to have enough to reconstruct `ref struct NewEnumerable : IEnumerable2<NewElement, NewEnumerable.Enumerator>`.
+    // so it needs bit in the syntax for NewEnumerable/NewElement, and potentially bits for the ref-ness of the struct.  Or we always give
+    // you that, and if you don't want that, you use a normal iterator.
+
     // If nominal abi guarantees are not necessary then we could simplify to:
     // This would give you an unnamed struct you could use in places like var/foreach.  But which you could not name or put in your own abi.
     // In particular, the name of this could change, which could lead to binary breaks.
