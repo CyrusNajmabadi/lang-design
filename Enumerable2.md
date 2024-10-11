@@ -6,8 +6,8 @@ extension Enumerable
     public TAccumulate (IEnumerable<TSource> source).Aggregate<TSource, TAccumulate>(TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
     public TResult (IEnumerable<TSource> source).Aggregate<TSource, TAccumulate, TResult>(TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
 
-    public IEnumerable<KeyValuePair<TKey, TAccumulate>> AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null) for IEnumerable<TSource> source where TKey : notnull;
-    public IEnumerable<KeyValuePair<TKey, TAccumulate>> AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, Func<TKey, TAccumulate> seedSelector, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null) for IEnumerable<TSource> source where TKey : notnull;
+    public IEnumerable<KeyValuePair<TKey, TAccumulate>> (IEnumerable<TSource> source where TKey : notnull).AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null)
+    public IEnumerable<KeyValuePair<TKey, TAccumulate>> (IEnumerable<TSource> source where TKey : notnull).AggregateBy<TSource, TKey, TAccumulate>(Func<TSource, TKey> keySelector, Func<TKey, TAccumulate> seedSelector, Func<TAccumulate, TSource, TAccumulate> func, IEqualityComparer<TKey>? keyComparer = null)
 
     public bool (IEnumerable<TSource> source).All<TSource>(Func<TSource, bool> predicate)
 
