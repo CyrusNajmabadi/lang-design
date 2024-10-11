@@ -151,6 +151,64 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // If abi is important, you must provide the OptionalName.  If not, you can leave it off.
 }
 
+// What if we want no alloc at all (even delegates).  Can the runtime do that automatically with lambdas?  It knows the 
+// .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
+// can become stack-based.  Otherwise, we'd need something like:
+
+ref struct delegate TResult RefFunc<T, TResult>(T value);
+
+extension VeryVeryFastEnumerable<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
+{
+       public WhereEnumerable Where<TRefFunc>(ref TRefFunc test) where TRefFunc : RefFunc<TElement, bool>
+        => new(ref this, ref test);
+
+    public ref struct WhereEnumerable<TRefFunc>(
+        ref TEnumerable enumerable,
+        ref TRefFunc test) :
+        IEnumerable2<TElement, TWhereEnumerator>
+        where TRefFunc : RefFunc<TElement, bool>
+    {
+        // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
+        private ref TEnumerable _enumerable = ref enumerable;
+        private ref TRefFunc _test = ref test;
+
+        public WhereEnumerator GetEnumerator()
+            => new(ref _enumerable.GetEnumerator(), ref test);
+
+        public ref struct Enumerator(
+            ref TEnumerator enumerator,
+            ref TRefFunc test) :
+            IEnumerator<TElement>
+        {
+            // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
+            private ref TEnumerator _enumerator = ref enumerator;
+            private ref TRefFunc _test = ref test;
+
+            public TElement? Current { get; private set }
+
+            public bool MoveNext()
+            {
+                while (_enumerator.MoveNext())
+                {
+                    var current = _enumerator.Current;
+                    if (test(_enumerator.Current))
+                    {
+                        this.Current = current;
+                        return true;
+                    }
+                }
+
+                this.Current = default;
+                return false;
+            }
+        }
+    }
+}
+
+
+
+
+
 //
 
     public iterator(WhereEnumerable, TElement) Where<TRefStructFunc>(ref TRefStructFunc test) where TRefStructFunc : IFunc<TElement, bool>
