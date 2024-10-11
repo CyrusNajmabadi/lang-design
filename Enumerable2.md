@@ -89,11 +89,12 @@ extension Enumerable
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement, TResult>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, Func<TKey, IEnumerable<TElement>, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TResult>(Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector);
-    
+
     public IEnumerable<IGrouping<TKey, TSource>> (IEnumerable<TSource> source).GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector);
     public IEnumerable<IGrouping<TKey, TElement>> (IEnumerable<TSource> source).GroupBy<TSource, TKey, TElement>(Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<IGrouping<TKey, TSource>> (IEnumerable<TSource> source).GroupBy<TSource, TKey>(Func<TSource, TKey> keySelector);
+    
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector);
     public IEnumerable<TResult> (IEnumerable<TOuter> outer).GroupJoin<TOuter, TInner, TKey, TResult>(IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey>? comparer);
     public IEnumerable<(int Index, TSource Item)> (IEnumerable<TSource> source).Index<TSource>();
