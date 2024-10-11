@@ -99,4 +99,11 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 
     // Ideally, one could write the following with iterators/yield:
 
+    // Similar to Enumerable.Where.  But gives a stack-based enumerable which gives a stack based enumerator.
+    public ref struct WhereEnumerable Where(Func<TElement, bool> test) where WhereEnumerable : IEnumerable2<TElement>
+    {
+        foreach (var value in this)
+            if (test(value))
+                yield return this;
+    }
 }
