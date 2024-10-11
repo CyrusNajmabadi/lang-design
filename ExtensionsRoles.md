@@ -8,7 +8,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // if we don't have yield-support could write as:
 
     public WhereEnumerable Where(Func<TElement, bool> test)
-        => new(this, test);
+        => new(ref this, test);
 
     public ref struct WhereEnumerable(ref TEnumerable enumerable, Func<TElement, bool> test) : IEnumerable2<TElement, TWhereEnumerator>
     {
@@ -21,6 +21,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         public WhereSelectEnumerator Select<TResult>(Func<TElement, TResult> selector)
         {
             // Can return dedicated special type without indirection.
+            return new(this, test, selector);
         }
     }
 
@@ -49,7 +50,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     }
 
     public SelectEnumerable<TResult> Select(Func<TElement, TResult> selector)
-        => new(this, selector);
+        => new(ref this, selector);
 
     public ref struct SelectEnumerable<TResult>(ref TEnumerable enumerable, Func<TElement, TResult> selector) : IEnumerable2<TResult, TSelectEnumerator<TResult>> {
 
