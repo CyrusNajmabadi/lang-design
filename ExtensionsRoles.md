@@ -67,6 +67,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
         }
     }
 
+    // Similar to Enumerable.Select.  But gives a stack-based enumerable which gives a stack based enumerator.
     public SelectEnumerable<TResult> Select(Func<TElement, TResult> selector)
         => new(ref this, selector);
 
@@ -95,4 +96,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
             }
         }
     }
+
+    // Ideally, one could write the following with iterators/yield:
+
 }
