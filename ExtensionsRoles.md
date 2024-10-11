@@ -33,7 +33,11 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
 
         public WhereSelectEnumerator Select<TResult>(Func<TElement, TResult> selector)
         {
-            // Can return dedicated special type without indirection.
+            // Can return dedicated special type without indirection.  Open question if whether that is necessary.
+            // If you have a standard SelectEnumerator<TResult> that wraps a WhereEnumerator, perhaps the runtime is
+            // just going to be fast enough, as there will be no virtual calls.  In other words: It could write-through 
+            // .Current on the SelectEnumerator all the way through to this WhereEnumerator, and perhaps it could inline 
+            // SelectEnumerator.MoveNext as well.  If that's the case, we wouldn't need specialized types.
             return new(this, test, selector);
         }
     }
