@@ -7,8 +7,11 @@ foreach (var string in someSpan.Where(v => v < 21).Select(v => v.ToString())
 
 }
 
-// New IEnumerable2 interface (which is generic on its TEnumerator type).  Calling it IEnumerable2 to make it clear
-// which IEnumerable i'm talking about.  It could still be called IEnumerable since it has two type parameters.
+// How?
+
+// 1. Introduce IEnumerable2 interface (which is generic on its TEnumerator type).  Calling it IEnumerable2
+// in this doc to make it clear which IEnumerable is being talked about.  It could still be called IEnumerable
+// if it ships since it has two type parameters.
 interface IEnumerable2<TElement, TEnumerator> where TEnumerator : IEnumerator<TElement>
 {
 }
