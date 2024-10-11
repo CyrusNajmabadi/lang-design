@@ -1,11 +1,23 @@
 ```c#
+// can now write:
+foreach (var string in someSpan.Where(v => v < 21).Select(v => v.ToString())
+{
+
+}
+
+// New IEnumerable2 interface (which is generic on its TEnumerator type).  Calling it IEnumerable2 to make it clear
+// which IEnumerable i'm talking about.  It could still be called IEnumerable since it has two type parameter.
 interface IEnumerable2<TElement, TEnumerator> where TEnumerator : IEnumerator<TElement>
 {
 }
 
+// Extensions on IEnumerable2's.  Importantly, when called on a struct (which most of these helper return), they need 
+// to take 'by reference' (i.e. ref-this) so that mutation methods call-through to the original.  In other words, if 
+// we have a SelectEnumerator wrapping a WhereEnumerator.  Then MoveNext on the SelectEnumerator needs to call through
+// to the WhereEnumerator.MoveNext and have it actually mutate it.
 extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnumerable : IEnumerable2<TElement, TEnumerator>
 {
-    // if we don't have yield-support could write as:
+    // Until we got iterator/yield support we would write the extensions as:
 
     public WhereEnumerable Where(Func<TElement, bool> test)
         => new(ref this, test);
