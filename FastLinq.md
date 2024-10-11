@@ -162,7 +162,7 @@ extension EnumerableExtensions<TEnumerable, TElement, TEnumerator> where TEnumer
 
 // What if we want no alloc at all (even delegates).  Can the runtime do that automatically with lambdas?  It knows the 
 // .Where/.Select calls are only on stack objects that can't capture the delegate.  So perhaps the new-capture and new-delegate
-// can become stack-based.  This would be the greatest part.
+// can become stack-based.  This would be awesome if that was possible.
 
 // Otherwise, we'd need something like:
 
