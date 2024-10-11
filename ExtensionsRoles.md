@@ -124,6 +124,11 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     // and needs to have enough to reconstruct `ref struct NewEnumerable : IEnumerable2<NewElement, NewEnumerable.Enumerator>`.
     // so it needs bit in the syntax for NewEnumerable/NewElement, and potentially bits for the ref-ness of the struct.  Or we always give
     // you that, and if you don't want that, you use a normal iterator.
+    //
+    // Other strawmen:
+    // public iterator<TElement> as WhereEnumerable Where(...)
+    // public iterator<TElement> Where(...) named WhereEnumerable
+
 
     // If nominal abi guarantees are not necessary then we could simplify to:
     // This would give you an unnamed struct you could use in places like var/foreach.  But which you could not name or put in your own abi.
