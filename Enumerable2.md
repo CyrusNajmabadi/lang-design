@@ -180,16 +180,22 @@ extension Enumerable
 
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>(IComparer<T>? comparer);
     public IOrderedEnumerable<T> (IEnumerable<T> source).Order<T>();
-    
+
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderBy<TSource, TKey>(Func<TSource, TKey> keySelector);
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
+
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderByDescending<TSource, TKey>(Func<TSource, TKey> keySelector);
     public IOrderedEnumerable<TSource> (IEnumerable<TSource> source).OrderByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey>? comparer);
+
     public IOrderedEnumerable<T> (IEnumerable<T> source).OrderDescending<T>(IComparer<T>? comparer);
     public IOrderedEnumerable<T> (IEnumerable<T> source).OrderDescending<T>();
+
     public IEnumerable<TSource> (IEnumerable<TSource> source).Prepend<TSource>(TSource element);
-    public IEnumerable<int> Range(int start, int count);
+
+    public static IEnumerable<int> Range(int start, int count);
+
     public IEnumerable<TResult> Repeat<TResult>(TResult element, int count);
+    
     public IEnumerable<TSource> (IEnumerable<TSource> source).Reverse<TSource>();
     public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, int, TResult> selector);
     public IEnumerable<TResult> (IEnumerable<TSource> source).Select<TSource, TResult>(Func<TSource, TResult> selector);
