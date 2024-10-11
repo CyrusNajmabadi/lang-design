@@ -41,7 +41,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     public ref struct WhereEnumerator(ref TEnumerator enumerator, Func<TElement, bool> test) : IEnumerator<TElement>
     {
         // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
-        private ref TEnumerator _enumerator = enumerator;
+        private ref TEnumerator _enumerator = ref enumerator;
 
         public TElement? Current { get; private set }
 
@@ -74,7 +74,7 @@ extension Enumerable2Extensions<TEnumerable, TElement, TEnumerator> where TEnume
     public ref struct SelectEnumerator<TResult>(ref TEnumerator enumerator, Func<TElement, TResult> selector) : IEnumerator<REsult>
     {
         // Ref struct, so we don't get a copy in here, this can just point up the stack as necessary.
-        private ref TEnumerator _enumerator = enumerator;
+        private ref TEnumerator _enumerator = ref enumerator;
 
         public TElement? Current { get; private set }
 
