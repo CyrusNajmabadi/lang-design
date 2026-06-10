@@ -49,7 +49,7 @@ Variants the user has used interchangeably (pick one, keep the spirit):
 >
 > Deliverable: a punch-list of concrete, actionable findings. Every finding must cite
 > `file:line` and quote the offending text (or the missing spec rule). No vague worries.
-> Do NOT summarize what the code does or what is correct — only what is wrong, risky, or
+> Do NOT summarize what the code does or what is correct, only what is wrong, risky, or
 > untested. Severity each finding: BLOCKER / HIGH / MEDIUM / LOW / NIT. Do not pad with
 > nits. Be exhaustive: I would rather see 30 real issues than 5 cherry-picked ones.
 
@@ -64,7 +64,7 @@ Then add a `## Areas audited clean` section request so you know what was actuall
 ## Findings
 ### 1. [SEVERITY] <short title>
 - Spec / expectation: <quote or rule>
-- Code / test: `file:line` — <quote>
+- Code / test: `file:line`, <quote>
 - Problem: <concrete technical objection>
 - Suggested fix: <specific change or action>
 
@@ -74,7 +74,7 @@ Then add a `## Areas audited clean` section request so you know what was actuall
 
 Role-specific sections to swap in:
 - impl-vs-tests → `## Uncovered code paths` + `## Weak / unfaithful tests`
-- spec-vs-tests → `## Untested spec rules` + `## Tests not backed by spec` + **`## Spec / test matrix`** (the single highest-value artifact — always request it)
+- spec-vs-tests → `## Untested spec rules` + `## Tests not backed by spec` + **`## Spec / test matrix`** (the single highest-value artifact, always request it)
 - consumer/interaction audit → `## Confirmed breaks` / `## Fragile but currently-gated` / `## Safe`
 - feature-matrix → a table with axes as columns + `Predicted behavior` + `Risk / test` columns
 
@@ -102,7 +102,7 @@ each is in [templates.md](templates.md).
 ## Hard-won meta-rules (the user corrected agents on these repeatedly)
 
 - "The compiler team rarely thinks something is too contrived to test for." Don't self-censor edge cases.
-- For success cases, **execute** tests and show real output — don't only assert diagnostics.
+- For success cases, **execute** tests and show real output, don't only assert diagnostics.
 - Don't pin buggy behavior as "expected." A whole audit role exists just to catch tests that lock in bugs (see `hidden-bug auditor` in templates.md).
 - Run the agents. Don't claim a phase is done without them. ("what did your adversarial agents say here?")
 - Keep test comments clean: no quoting compiler code, no line numbers, no narration.

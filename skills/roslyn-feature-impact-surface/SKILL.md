@@ -33,7 +33,7 @@ Every pass that consumes the node you add or the bound node you reshape, especia
 - Constant folding, `SymbolDisplay`, speculative-binding paths
 
 For a node that **short-circuits** or carries a **new marker flag** (e.g. `IsChainedRelational`,
-a new `QuestionToken`), confirm each walker either handles it or correctly stops — a flatten that
+a new `QuestionToken`), confirm each walker either handles it or correctly stops, a flatten that
 ignores short-circuiting is a classic bug.
 
 ### 2. Syntax/API obligations
@@ -62,8 +62,8 @@ needs handling, currently breaks, or safe no-op (justify). This is its own follo
 
 - Use Grep/Glob to enumerate consumers and `switch`/cast sites; don't read the tree linearly.
 - One subagent per area (bound-tree consumers, syntax/API, parser positions, IDE) in parallel.
-- Each returns a **locator report**: `file:line`, the method, 5-10 lines of context, and a verdict —
-  `Confirmed breaks` / `Fragile but currently-gated` / `Safe` — with a minimal repro for breaks.
+- Each returns a **locator report**: `file:line`, the method, 5-10 lines of context, and a verdict,
+  `Confirmed breaks` / `Fragile but currently-gated` / `Safe`, with a minimal repro for breaks.
 
 ## Output: an impact map
 
@@ -71,7 +71,7 @@ Consolidate into a checklist that feeds the implementation plan and the test mat
 
 ```
 ## Must-change (product code)
-- file:method:line — why — phase
+- file:method:line, why, phase
 
 ## Consumers to verify (may break)
 - Confirmed breaks / Fragile-but-gated / Safe
@@ -80,10 +80,10 @@ Consolidate into a checklist that feeds the implementation plan and the test mat
 - <position> -> <ParseExpression* call site>
 
 ## Intersecting features
-- <feature> — composes how / rejected where
+- <feature>, composes how / rejected where
 
 ## IDE / analyzer fixups (separate track)
-- <feature area> — needs handling | breaks | safe no-op
+- <feature area>, needs handling | breaks | safe no-op
 ```
 
 Then drive: must-change items become implementation work; consumer breaks become bugs to fix in the

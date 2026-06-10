@@ -19,8 +19,8 @@ spec-vs-tests, test-suite mining, hidden-bug).
 
 - **"The compiler team rarely thinks something is too contrived to test for."** Don't self-censor.
 - **Execute success cases.** For everything that should work, run the test and assert the real
-  runtime output — not just "it compiled" or "no diagnostics."
-- **Validate the failure cases too** — everything that should *not* work, with the exact diagnostic.
+  runtime output, not just "it compiled" or "no diagnostics."
+- **Validate the failure cases too**: everything that should *not* work, with the exact diagnostic.
 - **Confidence over exhaustiveness.** After mapping every case, *consolidate*: you don't need 40
   variants of "named parameters"; you need enough to be confident success/failure both work.
   > "we likely don't need exhaustiveness on, say, 'named parameters' ... but we need enough to feel
@@ -30,7 +30,7 @@ spec-vs-tests, test-suite mining, hidden-bug).
 - **Smoke tests first, then deep areas.** Broad coverage without craziness, then drill per area.
 - Expect a high **test:product code ratio** (often ~100:1 for cross-cutting features).
 
-## Step 1 — mine the analogues
+## Step 1: mine the analogues
 
 Before inventing tests, crawl the existing corpus for the nearest existing construct and ask
 "do we have the `<feature>` analogue of each?" Launch test-suite-mining subagents (see
@@ -44,7 +44,7 @@ Before inventing tests, crawl the existing corpus for the nearest existing const
 | operators / comparisons | classical operator + comparison tests, constant-folding tests |
 | extension members | classic extension-method + modern extension corpora |
 
-## Step 2 — build the matrix
+## Step 2: build the matrix
 
 Enumerate the axes that matter for the feature, then cross them. Common axes:
 
@@ -64,7 +64,7 @@ widening chain `short < int < long` has 6 orderings worth pinning).
 
 A feature-matrix adversarial subagent can generate and risk-rank the grid for you.
 
-## Step 3 — pin the categories that always bite
+## Step 3: pin the categories that always bite
 
 - **Type inference & overload resolution** interacting with the feature's result type.
 - **Nullable reference flow** (NRT): does the feature learn/forget null state correctly? `!`, `out var`.
@@ -73,16 +73,18 @@ A feature-matrix adversarial subagent can generate and risk-rank the grid for yo
 - **Forbidden contexts**: default-param value, attribute arg, expression tree, const context.
 - **Diagnostics**: exact code, message, and span on each malformed input (one targeted error, no cascade).
 - **Emit/IL**: state-machine shape, spilling, unused-result handling, and an IL matrix across receiver/result.
+  For async-related features, run the IL+execution matrix in **both** classic state-machine **and**
+  runtime-async modes, and extend spill-breadth coverage mirroring existing async spill tests.
 - **Runtime behavior**: exception on the non-null branch, single-evaluation of shared sub-expressions,
   short-circuit (prove the skipped side is *not* evaluated, e.g. via a counter or throwing member).
 - **LangVersion gating**: feature rejected pre-preview with `ERR_FeatureInPreview`.
 
-## Step 4 — consolidate
+## Step 4: consolidate
 
 Once the matrix + categories are mapped, cut to the minimal set that gives confidence. Drop tedious
 near-duplicates; keep one test per distinct bug-generating corner. State explicitly what you dropped.
 
-## Step 5 — organize & commit
+## Step 5: organize & commit
 
 - Tests live in their own files, per layer, language-version-scoped where relevant (e.g. a `CSharp15`
   test project). Comments in tests: no quoting compiler source, no line numbers, no narration.

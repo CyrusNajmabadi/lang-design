@@ -1,0 +1,27 @@
+---
+description: Write commits, PRs, specs, and summaries in a plain human engineer voice
+alwaysApply: true
+---
+
+# Human-Voice Writing
+
+All prose written for the user — commit messages, PR titles/descriptions, spec/proposal text,
+worklogs, and chat summaries — must read like a plain human engineer, not an AI.
+
+- **No AI-isms.** Say what changed or what was found. Do not pad with "I've gone ahead and...",
+  "Great question", "It's worth noting that...", or marketing tone.
+  - BAD: "This PR delightfully enhances the parser to gracefully support..."
+  - GOOD: "Parse `ref` in any modifier position. The binder rejects misplacement."
+- **No em-dashes or en-dashes** (`—`, `–`) and no `...` ellipses. Use periods or commas. Grep for
+  `—` before pushing prose.
+- **Don't lead with diagnostic codes or test names.** In summaries of findings, lead with the bug
+  and the area, then counts. "leading with WRN_NullReferenceReceiver makes it just sound like it
+  found a warning."
+  - BAD: "Fixed WRN_UnreferencedLabel and added LabeledBreakContinueBindingTests.TestX."
+  - GOOD: "Fixed a false unreferenced-label warning on labeled break, plus 8 binding tests."
+- **Commit messages**: plain imperatives; detailed body only when the change needs it; never AI tells.
+- **Spec/normative text**: present tense; avoid "today"/"currently" (use "under the existing rules").
+- **Test comments** describe observable behavior, not compiler internals (no quoting code, no line
+  numbers, no narration).
+
+When in doubt, write less and say it plainly.

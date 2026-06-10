@@ -21,7 +21,7 @@ How to deploy and triage the hostile review agents whose prompts live in
 
 ## When to launch
 
-- **After each phase passes its own tests** — syntax, binding, lowering, semantic-model/IOperation, emit.
+- **After each phase passes its own tests**: syntax, binding, lowering, semantic-model/IOperation, emit.
 - **Again after any bugfix commit** (don't skip the re-audit).
 - **After a spec merge** (re-audit code against the now-merged spec).
 - **Before a PR leaves draft** (PR-author + optionally cleanroom).
@@ -34,7 +34,7 @@ How to deploy and triage the hostile review agents whose prompts live in
 - **Self-contained briefs**: branch name + HEAD SHA + spec path + changed-file list +
   scope fence + carve-out list + report schema. The agent must not need parent chat history.
 - **Propose the split, get a sanity-check, then launch.** ("What sort of subagents do you
-  plan on creating? ... Ready to launch all six if the split looks right — want me to go?")
+  plan on creating? ... Ready to launch all six if the split looks right, want me to go?")
 
 ## Per-phase deployment
 
@@ -59,7 +59,7 @@ GAP = correct but untested, NIT = comment/wording). Tell agents **"do not pad wi
 ## Carve-outs (always include)
 
 List deferred-phase work in every brief so agents don't fault it, e.g.:
-- "Constant folding returns null — follow-up PR."
+- "Constant folding returns null, follow-up PR."
 - "IOperation does not expose `IsChainedRelational` yet."
 - "IDE tests are a separate PR."
 - "IL-verify failure on asymmetric-widening chains is pinned with `Verification.FailsILVerify`."
@@ -70,7 +70,7 @@ Confirm the carve-outs actually appeared in the reports (agents that ignore them
 
 1. **Wait for all agents**, then **union** their findings.
 2. **Dedupe** overlapping items; note **convergence** (2+ agents flagging the same thing → prioritize).
-3. **Synthesize by severity, with source attribution** — "(spec-vs-impl)", "(consumer audit)" —
+3. **Synthesize by severity, with source attribution**: "(spec-vs-impl)", "(consumer audit)",
    so it's clear what converges and what each auditor uniquely saw.
 4. **Push back on false positives** with a one-line rationale; do not silently drop them.
 5. **Never dismiss a finding as "out of scope" without proposing a follow-up.**
@@ -88,11 +88,11 @@ Confirm the carve-outs actually appeared in the reports (agents that ignore them
 All <N> subagents returned. Grouped by severity and by where each finding came from:
 
 ## Blockers
-1. <title> (spec-vs-impl) — file:line — <one line>
+1. <title> (spec-vs-impl), file:line, <one line>
 ## High
 ...
 ## Checked and disagree (false positives)
-- <finding> — <why it's fine>
+- <finding>, <why it's fine>
 ## Carve-outs confirmed clean
 ## Suggested order of attack
 First: ...  Second: ...  Third: ...

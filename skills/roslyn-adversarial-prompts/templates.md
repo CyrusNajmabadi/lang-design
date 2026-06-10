@@ -4,7 +4,7 @@ Each template = **posture preamble** (from SKILL.md) + the role body below + **s
 deliverable contract** + **report schema**. Fill `<...>` placeholders with the branch
 name, HEAD SHA, spec path, and changed-file list so the agent is self-contained and does
 not depend on parent chat history. Always add a **scope fence** (e.g. "this PR is SYNTAX
-ONLY — do not flag missing binder work") and a **carve-out list** of deferred work so the
+ONLY, do not flag missing binder work") and a **carve-out list** of deferred work so the
 agent does not noise-report known gaps.
 
 ---
@@ -24,14 +24,14 @@ agent does not noise-report known gaps.
 > Map every normative rule in `<spec path>` to the test(s) that pin it. Assume the worst:
 > rules feel covered but aren't. Produce a compact **spec / test matrix** (rule → test name,
 > or "NONE"). For each unpinned rule give a concrete C# snippet that would pin it. Include
-> the matrix — it is the single most useful artifact you can produce.
+> the matrix, it is the single most useful artifact you can produce.
 
 ## impl-vs-tests adversarial reviewer
 
 > Given the implementation on `<branch>`, think like a malicious test author: what would
 > you try to break it? Assume the author wrote tests that FEEL thorough but miss real
 > branches and that silent bugs hide in uncovered code. Also report anything that looks
-> covered but tests the wrong thing — e.g. a test asserting non-null that would still pass
+> covered but tests the wrong thing, e.g. a test asserting non-null that would still pass
 > if the code returned a null-but-equivalent value is a weak test. Two sections: Uncovered
 > code paths, and Weak / unfaithful tests.
 
@@ -42,13 +42,13 @@ agent does not noise-report known gaps.
 > (`git diff <base>..<branch>`). Find EVERY duplication, dead helper, and refactor/share
 > opportunity (e.g. can this reuse the existing `&&`/`?.`/await rewriter?). Be ruthless
 > about small wins; give line-savings estimates. Add a POTENTIAL BUGS section for anything
-> you trip over. If a chunk is genuinely minimal, say "no reduction: <reason>" — do not
+> you trip over. If a chunk is genuinely minimal, say "no reduction: <reason>", do not
 > invent work.
 
 ## test-suite mining auditor
 
 > Crawl the existing test corpus for `<adjacent construct>` (e.g. plain `await`, `?.`/`??`,
-> simple `=` initializers, classical comparisons) across `src/Compilers/CSharp/Test/` — not
+> simple `=` initializers, classical comparisons) across `src/Compilers/CSharp/Test/`, not
 > just files with obvious names. For each interesting existing scenario, ask: do we have the
 > `<feature>` analogue? Return a prioritized list: existing file + test name, what it
 > exercises, why it's interesting for `<feature>`, and likelihood already covered
@@ -101,7 +101,7 @@ agent does not noise-report known gaps.
 
 ## cleanroom adversary
 
-> You have ONLY the spec at `<path>` — no access to the implementation. Implement `<feature>`
+> You have ONLY the spec at `<path>`, no access to the implementation. Implement `<feature>`
 > from the spec alone (or describe the exact bound-tree/lowering you would produce for a set
 > of inputs). Then I will diff your version against the real impl: every divergence is either
 > a spec ambiguity or an impl bug. Be literal about what the spec does and does not say.
@@ -110,7 +110,7 @@ agent does not noise-report known gaps.
 
 > You are the harshest senior reviewer on the compiler team doing a final pass on this PR
 > diff before it leaves draft. Produce the worst, most pointed review comments you can
-> justify — naming, layering, test quality, diagnostics, public API, spec fidelity. The goal
+> justify, naming, layering, test quality, diagnostics, public API, spec fidelity. The goal
 > is to surface everything a human reviewer would, so we fix it first.
 
 ## hidden-bug auditor (tests pinning wrong behavior)
@@ -129,4 +129,4 @@ agent does not noise-report known gaps.
 > LocalRewriter, ExpressionLambdaRewriter, CSharpOperationFactory, BoundTreeWalker spines,
 > SyntaxKind switches, PublicAPI files. For nodes that short-circuit or carry a new marker,
 > confirm each walker treats them correctly. Buckets: Confirmed breaks / Fragile but
-> currently-gated / Safe — each with `file:line` and a minimal repro.
+> currently-gated / Safe, each with `file:line` and a minimal repro.

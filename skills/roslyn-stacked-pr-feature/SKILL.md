@@ -18,10 +18,10 @@ use `roslyn-feature-test-design`; for validation use the adversarial skills.
 
 Implement in dependency order, one PR per phase, each branching off the previous:
 
-1. **Syntax / parsing** — `Syntax.xml`, `LanguageParser`, parsing tests, PublicAPI, generated nodes.
-2. **Binding** — binder + bound nodes, diagnostics, `ErrorCode`/`MessageID`/resources, binding tests.
-3. **Lowering / emit** — `LocalRewriter`, codegen, emit/IL tests.
-4. **Semantic model / IOperation / flow** — SemanticModel APIs, `IOperation`, CFG, nullable, those tests.
+1. **Syntax / parsing**: `Syntax.xml`, `LanguageParser`, parsing tests, PublicAPI, generated nodes.
+2. **Binding**: binder + bound nodes, diagnostics, `ErrorCode`/`MessageID`/resources, binding tests.
+3. **Lowering / emit**: `LocalRewriter`, codegen, emit/IL tests.
+4. **Semantic model / IOperation / flow**: SemanticModel APIs, `IOperation`, CFG, nullable, those tests.
 
 IDE work (refactorings, completion, analyzers) is usually a separate later track, not in the core stack.
 
@@ -53,18 +53,30 @@ collision, **take the next free number** rather than reshuffling. Update in lock
 New preview features go under `LanguageVersion.Preview`; pin old behavior with a specific
 `LanguageVersion`/`TestOptions.RegularNN`.
 
+A new `IDS_Feature...` string needs an entry in **all 13 `xlf/*.xlf`** files: insert after an
+existing anchor (e.g. `IDS_FeatureUnions`) with `target state="new"`, and regenerate xlf via tooling,
+not by hand. Missing xlf entries break localization CI.
+
+## Area-complete PR cadence
+
+For features split across many areas (receiver kinds, member kinds, operators), **finish one area's
+full PR set before starting the next**, so the overall PR stack stays consistent. Tests for each area
+go in **separate files** to avoid collisions. If a later test surfaces a missing edge case in earlier
+product code, **amend the upstream PR and flow the change down** the stack via merge-forward (not
+rebase + force-push) once any PR in the stack is open.
+
 ## Merge-main propagation (repeatable procedure)
 
 When upstream `main` advances, propagate through the whole stack. Do it in the parent shell
 (branch state must persist across steps), not in throwaway subshells.
 
 ```
-Phase A — create the merge into the feature integration branch:
+Phase A, create the merge into the feature integration branch:
   git checkout -B merge-main-into-<feature> upstream/features/<feature>
   git merge upstream/main --no-edit -m "Merge `main` into `features/<feature>`"
   # resolve, build the compiler project, push, open PR against features/<feature>
 
-Phase B — flow it down each stack branch in order:
+Phase B, flow it down each stack branch in order:
   for each branch b in stack order (syntax -> binding -> emit -> semantic-model):
     git checkout -B b origin/b
     git merge <previous-branch-or-merge-branch> --no-edit -m "Merge ... into b"
@@ -73,7 +85,7 @@ Phase B — flow it down each stack branch in order:
 
 ### Conflict resolution playbook
 
-- **PublicAPI.Unshipped.txt / resx / xlf**: almost always adjacent additions — keep both sides.
+- **PublicAPI.Unshipped.txt / resx / xlf**: almost always adjacent additions, keep both sides.
   After resolving xlf, validate XML well-formedness (a conflict can split a `<trans-unit>`).
 - **ErrorCode.cs / MessageID.cs / ErrorFacts.cs**: renumber your feature's codes to the next free
   slot; reconcile the feature list. Then bump any `CSNNNN` references in your tests in lockstep.
